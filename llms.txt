@@ -1,99 +1,99 @@
 # Avente Hub
 
-> Avente Hub (Avente Canada Inc., Vaughan, Ontario) supplies factory-direct GRF (Green, Resilient, Fast) building finishes to developers and builders in the Greater Toronto Area and in Florida. We bring sample boards to your office or site. Phone +1 (416) 450-6656, Max@aventehub.com, https://aventehub.com
+> Avente Hub (Avente Canada Inc., Vaughan, Ontario) supplies factory-direct GRF (Green, Resilient, Fast) building finishes to developers and builders in the Greater Toronto Area and in Florida. We bring sample boards to your office or site. Phone +1 (416) 450-6656, Max@aventehub.com, https://www.aventehub.com
 
 Products are sold in two packs: the Lighting pack (LED crown moulding, LED neon flex, LED strips, running light strip, magnetic track lighting, LED baseboards) and the Door pack (WPC interior doors, wood-grain aluminum baseboards). Every product carries an AVH code and is available in Toronto and Florida.
 
 ## Pages
-- https://aventehub.com/
-- https://aventehub.com/aluminum-baseboards/
-- https://aventehub.com/aluminum-baseboards/model/
-- https://aventehub.com/builder-pilot/
-- https://aventehub.com/door-pack/
-- https://aventehub.com/grf-standard/
-- https://aventehub.com/led-baseboards/
-- https://aventehub.com/led-baseboards/model/
-- https://aventehub.com/led-crown-moulding/
-- https://aventehub.com/led-crown-moulding/model/
-- https://aventehub.com/led-neon-flex/
-- https://aventehub.com/led-neon-flex/model/
-- https://aventehub.com/led-strips/
-- https://aventehub.com/led-strips/model/
-- https://aventehub.com/lighting-pack/
-- https://aventehub.com/magnetic-track-lighting/
-- https://aventehub.com/magnetic-track-lighting/model/
-- https://aventehub.com/meet/
-- https://aventehub.com/running-light-strip/
-- https://aventehub.com/running-light-strip/model/
-- https://aventehub.com/wpc-interior-doors/
-- https://aventehub.com/wpc-interior-doors/model/
+- https://www.aventehub.com/
+- https://www.aventehub.com/aluminum-baseboards/
+- https://www.aventehub.com/aluminum-baseboards/model/
+- https://www.aventehub.com/builder-pilot/
+- https://www.aventehub.com/door-pack/
+- https://www.aventehub.com/grf-standard/
+- https://www.aventehub.com/led-baseboards/
+- https://www.aventehub.com/led-baseboards/model/
+- https://www.aventehub.com/led-crown-moulding/
+- https://www.aventehub.com/led-crown-moulding/model/
+- https://www.aventehub.com/led-neon-flex/
+- https://www.aventehub.com/led-neon-flex/model/
+- https://www.aventehub.com/led-strips/
+- https://www.aventehub.com/led-strips/model/
+- https://www.aventehub.com/lighting-pack/
+- https://www.aventehub.com/magnetic-track-lighting/
+- https://www.aventehub.com/magnetic-track-lighting/model/
+- https://www.aventehub.com/meet/
+- https://www.aventehub.com/running-light-strip/
+- https://www.aventehub.com/running-light-strip/model/
+- https://www.aventehub.com/wpc-interior-doors/
+- https://www.aventehub.com/wpc-interior-doors/model/
 
 ## Products (AVH code: name, one line, page)
 
-### LED Crown Moulding (https://aventehub.com/led-crown-moulding/)
-- AVH-HG21: 120 mm. The base profile. A flat line of light. https://aventehub.com/led-crown-moulding/model/?model=hg21
-- AVH-HG21A: 160 mm. The base with a cove above. https://aventehub.com/led-crown-moulding/model/?model=hg21a
-- AVH-HG22: 80 mm. The base profile. A slim line of light. https://aventehub.com/led-crown-moulding/model/?model=hg22
-- AVH-HG22A: 120 mm. The base with a small cove above. https://aventehub.com/led-crown-moulding/model/?model=hg22a
-- AVH-HG22B: 160 mm. The base with a tall cove above. https://aventehub.com/led-crown-moulding/model/?model=hg22b
-- AVH-HG23: 80 mm. The base profile. A slim line of light. https://aventehub.com/led-crown-moulding/model/?model=hg23
-- AVH-HG23A: 120 mm. The base with a small cove above. https://aventehub.com/led-crown-moulding/model/?model=hg23a
-- AVH-HG23B: 160 mm. The base with a tall cove above. https://aventehub.com/led-crown-moulding/model/?model=hg23b
-- AVH-6060: 60.8 × 60.8 mm. 45° corner profile. White or black. https://aventehub.com/led-crown-moulding/model/?model=6060
-- AVH-HG16: 97.8 × 97.8 mm. 45° corner crown. White or black. https://aventehub.com/led-crown-moulding/model/?model=hg16
-- AVH-HG17S: 50 × 50 mm. Corner crown. https://aventehub.com/led-crown-moulding/model/?model=hg17s
-- AVH-HG17: 78 × 78 mm. Corner crown. https://aventehub.com/led-crown-moulding/model/?model=hg17
-- AVH-HG18S: 86 × 80.8 mm. Corner crown. https://aventehub.com/led-crown-moulding/model/?model=hg18s
-- AVH-HG18: 90 × 90 mm. Corner crown. https://aventehub.com/led-crown-moulding/model/?model=hg18
+### LED Crown Moulding (https://www.aventehub.com/led-crown-moulding/)
+- AVH-HG21: 120 mm. The base profile. A flat line of light. https://www.aventehub.com/led-crown-moulding/model/?model=hg21
+- AVH-HG21A: 160 mm. The base with a cove above. https://www.aventehub.com/led-crown-moulding/model/?model=hg21a
+- AVH-HG22: 80 mm. The base profile. A slim line of light. https://www.aventehub.com/led-crown-moulding/model/?model=hg22
+- AVH-HG22A: 120 mm. The base with a small cove above. https://www.aventehub.com/led-crown-moulding/model/?model=hg22a
+- AVH-HG22B: 160 mm. The base with a tall cove above. https://www.aventehub.com/led-crown-moulding/model/?model=hg22b
+- AVH-HG23: 80 mm. The base profile. A slim line of light. https://www.aventehub.com/led-crown-moulding/model/?model=hg23
+- AVH-HG23A: 120 mm. The base with a small cove above. https://www.aventehub.com/led-crown-moulding/model/?model=hg23a
+- AVH-HG23B: 160 mm. The base with a tall cove above. https://www.aventehub.com/led-crown-moulding/model/?model=hg23b
+- AVH-6060: 60.8 × 60.8 mm. 45° corner profile. White or black. https://www.aventehub.com/led-crown-moulding/model/?model=6060
+- AVH-HG16: 97.8 × 97.8 mm. 45° corner crown. White or black. https://www.aventehub.com/led-crown-moulding/model/?model=hg16
+- AVH-HG17S: 50 × 50 mm. Corner crown. https://www.aventehub.com/led-crown-moulding/model/?model=hg17s
+- AVH-HG17: 78 × 78 mm. Corner crown. https://www.aventehub.com/led-crown-moulding/model/?model=hg17
+- AVH-HG18S: 86 × 80.8 mm. Corner crown. https://www.aventehub.com/led-crown-moulding/model/?model=hg18s
+- AVH-HG18: 90 × 90 mm. Corner crown. https://www.aventehub.com/led-crown-moulding/model/?model=hg18
 
-### WPC Interior Doors (https://aventehub.com/wpc-interior-doors/)
-- AVH-ZL01: Metal-line door. Flat wood-grain face with slim aluminum strips. Single swing, 36 × 84 in. 6 finishes https://aventehub.com/wpc-interior-doors/model/?model=AVH-ZL01
-- AVH-ZL02: Flat door. Plain wood-grain face. No lines. Single swing, 36 × 84 in. 4 finishes https://aventehub.com/wpc-interior-doors/model/?model=AVH-ZL02
-- AVH-ZL03: Groove-line door. Horizontal grooves across a wood-grain face. Single swing, 36 × 84 in. 6 finishes https://aventehub.com/wpc-interior-doors/model/?model=AVH-ZL03
+### WPC Interior Doors (https://www.aventehub.com/wpc-interior-doors/)
+- AVH-ZL01: Metal-line door. Flat wood-grain face with slim aluminum strips. Single swing, 36 × 84 in. 6 finishes https://www.aventehub.com/wpc-interior-doors/model/?model=AVH-ZL01
+- AVH-ZL02: Flat door. Plain wood-grain face. No lines. Single swing, 36 × 84 in. 4 finishes https://www.aventehub.com/wpc-interior-doors/model/?model=AVH-ZL02
+- AVH-ZL03: Groove-line door. Horizontal grooves across a wood-grain face. Single swing, 36 × 84 in. 6 finishes https://www.aventehub.com/wpc-interior-doors/model/?model=AVH-ZL03
 
-### LED Neon Flex (https://aventehub.com/led-neon-flex/)
-- AVH-NF01: Neon Flex 12 Top. Bends flat. Three-side glow. 12 × 12 mm · Top-bend · 180° https://aventehub.com/led-neon-flex/model/?model=nf01
-- AVH-NF02: Neon Flex 20 Top. The wide line. Three-side glow. 20 × 14 mm · Top-bend · 180° https://aventehub.com/led-neon-flex/model/?model=nf02
-- AVH-NF03: Neon Flex 16 Outdoor. IP68 body, moulded plug. Outdoor. 16 × 16 mm · IP68 · Top-bend https://aventehub.com/led-neon-flex/model/?model=nf03
-- AVH-NF04: Neon Flex 10 Side. Bends sideways. Side glow. 10 × 10 mm · Side-bend · 120° https://aventehub.com/led-neon-flex/model/?model=nf04
-- AVH-NF05: Neon Flex 10 Edge. Edge-lit, 180° spread. 10 × 18 mm · Side-bend · 180° https://aventehub.com/led-neon-flex/model/?model=nf05
-- AVH-NF06: Mini Neon 5. Bends to 5 mm. Cuts anywhere. 5 × 5 mm · R min 5 mm · IP65 https://aventehub.com/led-neon-flex/model/?model=nf06
+### LED Neon Flex (https://www.aventehub.com/led-neon-flex/)
+- AVH-NF01: Neon Flex 12 Top. Bends flat. Three-side glow. 12 × 12 mm · Top-bend · 180° https://www.aventehub.com/led-neon-flex/model/?model=nf01
+- AVH-NF02: Neon Flex 20 Top. The wide line. Three-side glow. 20 × 14 mm · Top-bend · 180° https://www.aventehub.com/led-neon-flex/model/?model=nf02
+- AVH-NF03: Neon Flex 16 Outdoor. IP68 body, moulded plug. Outdoor. 16 × 16 mm · IP68 · Top-bend https://www.aventehub.com/led-neon-flex/model/?model=nf03
+- AVH-NF04: Neon Flex 10 Side. Bends sideways. Side glow. 10 × 10 mm · Side-bend · 120° https://www.aventehub.com/led-neon-flex/model/?model=nf04
+- AVH-NF05: Neon Flex 10 Edge. Edge-lit, 180° spread. 10 × 18 mm · Side-bend · 180° https://www.aventehub.com/led-neon-flex/model/?model=nf05
+- AVH-NF06: Mini Neon 5. Bends to 5 mm. Cuts anywhere. 5 × 5 mm · R min 5 mm · IP65 https://www.aventehub.com/led-neon-flex/model/?model=nf06
 
-### Running Light Strip (https://aventehub.com/running-light-strip/)
-- AVH-RL01: Running Light Kit. Strip, channel, driver, controller, panel. 5 m or 10 m reel · 3 whites · 24 V https://aventehub.com/running-light-strip/model/?model=rl01
+### Running Light Strip (https://www.aventehub.com/running-light-strip/)
+- AVH-RL01: Running Light Kit. Strip, channel, driver, controller, panel. 5 m or 10 m reel · 3 whites · 24 V https://www.aventehub.com/running-light-strip/model/?model=rl01
 
-### LED Strips (https://aventehub.com/led-strips/)
-- AVH-LS01: COB Strip 24 V. Dot-free line. 480 chips per metre. COB 480/m · 8–12 W/m · CRI 90 https://aventehub.com/led-strips/model/?model=ls01
-- AVH-LS02: SMD 2835 Strip 24 V. The workhorse. Four outputs on one board. SMD 2835 120/m · 8–14 W/m · CRI 90 https://aventehub.com/led-strips/model/?model=ls02
-- AVH-LS03: Tunable White Strip. Warm to cool on one board. 2835 60 + 60/m · 6–12 W/m · 3000 + 6500 K https://aventehub.com/led-strips/model/?model=ls03
-- AVH-LS04: Mini Side Strip 2 mm. 2 mm wide. Lights sideways. 2 × 10 mm · 320/m · Free cutting https://aventehub.com/led-strips/model/?model=ls04
+### LED Strips (https://www.aventehub.com/led-strips/)
+- AVH-LS01: COB Strip 24 V. Dot-free line. 480 chips per metre. COB 480/m · 8–12 W/m · CRI 90 https://www.aventehub.com/led-strips/model/?model=ls01
+- AVH-LS02: SMD 2835 Strip 24 V. The workhorse. Four outputs on one board. SMD 2835 120/m · 8–14 W/m · CRI 90 https://www.aventehub.com/led-strips/model/?model=ls02
+- AVH-LS03: Tunable White Strip. Warm to cool on one board. 2835 60 + 60/m · 6–12 W/m · 3000 + 6500 K https://www.aventehub.com/led-strips/model/?model=ls03
+- AVH-LS04: Mini Side Strip 2 mm. 2 mm wide. Lights sideways. 2 × 10 mm · 320/m · Free cutting https://www.aventehub.com/led-strips/model/?model=ls04
 
-### LED Baseboards (https://aventehub.com/led-baseboards/)
-- AVH-A-8: Recessed LED baseboard. The strip is hidden behind the lip. Two heights. 40 / 65 mm. 4 finishes https://aventehub.com/led-baseboards/model/?model=AVH-A-8
-- AVH-A-32: Elegant LED baseboard. A continuous light line at the floor. Two heights. 60 / 80 mm. Black or dark grey https://aventehub.com/led-baseboards/model/?model=AVH-A-32
-- AVH-A-7: Side-glow LED baseboard. A 50 mm baseboard with a light line on top. 50 mm. Sand black or sand grey or white https://aventehub.com/led-baseboards/model/?model=AVH-A-7
-- AVH-A-12: Curved LED baseboard. A rounded profile, light at the floor. Two heights. 60 / 80 mm. Black or dark grey https://aventehub.com/led-baseboards/model/?model=AVH-A-12
-- AVH-A-36: Top-glow LED baseboard. A flat profile with the light on top. Two heights. 50 / 80 mm. Sand black https://aventehub.com/led-baseboards/model/?model=AVH-A-36
+### LED Baseboards (https://www.aventehub.com/led-baseboards/)
+- AVH-A-8: Recessed LED baseboard. The strip is hidden behind the lip. Two heights. 40 / 65 mm. 4 finishes https://www.aventehub.com/led-baseboards/model/?model=AVH-A-8
+- AVH-A-32: Elegant LED baseboard. A continuous light line at the floor. Two heights. 60 / 80 mm. Black or dark grey https://www.aventehub.com/led-baseboards/model/?model=AVH-A-32
+- AVH-A-7: Side-glow LED baseboard. A 50 mm baseboard with a light line on top. 50 mm. Sand black or sand grey or white https://www.aventehub.com/led-baseboards/model/?model=AVH-A-7
+- AVH-A-12: Curved LED baseboard. A rounded profile, light at the floor. Two heights. 60 / 80 mm. Black or dark grey https://www.aventehub.com/led-baseboards/model/?model=AVH-A-12
+- AVH-A-36: Top-glow LED baseboard. A flat profile with the light on top. Two heights. 50 / 80 mm. Sand black https://www.aventehub.com/led-baseboards/model/?model=AVH-A-36
 
-### Aluminum Baseboards (https://aventehub.com/aluminum-baseboards/)
-- AVH-A-34: Wood-grain baseboard. Wood grain on aluminum, matched to the doors. Three heights. 40 / 60 / 80 mm. 9 finishes https://aventehub.com/aluminum-baseboards/model/?model=AVH-A-34
-- AVH-A-1: Standard aluminum baseboard. Five heights, ten finishes. The one to start with. 40 – 100 mm. 10 finishes https://aventehub.com/aluminum-baseboards/model/?model=AVH-A-1
-- AVH-A-5: Colour clip baseboard. Fourteen colours, three heights. 46 / 60 / 80 mm. 14 finishes https://aventehub.com/aluminum-baseboards/model/?model=AVH-A-5
-- AVH-A-16: Bevel baseboard. A bevelled edge on a double clip. Seven colours. 30 / 50 / 70 mm. 7 finishes https://aventehub.com/aluminum-baseboards/model/?model=AVH-A-16
-- AVH-A-33: Double-layer clip baseboard. Two clip rows: flat on long walls. Six colours. 40 / 60 / 80 mm. 5 finishes https://aventehub.com/aluminum-baseboards/model/?model=AVH-A-33
+### Aluminum Baseboards (https://www.aventehub.com/aluminum-baseboards/)
+- AVH-A-34: Wood-grain baseboard. Wood grain on aluminum, matched to the doors. Three heights. 40 / 60 / 80 mm. 9 finishes https://www.aventehub.com/aluminum-baseboards/model/?model=AVH-A-34
+- AVH-A-1: Standard aluminum baseboard. Five heights, ten finishes. The one to start with. 40 – 100 mm. 10 finishes https://www.aventehub.com/aluminum-baseboards/model/?model=AVH-A-1
+- AVH-A-5: Colour clip baseboard. Fourteen colours, three heights. 46 / 60 / 80 mm. 14 finishes https://www.aventehub.com/aluminum-baseboards/model/?model=AVH-A-5
+- AVH-A-16: Bevel baseboard. A bevelled edge on a double clip. Seven colours. 30 / 50 / 70 mm. 7 finishes https://www.aventehub.com/aluminum-baseboards/model/?model=AVH-A-16
+- AVH-A-33: Double-layer clip baseboard. Two clip rows: flat on long walls. Six colours. 40 / 60 / 80 mm. 5 finishes https://www.aventehub.com/aluminum-baseboards/model/?model=AVH-A-33
 
-### Magnetic Track Lighting (https://aventehub.com/magnetic-track-lighting/)
-- AVH-MT01: Recessed trimless rail. Plaster-in, no trim, no frame. The luxury tier. Black, white to confirm https://aventehub.com/magnetic-track-lighting/model/?model=AVH-MT01
-- AVH-MT02: Track spot 80. The accent light. Turns 350°, tilts 90°. White or black https://aventehub.com/magnetic-track-lighting/model/?model=AVH-MT02
-- AVH-MT03: Mini spot 55. A 55 mm spot for art, shelves and counters. White or black https://aventehub.com/magnetic-track-lighting/model/?model=AVH-MT03
-- AVH-MT04: Linear diffuser 257. A soft 120° wash. The general light on the rail. White or black https://aventehub.com/magnetic-track-lighting/model/?model=AVH-MT04
-- AVH-MT05: Grille linear 131. Narrow lenses: light on the table, not in the eyes. White or black https://aventehub.com/magnetic-track-lighting/model/?model=AVH-MT05
-- AVH-MT06: Folding grille 127. On a hinge: flat for the floor, folded to wash a wall. White or black https://aventehub.com/magnetic-track-lighting/model/?model=AVH-MT06
-- AVH-MT07: Track pendant 45. Hangs from the rail on an adjustable cable. White or black https://aventehub.com/magnetic-track-lighting/model/?model=AVH-MT07
-- AVH-MT11: Ultra-slim surface rail. 8 mm thin. Screws to any finished ceiling. Black, white to confirm https://aventehub.com/magnetic-track-lighting/model/?model=AVH-MT11
-- AVH-MT12: Track spot 80. The accent light. Turns 350°, tilts 90°. White or black https://aventehub.com/magnetic-track-lighting/model/?model=AVH-MT12
-- AVH-MT13: Mini spot 55. A 55 mm spot for art, shelves and counters. White or black https://aventehub.com/magnetic-track-lighting/model/?model=AVH-MT13
-- AVH-MT14: Linear diffuser 257. A soft 120° wash. The general light on the rail. White or black https://aventehub.com/magnetic-track-lighting/model/?model=AVH-MT14
-- AVH-MT15: Grille linear 131. Narrow lenses: light on the table, not in the eyes. White or black https://aventehub.com/magnetic-track-lighting/model/?model=AVH-MT15
-- AVH-MT16: Folding grille 127. On a hinge: flat for the floor, folded to wash a wall. White or black https://aventehub.com/magnetic-track-lighting/model/?model=AVH-MT16
-- AVH-MT17: Track pendant 45. Hangs from the rail on an adjustable cable. White or black https://aventehub.com/magnetic-track-lighting/model/?model=AVH-MT17
+### Magnetic Track Lighting (https://www.aventehub.com/magnetic-track-lighting/)
+- AVH-MT01: Recessed trimless rail. Plaster-in, no trim, no frame. The luxury tier. Black, white to confirm https://www.aventehub.com/magnetic-track-lighting/model/?model=AVH-MT01
+- AVH-MT02: Track spot 80. The accent light. Turns 350°, tilts 90°. White or black https://www.aventehub.com/magnetic-track-lighting/model/?model=AVH-MT02
+- AVH-MT03: Mini spot 55. A 55 mm spot for art, shelves and counters. White or black https://www.aventehub.com/magnetic-track-lighting/model/?model=AVH-MT03
+- AVH-MT04: Linear diffuser 257. A soft 120° wash. The general light on the rail. White or black https://www.aventehub.com/magnetic-track-lighting/model/?model=AVH-MT04
+- AVH-MT05: Grille linear 131. Narrow lenses: light on the table, not in the eyes. White or black https://www.aventehub.com/magnetic-track-lighting/model/?model=AVH-MT05
+- AVH-MT06: Folding grille 127. On a hinge: flat for the floor, folded to wash a wall. White or black https://www.aventehub.com/magnetic-track-lighting/model/?model=AVH-MT06
+- AVH-MT07: Track pendant 45. Hangs from the rail on an adjustable cable. White or black https://www.aventehub.com/magnetic-track-lighting/model/?model=AVH-MT07
+- AVH-MT11: Ultra-slim surface rail. 8 mm thin. Screws to any finished ceiling. Black, white to confirm https://www.aventehub.com/magnetic-track-lighting/model/?model=AVH-MT11
+- AVH-MT12: Track spot 80. The accent light. Turns 350°, tilts 90°. White or black https://www.aventehub.com/magnetic-track-lighting/model/?model=AVH-MT12
+- AVH-MT13: Mini spot 55. A 55 mm spot for art, shelves and counters. White or black https://www.aventehub.com/magnetic-track-lighting/model/?model=AVH-MT13
+- AVH-MT14: Linear diffuser 257. A soft 120° wash. The general light on the rail. White or black https://www.aventehub.com/magnetic-track-lighting/model/?model=AVH-MT14
+- AVH-MT15: Grille linear 131. Narrow lenses: light on the table, not in the eyes. White or black https://www.aventehub.com/magnetic-track-lighting/model/?model=AVH-MT15
+- AVH-MT16: Folding grille 127. On a hinge: flat for the floor, folded to wash a wall. White or black https://www.aventehub.com/magnetic-track-lighting/model/?model=AVH-MT16
+- AVH-MT17: Track pendant 45. Hangs from the rail on an adjustable cable. White or black https://www.aventehub.com/magnetic-track-lighting/model/?model=AVH-MT17
