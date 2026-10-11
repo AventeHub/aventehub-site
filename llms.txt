@@ -6,9 +6,13 @@ Products are sold in two packs: the Lighting pack (LED crown moulding, LED neon 
 
 ## Pages
 - https://aventehub.com/
+- https://aventehub.com/aluminum-baseboards/
+- https://aventehub.com/aluminum-baseboards/model/
 - https://aventehub.com/builder-pilot/
 - https://aventehub.com/door-pack/
 - https://aventehub.com/grf-standard/
+- https://aventehub.com/led-baseboards/
+- https://aventehub.com/led-baseboards/model/
 - https://aventehub.com/led-crown-moulding/
 - https://aventehub.com/led-crown-moulding/model/
 - https://aventehub.com/led-neon-flex/
@@ -63,6 +67,20 @@ Products are sold in two packs: the Lighting pack (LED crown moulding, LED neon 
 - AVH-LS02: SMD 2835 Strip 24 V. The workhorse. Four outputs on one board. SMD 2835 120/m · 8–14 W/m · CRI 90 https://aventehub.com/led-strips/model/?model=ls02
 - AVH-LS03: Tunable White Strip. Warm to cool on one board. 2835 60 + 60/m · 6–12 W/m · 3000 + 6500 K https://aventehub.com/led-strips/model/?model=ls03
 - AVH-LS04: Mini Side Strip 2 mm. 2 mm wide. Lights sideways. 2 × 10 mm · 320/m · Free cutting https://aventehub.com/led-strips/model/?model=ls04
+
+### LED Baseboards (https://aventehub.com/led-baseboards/)
+- AVH-A-8: Recessed LED baseboard. The strip is hidden behind the lip. Two heights. 40 / 65 mm. 4 finishes https://aventehub.com/led-baseboards/model/?model=AVH-A-8
+- AVH-A-32: Elegant LED baseboard. A continuous light line at the floor. Two heights. 60 / 80 mm. Black or dark grey https://aventehub.com/led-baseboards/model/?model=AVH-A-32
+- AVH-A-7: Side-glow LED baseboard. A 50 mm baseboard with a light line on top. 50 mm. Sand black or sand grey or white https://aventehub.com/led-baseboards/model/?model=AVH-A-7
+- AVH-A-12: Curved LED baseboard. A rounded profile, light at the floor. Two heights. 60 / 80 mm. Black or dark grey https://aventehub.com/led-baseboards/model/?model=AVH-A-12
+- AVH-A-36: Top-glow LED baseboard. A flat profile with the light on top. Two heights. 50 / 80 mm. Sand black https://aventehub.com/led-baseboards/model/?model=AVH-A-36
+
+### Aluminum Baseboards (https://aventehub.com/aluminum-baseboards/)
+- AVH-A-34: Wood-grain baseboard. Wood grain on aluminum, matched to the doors. Three heights. 40 / 60 / 80 mm. 9 finishes https://aventehub.com/aluminum-baseboards/model/?model=AVH-A-34
+- AVH-A-1: Standard aluminum baseboard. Five heights, ten finishes. The one to start with. 40 – 100 mm. 10 finishes https://aventehub.com/aluminum-baseboards/model/?model=AVH-A-1
+- AVH-A-5: Colour clip baseboard. Fourteen colours, three heights. 46 / 60 / 80 mm. 14 finishes https://aventehub.com/aluminum-baseboards/model/?model=AVH-A-5
+- AVH-A-16: Bevel baseboard. A bevelled edge on a double clip. Seven colours. 30 / 50 / 70 mm. 7 finishes https://aventehub.com/aluminum-baseboards/model/?model=AVH-A-16
+- AVH-A-33: Double-layer clip baseboard. Two clip rows: flat on long walls. Six colours. 40 / 60 / 80 mm. 5 finishes https://aventehub.com/aluminum-baseboards/model/?model=AVH-A-33
 
 ### Magnetic Track Lighting (https://aventehub.com/magnetic-track-lighting/)
 - AVH-MT01: Recessed trimless rail. Plaster-in, no trim, no frame. The luxury tier. Black, white to confirm https://aventehub.com/magnetic-track-lighting/model/?model=AVH-MT01
