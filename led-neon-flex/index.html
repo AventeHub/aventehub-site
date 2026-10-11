@@ -214,6 +214,22 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offse
 .menu-closed{display:none !important}
 img{max-width:100%}
 </style>
+<style id="av-lb-css">
+.av-play{position:relative;display:block;cursor:pointer;border:1px solid rgba(201,162,39,.45);padding:0;background:#1B1512;width:100%;max-width:880px;margin:18px auto 0;aspect-ratio:16/9;overflow:hidden;border-radius:2px;text-align:left;color:#F1E7D6;font:inherit}
+.av-play img{width:100%;height:100%;object-fit:cover;display:block;opacity:.92;transition:opacity .25s}
+.av-play:hover img{opacity:1}
+.av-play .av-badge{position:absolute;left:50%;top:50%;width:74px;height:74px;margin:-37px 0 0 -37px;border-radius:50%;background:rgba(201,162,39,.95);box-shadow:0 10px 30px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center}
+.av-play .av-badge svg{width:30px;height:30px;margin-left:4px;fill:#1B1512}
+.av-play .av-lbl{position:absolute;left:16px;bottom:14px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#F3E2A0;background:rgba(27,21,18,.7);padding:6px 10px}
+.av-play:focus-visible{outline:2px solid #C9A227;outline-offset:3px}
+.av-lb{position:fixed;inset:0;z-index:99999;background:rgba(27,21,18,.97);display:flex;align-items:center;justify-content:center;padding:max(16px,env(safe-area-inset-top)) 16px max(16px,env(safe-area-inset-bottom))}
+.av-lb video{width:min(96vw,1280px);max-height:88vh;aspect-ratio:16/9;height:auto;background:#000;box-shadow:0 30px 80px rgba(0,0,0,.6);outline:1px solid rgba(201,162,39,.4)}
+.av-lb .av-x{position:absolute;top:14px;right:14px;width:46px;height:46px;border-radius:50%;border:1px solid #C9A227;background:rgba(27,21,18,.85);color:#F3E2A0;font:28px/1 Georgia,serif;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.av-lb .av-cap{position:absolute;left:16px;bottom:14px;color:#D9CDB8;font-size:13px;letter-spacing:.1em}
+body.av-lb-open{overflow:hidden}
+.av-lb.portrait video{width:auto;height:88vh;max-width:96vw;aspect-ratio:9/16}
+@media (max-width:780px){.av-play{margin-top:14px}.av-play .av-badge{width:60px;height:60px;margin:-30px 0 0 -30px}}
+</style>
 </head>
 <body>
 
@@ -465,5 +481,44 @@ img{max-width:100%}
 })();
 </script>
 
+<script>
+(function(){
+  var PLAY='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+  function tile(web, story, poster, label){
+    var b=document.createElement('button'); b.type='button'; b.className='av-play'; b.setAttribute('aria-label','Play the video: '+label);
+    b.dataset.web=web||''; b.dataset.story=story||''; b.dataset.label=label||'';
+    b.innerHTML='<img src="'+poster+'" loading="lazy" alt="Avente Hub LED Neon Flex: &#x27;+poster+&#x27;"><span class="av-badge" aria-hidden="true">'+PLAY+'</span><span class="av-lbl">Watch the video</span>';
+    b.addEventListener('click', function(){ open(b.dataset.web, b.dataset.story, b.dataset.label); });
+    return b;
+  }
+  function convert(sec){
+    if(sec.dataset.avDone) return; sec.dataset.avDone='1';
+    var vd=sec.querySelector('.video video'), vs=sec.querySelector('.video-story video');
+    var src=function(v){ var s=v&&(v.querySelector('source')||v); return s?(s.getAttribute('src')||''):''; };
+    var web=src(vd), story=src(vs), poster=(vd&&vd.getAttribute('poster'))||(vs&&vs.getAttribute('poster'))||'';
+    var h1=document.querySelector('h1'); var label=h1?h1.textContent.trim():document.title;
+    var t=tile(web, story, poster, label); sec.replaceWith(t);
+  }
+  function open(web, story, label){
+    var portrait=window.innerHeight>window.innerWidth && story; var file=portrait?story:web; if(!file) return;
+    var lb=document.createElement('div'); lb.className='av-lb'+(portrait?' portrait':''); lb.setAttribute('role','dialog'); lb.setAttribute('aria-label','Video: '+label);
+    var v=document.createElement('video'); v.src=file; v.controls=true; v.autoplay=true; v.playsInline=true; v.preload='auto'; v.setAttribute('aria-label',label);
+    var x=document.createElement('button'); x.type='button'; x.className='av-x'; x.setAttribute('aria-label','Close the video'); x.innerHTML='&times;';
+    var cap=document.createElement('div'); cap.className='av-cap'; cap.textContent=label+' · Avente Hub';
+    lb.appendChild(v); lb.appendChild(x); lb.appendChild(cap); document.body.appendChild(lb); document.body.classList.add('av-lb-open');
+    function close(){ try{v.pause();}catch(e){} lb.remove(); document.body.classList.remove('av-lb-open'); document.removeEventListener('keydown',esc); }
+    function esc(e){ if(e.key==='Escape') close(); }
+    x.addEventListener('click', close); v.addEventListener('ended', function(){ setTimeout(close, 600); });
+    lb.addEventListener('click', function(e){ if(e.target===lb) close(); }); document.addEventListener('keydown', esc);
+    var p=v.play(); if(p&&p.catch) p.catch(function(){});
+  }
+  function scan(){ document.querySelectorAll('section.video-sec').forEach(convert);
+    var c=document.getElementById('meet-cta'), h1=document.querySelector('h1');
+    if(c&&h1){ var code=(h1.textContent.match(/AVH-[A-Z0-9-]+/)||[''])[0]; if(code) c.setAttribute('href','/meet/?product='+encodeURIComponent(code)+'&from='+encodeURIComponent(location.pathname)); } }
+  scan();
+  var top=document.getElementById('top'); if(top&&window.MutationObserver){ new MutationObserver(scan).observe(top,{childList:true,subtree:true}); }
+  window.avOpenVideo=open; window.avVideoTile=tile;
+})();
+</script>
 </body>
 </html>
