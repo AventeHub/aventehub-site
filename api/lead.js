@@ -1,5 +1,6 @@
 // Avente Hub lead endpoint (Vercel serverless). Creates/updates the HubSpot contact and adds a note with the survey answers.
-// Needs the environment variable HUBSPOT_TOKEN (a HubSpot private app token with crm.objects.contacts write + crm.objects.notes write).
+// Needs the environment variable HUBSPOT_TOKEN: a HubSpot Service Key (Settings > Integrations > Service Keys) with the scopes
+// crm.objects.contacts.read and crm.objects.contacts.write (the note uses the contacts scope too). Sent as a Bearer token.
 // Without the token it answers {ok:true, stored:false} and the website falls back to the email / WhatsApp handover.
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', 'https://www.aventehub.com');
