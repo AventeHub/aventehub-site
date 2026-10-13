@@ -86,3 +86,18 @@ footer.avh-foot .avh-legal{max-width:1240px;margin:0 auto;padding:16px 24px 28px
 
 /* phone: the gold ribbon behind the hero text is softer so the text reads */
 @media (max-width:780px){.hero .ribbon{opacity:.35}}
+
+/* Door pack: door + matching baseboard pairs (from the show catalogue) */
+.avh-pair{margin:0;display:flex;flex-direction:column;gap:10px}
+.avh-pair-door{width:100%;aspect-ratio:853/1360;object-fit:cover;display:block;border:1px solid rgba(201,162,39,.55)}
+.avh-pair-info{display:flex;flex-direction:column;gap:10px;align-items:stretch}
+.avh-pair-name{text-align:center;font-family:Marcellus,Georgia,serif;font-size:19px;color:var(--esp,#3A2416)}
+.avh-pair-line{align-self:center;width:1px;height:22px;background:#C9A227}
+.avh-pair-bb{width:100%;aspect-ratio:473/166;object-fit:cover;display:block;border:1px solid rgba(201,162,39,.55)}
+.avh-pair-bbname{text-align:center;font-size:15px;color:var(--muted,#7D6B59)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .avh-pair-name{color:var(--ink,#F1E7D6)}}
+@media (max-width:600px){
+  .avh-pair{display:grid;grid-template-columns:40% 1fr;gap:14px;align-items:center}
+  .avh-pair-name,.avh-pair-bbname{text-align:left}
+  .avh-pair-line{align-self:flex-start;width:28px;height:1px}
+}
