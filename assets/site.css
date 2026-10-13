@@ -101,3 +101,25 @@ footer.avh-foot .avh-legal{max-width:1240px;margin:0 auto;padding:16px 24px 28px
   .avh-pair-name,.avh-pair-bbname{text-align:left}
   .avh-pair-line{align-self:flex-start;width:28px;height:1px}
 }
+
+/* LED baseboards: flagship blocks */
+.avh-flag{display:grid;grid-template-columns:1.25fr 1fr;gap:34px;align-items:center;background:var(--char,#1B1512);color:#F1E7D6;padding:26px;border:1px solid rgba(201,162,39,.45);position:relative}
+.avh-flag::before{content:"";position:absolute;inset:0;border-top:2px solid #C9A227;pointer-events:none}
+.avh-flag-rev .avh-flag-media{order:2}
+.avh-flag-media{display:flex;flex-direction:column;gap:10px;min-width:0}
+.avh-flag-main{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
+.avh-flag-rev .avh-flag-main{aspect-ratio:4/3;object-position:50% 70%}
+.avh-flag-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.avh-flag-strip img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
+.avh-flag-fin figure{margin:0;position:relative}
+.avh-flag-fin img{aspect-ratio:4/3;object-position:50% 80%}
+.avh-flag-fin figcaption{position:absolute;left:0;bottom:0;background:rgba(27,21,18,.78);color:#F3E2A0;font-size:12px;letter-spacing:.06em;padding:4px 8px}
+.avh-flag-text{display:flex;flex-direction:column;gap:14px;min-width:0}
+.avh-flag-tag{font-size:12px;letter-spacing:.16em;color:#D9B65A}
+.avh-flag-ttl{margin:0;font-family:Marcellus,Georgia,serif;font-weight:400;font-size:34px;line-height:1.1;color:#F3E2A0}
+.avh-flag-sub{margin:0;font-size:17px;line-height:1.6;color:#D9CDB8}
+.avh-fchips{display:flex;flex-wrap:wrap;gap:8px}
+.avh-fchip{font-size:13px;border:1px solid rgba(201,162,39,.55);color:#F1E7D6;padding:5px 11px;border-radius:999px}
+.avh-flag .btn-line.avh-btn-dark{color:#F1E7D6 !important}
+.rail-tag.avh-flagtag{background:linear-gradient(100deg,#8A6A22 0%,#D9B65A 28%,#F3E2A0 50%,#D9B65A 72%,#8A6A22 100%);color:#2A1C13 !important;border-color:transparent !important;margin-right:6px}
+@media (max-width:860px){.avh-flag{grid-template-columns:1fr;padding:16px;gap:20px}.avh-flag-rev .avh-flag-media{order:0}.avh-flag-ttl{font-size:28px}}
