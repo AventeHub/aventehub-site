@@ -1,0 +1,88 @@
+/* Avente Hub shared header, menus and footer (Oct 13, 2026).
+   One header and one footer on every page, so the site looks and moves the same everywhere.
+   Look: charcoal / espresso / cream / foil gold. Marcellus + Jost. */
+
+header.avh-nav{position:sticky !important;top:0 !important;z-index:60 !important;background:rgba(27,21,18,.96) !important;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid rgba(201,162,39,.35) !important;color:#E9DCC3 !important;font-family:Jost,"Avenir Next","Segoe UI",system-ui,sans-serif !important;font-weight:400;margin:0 !important;padding:0 !important;width:auto !important}
+header.avh-nav *{box-sizing:border-box}
+header.avh-nav .avh-bar{max-width:1240px;margin:0 auto;height:72px;padding:0 24px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+header.avh-nav .avh-brand{display:flex !important;align-items:center;gap:12px;text-decoration:none !important;min-width:0;border:0 !important;padding:0 !important}
+header.avh-nav .avh-mark{width:44px !important;height:auto !important;display:block;flex:0 0 auto;max-width:none}
+header.avh-nav .avh-wm{display:flex;flex-direction:column;gap:4px;line-height:1}
+header.avh-nav .avh-wm1{font-family:Marcellus,Georgia,serif;font-size:21px;letter-spacing:3px;color:#F3E2A0;white-space:nowrap}
+header.avh-nav .avh-wm2{font-size:10.5px;letter-spacing:2.2px;color:#C9A227;white-space:nowrap}
+
+header.avh-nav .avh-main{display:flex;align-items:center;gap:26px;height:100%}
+header.avh-nav .avh-main a{color:#E9DCC3 !important;text-decoration:none !important;font-size:15px !important;letter-spacing:.02em;border:0 !important;padding:0 !important;background:none !important;font-weight:400 !important}
+header.avh-nav .avh-main > a,header.avh-nav .avh-top{display:flex !important;align-items:center;gap:6px;height:72px;border-bottom:2px solid transparent !important}
+header.avh-nav .avh-main > a:hover,header.avh-nav .avh-top:hover{color:#F3E2A0 !important}
+header.avh-nav .avh-main [aria-current="page"],header.avh-nav .avh-main .avh-on{color:#F3E2A0 !important;border-bottom-color:#C9A227 !important}
+header.avh-nav .avh-caret{width:12px;height:12px;opacity:.8;transition:transform .2s}
+header.avh-nav .avh-dd{position:relative;height:100%;display:flex;align-items:center}
+header.avh-nav .avh-dd:hover .avh-caret,header.avh-nav .avh-dd:focus-within .avh-caret{transform:rotate(180deg)}
+header.avh-nav .avh-panel{display:none;position:absolute;top:100%;left:-22px;min-width:330px;background:#1B1512;border:1px solid rgba(201,162,39,.45);border-top:2px solid #C9A227;padding:10px 0;box-shadow:0 18px 40px rgba(0,0,0,.35)}
+header.avh-nav .avh-dd:hover .avh-panel,header.avh-nav .avh-dd:focus-within .avh-panel{display:block}
+header.avh-nav .avh-panel a{display:flex !important;align-items:baseline;justify-content:space-between;gap:16px;padding:11px 22px !important;font-size:15px !important;color:#F1E7D6 !important;height:auto !important}
+header.avh-nav .avh-panel a:hover,header.avh-nav .avh-panel a:focus-visible{background:#2A1F18 !important;color:#F3E2A0 !important}
+header.avh-nav .avh-panel a .avh-n{font-size:12px;color:#B9AB95;letter-spacing:.04em;white-space:nowrap}
+header.avh-nav .avh-panel a[aria-current="page"]{color:#F3E2A0 !important;border:0 !important}
+header.avh-nav .avh-panel .avh-all{border-top:1px solid rgba(201,162,39,.3) !important;margin-top:6px;padding-top:13px !important;color:#D9B65A !important;font-weight:500 !important;justify-content:flex-start}
+header.avh-nav .avh-main a.avh-cta{display:inline-flex !important;align-items:center;height:auto !important;padding:10px 20px !important;border:1px solid #C9A227 !important;border-radius:2px;color:#F1E7D6 !important;font-weight:500 !important;white-space:nowrap}
+header.avh-nav .avh-main a.avh-cta:hover{background:rgba(201,162,39,.12) !important}
+
+header.avh-nav #menu-btn{display:none !important;align-items:center;justify-content:center;width:46px;height:46px;flex:0 0 auto;border:1px solid #C9A227 !important;border-radius:2px !important;background:transparent !important;color:#F3E2A0 !important;cursor:pointer;padding:0}
+header.avh-nav #mobile-menu{display:none !important}
+
+@media (max-width:960px){
+  header.avh-nav .avh-bar{height:64px;padding:0 16px}
+  header.avh-nav .avh-main{display:none !important}
+  header.avh-nav #menu-btn{display:flex !important}
+  header.avh-nav .avh-mark{width:38px !important}
+  header.avh-nav .avh-wm1{font-size:17px;letter-spacing:2px}
+  header.avh-nav .avh-wm2{font-size:8.5px;letter-spacing:1.6px}
+  header.avh-nav #mobile-menu{display:flex !important;flex-direction:column;max-height:calc(100vh - 64px);overflow-y:auto;padding:4px 16px 18px;border-top:1px solid rgba(201,162,39,.35);background:#1B1512}
+  header.avh-nav #mobile-menu.menu-closed{display:none !important}
+  header.avh-nav #mobile-menu a{color:#F1E7D6 !important;text-decoration:none !important;padding:13px 0 !important;border:0 !important;border-bottom:1px solid rgba(201,162,39,.18) !important;font-size:17px !important;background:none !important}
+  header.avh-nav #mobile-menu .avh-mhead{color:#F3E2A0 !important;font-family:Marcellus,Georgia,serif;font-size:19px !important;padding-top:16px !important}
+  header.avh-nav #mobile-menu .avh-msub{padding:10px 0 10px 16px !important;font-size:16px !important;color:#D9CDB8 !important;display:flex;justify-content:space-between;gap:12px}
+  header.avh-nav #mobile-menu .avh-msub .avh-n{font-size:12px;color:#9C8E79;white-space:nowrap}
+  header.avh-nav #mobile-menu [aria-current="page"]{color:#F3E2A0 !important}
+  header.avh-nav #mobile-menu .avh-mcta{margin-top:16px;text-align:center;border:0 !important;background:linear-gradient(100deg,#8A6A22 0%,#D9B65A 28%,#F3E2A0 50%,#D9B65A 72%,#8A6A22 100%) !important;color:#2A1C13 !important;font-weight:500;border-radius:2px}
+}
+@media (max-width:380px){header.avh-nav .avh-wm2{display:none}}
+
+/* model pages: the model chips sit right under the header instead of sliding over it */
+#av-chips{top:72px !important;z-index:50 !important}
+@media (max-width:960px){#av-chips{top:64px !important}}
+#av-chips.avh-hasback{display:flex;align-items:stretch}
+#av-chips.avh-hasback > .in{flex:1 1 auto;min-width:0;margin:0}
+#av-chips .avh-back{display:inline-flex;align-items:center;gap:6px;flex:0 0 auto;white-space:nowrap;font:500 13px Jost,system-ui,sans-serif;color:#6E560C;text-decoration:none;padding:0 14px 0 max(16px,calc(50vw - 590px)) !important;border:0 !important;border-right:1px solid rgba(201,162,39,.45) !important;border-radius:0 !important;background:none !important}
+#av-chips .avh-back:hover{color:#2A1C13}
+#av-chips .avh-bs{display:none}
+@media (max-width:700px){#av-chips .avh-bl{display:none}#av-chips .avh-bs{display:inline}#av-chips .avh-back{padding:0 10px 0 12px !important}}
+
+/* home page: the category tags are links */
+.pack a.tag{text-decoration:none;transition:border-color .2s,color .2s}
+.pack a.tag:hover{border-color:#C9A227;color:#F3E2A0}
+.pack .avh-packlink{color:inherit;text-decoration:none}
+.pack > a.avh-packlink{display:block}
+.pack a.go{text-decoration:none}
+
+/* shared footer */
+footer.avh-foot{background:#1B1512 !important;color:#B9AB95 !important;border-top:1px solid rgba(201,162,39,.35) !important;font-family:Jost,"Avenir Next","Segoe UI",system-ui,sans-serif !important;font-size:14px;font-weight:400;margin:0 !important;padding:0 !important}
+footer.avh-foot *{box-sizing:border-box}
+footer.avh-foot .avh-fin{max-width:1240px;margin:0 auto;padding:48px 24px 22px;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr 1fr;gap:32px}
+footer.avh-foot .avh-fbrand{display:flex;flex-direction:column;gap:10px}
+footer.avh-foot .avh-flogo{display:flex;align-items:center;gap:12px;text-decoration:none}
+footer.avh-foot .avh-flogo img{width:44px;height:auto;display:block}
+footer.avh-foot .avh-flogo span{font-family:Marcellus,Georgia,serif;font-size:21px;letter-spacing:3px;color:#F3E2A0}
+footer.avh-foot .avh-tag{font-family:Marcellus,Georgia,serif;font-size:16px;color:#F3E2A0}
+footer.avh-foot .avh-co{color:#B9AB95;max-width:300px;line-height:1.55}
+footer.avh-foot .avh-col{display:flex;flex-direction:column;gap:2px}
+footer.avh-foot .avh-k{font-size:12px;letter-spacing:.14em;color:#C9A227;text-transform:uppercase;padding-bottom:8px}
+footer.avh-foot .avh-col a,footer.avh-foot .avh-col span.avh-t{color:#E9DCC3 !important;text-decoration:none;padding:6px 0;line-height:1.35}
+footer.avh-foot .avh-col a:hover{color:#F3E2A0 !important}
+footer.avh-foot .avh-legal{max-width:1240px;margin:0 auto;padding:16px 24px 28px;border-top:1px solid rgba(201,162,39,.18);display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;font-size:13px;color:#8F826F}
+@media (max-width:960px){footer.avh-foot .avh-fin{grid-template-columns:1fr 1fr;padding:40px 16px 18px;gap:26px 20px}footer.avh-foot .avh-fbrand{grid-column:1 / -1}footer.avh-foot .avh-legal{padding:16px 16px 90px}}
+
+/* phone: the gold ribbon behind the hero text is softer so the text reads */
+@media (max-width:780px){.hero .ribbon{opacity:.35}}

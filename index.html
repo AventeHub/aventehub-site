@@ -215,33 +215,10 @@ section.sec{padding:var(--s12) 0 0}
   *{transition:none !important}
 }
 </style>
+<link rel="stylesheet" href="/assets/site.css">
 </head>
 <body>
-<header class="nav">
-<div class="wrap">
-  <a href="/" class="brand">
-    <img loading="lazy" decoding="async" src="data:image/png;base64,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" alt="Avente Hub Home">
-    <span><span class="wm">AVENTE HUB</span><span class="wm2">LUXURY BUILDING SYSTEMS</span></span>
-  </a>
-  <nav class="d-only" aria-label="Main">
-    <a href="/lighting-pack/">Lighting pack</a>
-    <a href="/door-pack/">Door pack</a>
-    <a href="/grf-standard/">GRF standard</a>
-    <a href="/builder-pilot/">Builder pilot</a>
-    <a href="/meet/" class="btn btn-line">Request a meeting</a>
-  </nav>
-  <button class="m-only" type="button" id="menu-btn" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
-  </button>
-</div>
-<nav id="mobile-menu" class="menu-closed" aria-label="Menu">
-  <a href="/lighting-pack/">Lighting pack</a>
-  <a href="/door-pack/">Door pack</a>
-  <a href="/grf-standard/">GRF standard</a>
-  <a href="/builder-pilot/">Builder pilot</a>
-  <a href="/meet/">Request a meeting</a>
-</nav>
-</header>
+<header class="nav avh-nav"><div class="avh-bar"><a href="/" class="avh-brand" aria-label="Avente Hub home"><img src="/assets/avh-mark.png" alt="" width="44" height="35" class="avh-mark"><span class="avh-wm"><span class="avh-wm1">AVENTE HUB</span><span class="avh-wm2">LUXURY BUILDING SYSTEMS</span></span></a><nav class="avh-main" aria-label="Main"><div class="avh-dd"><a href="/lighting-pack/" class="avh-top">Lighting pack<svg class="avh-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a><div class="avh-panel"><a href="/led-baseboards/"><span>LED Baseboards</span><span class="avh-n">5 models</span></a><a href="/led-crown-moulding/"><span>LED Crown Moulding</span><span class="avh-n">14 models</span></a><a href="/magnetic-track-lighting/"><span>Magnetic Track Lighting</span><span class="avh-n">14 models</span></a><a href="/led-neon-flex/"><span>LED Neon Flex</span><span class="avh-n">6 models</span></a><a href="/led-strips/"><span>LED Strips</span><span class="avh-n">4 models</span></a><a href="/running-light-strip/"><span>Running Light Strip</span><span class="avh-n">1 kit</span></a><a class="avh-all" href="/lighting-pack/">See the whole Lighting pack &rarr;</a></div></div><div class="avh-dd"><a href="/door-pack/" class="avh-top">Door pack<svg class="avh-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a><div class="avh-panel"><a href="/wpc-interior-doors/"><span>WPC Interior Doors</span><span class="avh-n">3 models</span></a><a href="/aluminum-baseboards/"><span>Aluminum &amp; Wood-Grain Baseboards</span><span class="avh-n">5 models</span></a><a class="avh-all" href="/door-pack/">See the whole Door pack &rarr;</a></div></div><a href="/grf-standard/">GRF standard</a><a href="/builder-pilot/">Builder pilot</a><a href="/meet/" class="avh-cta">Request a meeting</a></nav><button type="button" id="menu-btn" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button></div><nav id="mobile-menu" class="menu-closed" aria-label="Menu"><a href="/" aria-current="page">Home</a><a class="avh-mhead" href="/lighting-pack/">Lighting pack</a><a class="avh-msub" href="/led-baseboards/"><span>LED Baseboards</span><span class="avh-n">5 models</span></a><a class="avh-msub" href="/led-crown-moulding/"><span>LED Crown Moulding</span><span class="avh-n">14 models</span></a><a class="avh-msub" href="/magnetic-track-lighting/"><span>Magnetic Track Lighting</span><span class="avh-n">14 models</span></a><a class="avh-msub" href="/led-neon-flex/"><span>LED Neon Flex</span><span class="avh-n">6 models</span></a><a class="avh-msub" href="/led-strips/"><span>LED Strips</span><span class="avh-n">4 models</span></a><a class="avh-msub" href="/running-light-strip/"><span>Running Light Strip</span><span class="avh-n">1 kit</span></a><a class="avh-mhead" href="/door-pack/">Door pack</a><a class="avh-msub" href="/wpc-interior-doors/"><span>WPC Interior Doors</span><span class="avh-n">3 models</span></a><a class="avh-msub" href="/aluminum-baseboards/"><span>Aluminum &amp; Wood-Grain Baseboards</span><span class="avh-n">5 models</span></a><a href="/grf-standard/">GRF standard</a><a href="/builder-pilot/">Builder pilot</a><a class="avh-mcta" href="/meet/">Request a meeting</a></nav></header>
 
 <section id="top" class="hero" aria-label="Introduction">
   <picture>
@@ -284,24 +261,24 @@ section.sec{padding:var(--s12) 0 0}
     <h2 id="packs-h">Choose a pack</h2>
   </div>
   <div class="packs">
-    <a href="/lighting-pack/" class="pack">
-      <img src="/media/pack-lighting.jpg" alt="Hallway with LED baseboards glowing along the floor" width="900" height="900" loading="lazy">
+    <div class="pack">
+      <a href="/lighting-pack/" class="avh-packlink" tabindex="-1" aria-hidden="true"><img src="/media/pack-lighting.jpg" alt="Hallway with LED baseboards glowing along the floor" width="900" height="900" loading="lazy"></a>
       <span class="body">
-        <span class="ttl">Lighting pack</span>
+        <a href="/lighting-pack/" class="avh-packlink"><span class="ttl">Lighting pack</span></a>
         <span class="sub">Light built into the lines of the room, from the floor to the ceiling.</span>
-        <span class="tags"><span class="tag">LED baseboards</span><span class="tag">LED crown moulding</span><span class="tag">Magnetic track lighting</span><span class="tag">LED neon strips</span></span>
-        <span class="go">Open the Lighting pack <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        <span class="tags"><a class="tag" href="/led-baseboards/">LED baseboards</a><a class="tag" href="/led-crown-moulding/">LED crown moulding</a><a class="tag" href="/magnetic-track-lighting/">Magnetic track lighting</a><a class="tag" href="/led-neon-flex/">LED neon flex</a><a class="tag" href="/led-strips/">LED strips</a><a class="tag" href="/running-light-strip/">Running light strip</a></span>
+        <a href="/lighting-pack/" class="go">Open the Lighting pack <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </span>
-    </a>
-    <a href="/door-pack/" class="pack">
-      <img src="/media/pack-door.jpg" alt="Dark wood-grain interior door in a bright hallway" width="900" height="1062" loading="lazy" style="object-position:50% 40%">
+    </div>
+    <div class="pack">
+      <a href="/door-pack/" class="avh-packlink" tabindex="-1" aria-hidden="true"><img src="/media/pack-door.jpg" alt="Dark wood-grain interior door in a bright hallway" width="900" height="1062" loading="lazy" style="object-position:50% 40%"></a>
       <span class="body">
-        <span class="ttl">Door pack</span>
+        <a href="/door-pack/" class="avh-packlink"><span class="ttl">Door pack</span></a>
         <span class="sub">WPC interior doors and wood-grain aluminum baseboards in matching grains.</span>
-        <span class="tags"><span class="tag">WPC interior doors</span><span class="tag">Wood-grain aluminum baseboards</span></span>
-        <span class="go">Open the Door pack <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        <span class="tags"><a class="tag" href="/wpc-interior-doors/">WPC interior doors</a><a class="tag" href="/aluminum-baseboards/">Aluminum &amp; wood-grain baseboards</a></span>
+        <a href="/door-pack/" class="go">Open the Door pack <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </span>
-    </a>
+    </div>
   </div>
 </section>
 
@@ -386,29 +363,7 @@ section.sec{padding:var(--s12) 0 0}
   </div>
 </div>
 
-<footer class="foot">
-  <div class="wrap">
-    <div class="col" style="flex:1 1 260px;gap:8px">
-      <span class="brand"><img loading="lazy" decoding="async" src="data:image/png;base64,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" style="width:46px" alt="Avente Hub Home"><span class="wm">AVENTE HUB</span></span>
-      <span class="tag-line">Green by Design. Luxury by Nature.</span>
-      <span class="co">GRF building materials for developers and builders, straight from the factory.</span>
-    </div>
-    <div class="col">
-      <span class="k">Contact</span>
-      <a href="tel:+14164506656">+1 (416) 450-6656</a>
-      <a href="mailto:Max@aventehub.com">Max@aventehub.com</a>
-      <span class="co">Vaughan, Ontario</span>
-    </div>
-    <div class="col">
-      <span class="k">Explore</span>
-      <a href="/grf-standard/">GRF standard</a>
-      <a href="/lighting-pack/">Lighting pack</a>
-      <a href="/door-pack/">Door pack</a>
-      <a href="/builder-pilot/">Builder pilot</a>
-      <a href="/meet/">Request a meeting</a>
-    </div>
-  </div>
-</footer>
+<footer class="foot avh-foot"><div class="avh-fin"><div class="avh-fbrand"><a class="avh-flogo" href="/" aria-label="Avente Hub home"><img src="/assets/avh-mark.png" alt="" width="44" height="35"><span>AVENTE HUB</span></a><span class="avh-tag">Green by Design. Luxury by Nature.</span><span class="avh-co">GRF building materials for developers and builders, straight from the factory. Greater Toronto Area and Florida.</span></div><div class="avh-col"><span class="avh-k">Lighting pack</span><a href="/led-baseboards/">LED Baseboards</a><a href="/led-crown-moulding/">LED Crown Moulding</a><a href="/magnetic-track-lighting/">Magnetic Track Lighting</a><a href="/led-neon-flex/">LED Neon Flex</a><a href="/led-strips/">LED Strips</a><a href="/running-light-strip/">Running Light Strip</a></div><div class="avh-col"><span class="avh-k">Door pack</span><a href="/wpc-interior-doors/">WPC Interior Doors</a><a href="/aluminum-baseboards/">Aluminum &amp; Wood-Grain Baseboards</a></div><div class="avh-col"><span class="avh-k">Company</span><a href="/grf-standard/">GRF standard</a><a href="/builder-pilot/">Builder pilot</a><a href="/meet/">Request a meeting</a></div><div class="avh-col"><span class="avh-k">Contact</span><a href="tel:+14164506656">+1 (416) 450-6656</a><a href="mailto:Max@aventehub.com">Max@aventehub.com</a><span class="avh-t">Vaughan, Ontario</span></div></div><div class="avh-legal"><span>&copy; 2026 Avente Canada Inc.</span><span>Sample boards brought to your office or site.</span></div></footer>
 
 <div class="stick">
   <span style="display:flex;flex-direction:column;min-width:0;line-height:1.25">
@@ -429,5 +384,6 @@ section.sec{padding:var(--s12) 0 0}
   menu.addEventListener("click", function () { menu.classList.add("menu-closed"); btn.setAttribute("aria-expanded", "false"); });
 })();
 </script>
+<script src="/assets/site.js" defer></script>
 </body>
 </html>
