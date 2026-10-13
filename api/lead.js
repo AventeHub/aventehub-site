@@ -1,7 +1,9 @@
 // Avente Hub lead endpoint (Vercel serverless). Creates/updates the HubSpot contact and adds a note with the survey answers.
+// When a day and time were picked it also books the meeting in Max's calendar (HubSpot Meetings link, see api/_tz.js).
 // Needs the environment variable HUBSPOT_TOKEN: a HubSpot Service Key (Settings > Integrations > Service Keys) with the scopes
 // crm.objects.contacts.read and crm.objects.contacts.write (the note uses the contacts scope too). Sent as a Bearer token.
 // Without the token it answers {ok:true, stored:false} and the website falls back to the email / WhatsApp handover.
+const { TZ, torontoEpoch, SLUG } = require('./_tz');
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', 'https://www.aventehub.com');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -34,7 +36,18 @@ module.exports = async (req, res) => {
         properties: { hs_timestamp: new Date().toISOString(), hs_note_body: note },
         associations: [{ to: { id }, types: [{ associationCategory: 'HUBSPOT_DEFINED', associationTypeId: 202 }] }] }) });
     }
-    return res.status(200).json({ ok: true, stored: !!id, id });
+    // Book the chosen time in Max's calendar (HubSpot Meetings -> Google Calendar max@aventehomes.com).
+    let booked = false;
+    const start = a.dayKey && a.time ? torontoEpoch(a.dayKey, a.time) : NaN;
+    if (start > Date.now()) {
+      try {
+        const b = await fetch('https://api.hubapi.com/scheduler/v3/meetings/meeting-links/book?timezone=' + encodeURIComponent(TZ), { method: 'POST', headers: H, body: JSON.stringify({
+          slug: SLUG, email, firstName: firstname || 'Guest', lastName: rest.join(' ') || (a.company || '-'), startTime: start,
+          duration: a.meetingType === 'video_call' ? 1800000 : 3600000, timezone: TZ, locale: 'en-us' }) });
+        booked = b.ok;
+      } catch (e) { booked = false; }
+    }
+    return res.status(200).json({ ok: true, stored: !!id, booked, id });
   } catch (e) {
     return res.status(200).json({ ok: true, stored: false, reason: String(e).slice(0, 120) });
   }
