@@ -123,3 +123,14 @@ footer.avh-foot .avh-legal{max-width:1240px;margin:0 auto;padding:16px 24px 28px
 .avh-flag .btn-line.avh-btn-dark{color:#F1E7D6 !important}
 .rail-tag.avh-flagtag{background:linear-gradient(100deg,#8A6A22 0%,#D9B65A 28%,#F3E2A0 50%,#D9B65A 72%,#8A6A22 100%);color:#2A1C13 !important;border-color:transparent !important;margin-right:6px}
 @media (max-width:860px){.avh-flag{grid-template-columns:1fr;padding:16px;gap:20px}.avh-flag-rev .avh-flag-media{order:0}.avh-flag-ttl{font-size:28px}}
+
+/* Phones (Oct 14): compact bottom bar on model pages; video moved under the photos */
+@media (max-width:760px){
+  .stick #bar-name{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:14px!important;line-height:1.25}
+  .stick .k{font-size:10px!important;letter-spacing:1.1px!important;white-space:nowrap}
+  .avh-vid-after{margin:18px 0 6px!important}
+  .video-sec.avh-vid-after::before{display:none}
+  #av-chips{scroll-padding-left:84px}
+}
+/* Portrait corner photo in a landscape frame: keep the baseboard in view */
+img[src*="a16-corner"]{object-position:50% 72%!important}

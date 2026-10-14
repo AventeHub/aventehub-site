@@ -35,3 +35,19 @@
   }
   if (window.MutationObserver) new MutationObserver(function () { addBack(); }).observe(document.body, { childList: true, subtree: true });
 })();
+
+/* Phones (Oct 14): on model pages show the product photos first, the video right after them. */
+(function () {
+  if (!/^\/[a-z0-9-]+\/model\/?$/.test(location.pathname)) return;
+  function order() {
+    if (window.innerWidth > 760) return;
+    var v = document.querySelector(".hero .video-sec, .hero .av-play"), g = document.querySelector("section.gallery");
+    if (!v || !g || g.contains(v)) return;
+    if (v.compareDocumentPosition(g) & Node.DOCUMENT_POSITION_FOLLOWING) {
+      g.parentNode.insertBefore(v, g.nextSibling);
+      v.classList.add("avh-vid-after");
+    }
+  }
+  order();
+  if (window.MutationObserver) new MutationObserver(order).observe(document.body, { childList: true, subtree: true });
+})();
