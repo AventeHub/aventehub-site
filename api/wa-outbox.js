@@ -13,7 +13,7 @@ const strip = h => String(h || '').replace(/<br\s*\/?>/gi, '\n').replace(/<\/p>\
 module.exports = async (req, res) => {
   res.setHeader('Cache-Control', 'no-store');
   if (process.env.WA_CRON_KEY && req.headers['x-cron-key'] !== process.env.WA_CRON_KEY) return res.status(403).json({ ok: false });
-  const { HUBSPOT_TOKEN, WA_TOKEN, WA_PHONE_ID } = process.env;
+  const { HUBSPOT_TOKEN, WA_TOKEN } = process.env; const WA_PHONE_ID = process.env.WA_PHONE_ID || '1298479500023794';   // (813) 377-8225
   if (!HUBSPOT_TOKEN || !WA_TOKEN || !WA_PHONE_ID) return res.status(200).json({ ok: false, reason: 'missing env' });
   const out = [];
   try {
