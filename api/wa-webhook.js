@@ -38,7 +38,8 @@ module.exports = async (req, res) => {
   if (req.method !== 'POST') return res.status(405).end();
   const raw = await rawBody(req);
   const secret = process.env.WA_APP_SECRET;
-  if (secret) {
+  if (!secret) return res.status(503).send('not configured');
+  {
     const sig = String(req.headers['x-hub-signature-256'] || '');
     const want = 'sha256=' + crypto.createHmac('sha256', secret).update(raw).digest('hex');
     if (sig.length !== want.length || !crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(want))) return res.status(401).send('bad signature');
