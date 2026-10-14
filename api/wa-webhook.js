@@ -5,7 +5,7 @@
 // Env (Vercel): HUBSPOT_TOKEN, WA_VERIFY_TOKEN (any random text, same as typed in Meta's webhook setup),
 // WA_APP_SECRET (Meta app secret, to check that calls really come from Meta).
 const crypto = require('crypto');
-const { esc, findContactByPhone, createContact, addNote } = require('./_hs');
+const { HS, hdr, esc, findContactByPhone, createContact, addNote } = require('./_hs');
 const { sign } = require('./wa-media');
 const SITE = 'https://www.aventehub.com';
 const MEDIA = { image: '📷 Photo', video: '🎬 Video', document: '📄 File', audio: '🎤 Voice/audio', sticker: '🙂 Sticker' };
@@ -23,6 +23,26 @@ function describe(m) {
     case 'reaction': return `[reaction ${m.reaction && m.reaction.emoji}]`;
     default: return `[${m.type}]`;
   }
+}
+
+// Seen ticks: find our OUT note carrying wa:<message id> on the contact and stamp "WA-STATUS: delivered|read".
+const RANK = { delivered: 2, read: 3 };
+async function markSeen(phone, msgId, status) {
+  const c = await findContactByPhone(phone); if (!c) return;
+  const a = await fetch(HS + '/crm/v4/objects/contacts/' + c.id + '/associations/notes?limit=500', { headers: hdr() });
+  if (!a.ok) return;
+  const ids = ((await a.json()).results || []).map(x => String(x.toObjectId)).sort((x, y) => (BigInt(y) > BigInt(x) ? 1 : -1)).slice(0, 40);
+  if (!ids.length) return;
+  const b = await fetch(HS + '/crm/v3/objects/notes/batch/read', { method: 'POST', headers: hdr(), body: JSON.stringify({ properties: ['hs_note_body'], inputs: ids.map(id => ({ id })) }) });
+  if (!b.ok) return;
+  const note = ((await b.json()).results || []).find(n => String(n.properties.hs_note_body || '').includes('wa:' + msgId));
+  if (!note) return;
+  let body = note.properties.hs_note_body;
+  const cur = (body.match(/WA-STATUS: (\w+)/) || [])[1];
+  if (cur && (RANK[cur] || 0) >= RANK[status]) return;
+  const stamp = `<p style="color:#888">WA-STATUS: ${status} ${new Date().toISOString()}</p>`;
+  body = cur ? body.replace(/<p[^>]*>\s*WA-STATUS:[^<]*<\/p>/, stamp) : body + stamp;
+  await fetch(HS + '/crm/v3/objects/notes/' + note.id, { method: 'PATCH', headers: hdr(), body: JSON.stringify({ properties: { hs_note_body: body } }) });
 }
 
 async function rawBody(req) {
@@ -68,7 +88,8 @@ module.exports = async (req, res) => {
         await addNote(c && c.id, html, when);
         stored++;
       }
-      for (const s of v.statuses || []) {   // only failed deliveries are worth a note
+      for (const s of v.statuses || []) {
+        if (s.status === 'delivered' || s.status === 'read') { await markSeen(s.recipient_id, s.id, s.status); continue; }   // ✓✓ ticks on the Dashboard
         if (s.status !== 'failed') continue;
         const c = await findContactByPhone(s.recipient_id);
         const err = (s.errors || []).map(e => `${e.code} ${e.title}`).join('; ');

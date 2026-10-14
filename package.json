@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "description": "Server functions only (static site has no build step)",
+  "dependencies": {
+    "@vercel/blob": "2.8.0"
+  }
+}

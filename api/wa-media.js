@@ -19,6 +19,17 @@ async function handler(req, res) {
   const meta = await fetch(GRAPH + '/' + id, { headers: auth });
   if (!meta.ok) return res.status(410).send('This file is no longer available from WhatsApp (older than about 30 days).');
   const m = await meta.json();
+  // Big files (over ~4 MB) cannot pass through the website: copy once into Vercel Blob (kept 7 days) and redirect.
+  if (Number(m.file_size) > 4e6 && process.env.BLOB_READ_WRITE_TOKEN) {
+    const { list, put } = require('@vercel/blob');
+    const found = (await list({ prefix: 'wa/in/' + id + '-', limit: 1 })).blobs[0];
+    if (found) return res.redirect(302, found.url);
+    const big = await fetch(m.url, { headers: auth });
+    if (!big.ok) return res.status(502).send('could not load');
+    const ext = (String(m.mime_type || '').split('/')[1] || 'bin').replace(/[^\w]/g, '').slice(0, 8);
+    const b = await put('wa/in/' + id + '-file.' + ext, Buffer.from(await big.arrayBuffer()), { access: 'public', addRandomSuffix: true, contentType: m.mime_type });
+    return res.redirect(302, b.url);
+  }
   const f = await fetch(m.url, { headers: auth });
   if (!f.ok || !f.body) return res.status(502).send('could not load');
   res.setHeader('Content-Type', m.mime_type || f.headers.get('content-type') || 'application/octet-stream');

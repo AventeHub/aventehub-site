@@ -41,5 +41,19 @@
     }
    ]
   }
- ]
+ ],
+ "functions": {
+  "api/wa-media.js": {
+   "maxDuration": 60
+  },
+  "api/wa-upload.js": {
+   "maxDuration": 60
+  },
+  "api/wa-webhook.js": {
+   "maxDuration": 30
+  },
+  "api/wa-outbox.js": {
+   "maxDuration": 30
+  }
+ }
 }

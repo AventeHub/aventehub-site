@@ -6,6 +6,7 @@
 // Env (Vercel): HUBSPOT_TOKEN, WA_TOKEN (Meta system-user token), WA_PHONE_ID (Meta phone number id),
 // optional WA_CRON_KEY (if set, callers must send header x-cron-key with the same value).
 const { HS, hdr, esc, findContactByPhone, addNote } = require('./_hs');
+const { cleanBlobs } = require('./_wa');
 const GRAPH = 'https://graph.facebook.com/' + (process.env.WA_GRAPH_VERSION || 'v21.0');
 const strip = h => String(h || '').replace(/<br\s*\/?>/gi, '\n').replace(/<\/p>\s*<p[^>]*>/gi, '\n\n').replace(/<[^>]+>/g, '')
   .replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'").trim();
@@ -42,13 +43,12 @@ module.exports = async (req, res) => {
         if (files.length === 1 && msg) o.caption = msg.slice(0, 1024);
         if (k === 'document') o.filename = decodeURIComponent(u.split('?')[0].split('/').pop() || 'file');
         parts.push({ type: k, [k]: o }); });
-      let r;
-      for (const pt of parts) { r = await send(pt); if (!r.ok) break; }
-      const j = await r.json().catch(() => ({}));
+      let r, j = {}, wamid = '';
+      for (const pt of parts) { r = await send(pt); j = await r.json().catch(() => ({})); if (!r.ok) break; wamid = (j.messages && j.messages[0] && j.messages[0].id) || wamid; }
       const c = await findContactByPhone(to);
       if (r.ok) {
         await fetch(HS + '/crm/v3/objects/tasks/' + t.id, { method: 'PATCH', headers: hdr(), body: JSON.stringify({ properties: { hs_task_status: 'COMPLETED' } }) });
-        await addNote(c && c.id, `<p><strong>💬 WhatsApp OUT</strong> to +${esc(to)} (approved by Max)</p><p>${esc(text).replace(/\n/g, '<br>')}</p>`);
+        await addNote(c && c.id, `<p><strong>💬 WhatsApp OUT</strong> to +${esc(to)} (approved by Max)</p><p>${esc(text).replace(/\n/g, '<br>')}</p>` + (wamid ? `<p style="color:#888">wa:${esc(wamid)}</p>` : ''));
         out.push({ id: t.id, sent: true });
       } else {
         const why = (j.error && (j.error.error_data && j.error.error_data.details || j.error.message)) || ('HTTP ' + r.status);
@@ -57,6 +57,8 @@ module.exports = async (req, res) => {
         out.push({ id: t.id, sent: false, why });
       }
     }
+    // Delete pass-through files older than 7 days (OneDrive is where important files are kept)
+    { const d = new Date(); if (d.getUTCHours() === 7 && d.getUTCMinutes() === 0) { try { await cleanBlobs(); } catch (e) {} } }
     // Close 📎 upload links that were never used (older than 2 hours)
     const old = await fetch(HS + '/crm/v3/objects/tasks/search', { method: 'POST', headers: hdr(), body: JSON.stringify({ limit: 20, properties: ['hs_task_subject'],
       filterGroups: [{ filters: [{ propertyName: 'hs_task_subject', operator: 'CONTAINS_TOKEN', value: 'WAUPLOAD' },

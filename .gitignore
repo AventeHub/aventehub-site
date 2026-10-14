@@ -1,2 +1,3 @@
 site-check/
 *.DS_Store
+node_modules/
