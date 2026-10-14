@@ -37,17 +37,17 @@ module.exports = async (req, res) => {
         associations: [{ to: { id }, types: [{ associationCategory: 'HUBSPOT_DEFINED', associationTypeId: 202 }] }] }) });
     }
     // Book the chosen time in Max's calendar (HubSpot Meetings -> Google Calendar max@aventehomes.com).
-    let booked = false;
+    let booked = false, bookErr = '';
     const start = a.dayKey && a.time ? torontoEpoch(a.dayKey, a.time) : NaN;
     if (start > Date.now()) {
       try {
         const b = await fetch('https://api.hubapi.com/scheduler/v3/meetings/meeting-links/book?timezone=' + encodeURIComponent(TZ), { method: 'POST', headers: H, body: JSON.stringify({
           slug: SLUG, email, firstName: firstname || 'Guest', lastName: rest.join(' ') || (a.company || '-'), startTime: start,
           duration: a.meetingType === 'video_call' ? 1800000 : 3600000, timezone: TZ, locale: 'en-us' }) });
-        booked = b.ok;
-      } catch (e) { booked = false; }
+        booked = b.ok; if (!b.ok) bookErr = b.status + ' ' + (await b.text()).slice(0, 300);
+      } catch (e) { booked = false; bookErr = String(e).slice(0, 120); }
     }
-    return res.status(200).json({ ok: true, stored: !!id, booked, id });
+    return res.status(200).json({ ok: true, stored: !!id, booked, bookErr, id });
   } catch (e) {
     return res.status(200).json({ ok: true, stored: false, reason: String(e).slice(0, 120) });
   }
