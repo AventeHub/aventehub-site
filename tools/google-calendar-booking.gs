@@ -126,7 +126,7 @@ function sendConfirmation_(a, b) {
 function notifyTeam_(a, b) {
   try {
     var when = b ? Utilities.formatDate(b.start, 'America/Toronto', "EEE MMM d, h:mm a") : '';
-    var subject = (b ? '📅 New booking: ' + when + ' · ' : '📩 New website request · ') + (a.name || a.email) + (a.company ? ' (' + a.company + ')' : '');
+    var subject = (b ? 'New booking: ' + when + ' - ' : 'New website request - ') + (a.name || a.email) + (a.company ? ' (' + a.company + ')' : '');
     var body = (b ? 'Booked in the calendar: ' + when + ' Toronto' + (b.meet ? '\nMeet: ' + b.meet : '') + '\n\n' : '')
       + String(a.description || '').replace(/^Booked on aventehub.com\/meet\/\n\n/, '')
       + (a.description ? '' : 'Name: ' + (a.name || '') + '\nEmail: ' + a.email + '\nRequest: ' + (a.door || ''))
