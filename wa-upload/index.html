@@ -30,12 +30,12 @@ button:disabled{opacity:.5;cursor:default}
 </head>
 <body>
 <main>
-<h1>📎 Send on WhatsApp</h1>
+<h1>📎 Attach a file</h1>
 <p class="to" id="to">from Avente Hub · +1 (813) 377-8225</p>
-<textarea id="cap" placeholder="Message with it (optional)"></textarea>
-<label class="pick"><input type="file" id="file" accept="image/*,video/mp4,video/3gpp,application/pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.zip"><b>📎 Choose a photo, video or file</b><br><span class="small">It sends right away, with the message above</span><br><span class="small">Photos are resized to send fast · videos up to 16 MB · files up to 100 MB</span></label>
+<textarea id="cap" hidden></textarea>
+<label class="pick"><input type="file" id="file" accept="image/*,video/mp4,video/3gpp,application/pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.zip"><b>📎 Choose a photo, video or file</b><br><span class="small">It is added to your message in the Dashboard. Then tap Send there.</span><br><span class="small">Photos are resized to send fast · videos up to 16 MB · files up to 100 MB</span></label>
 <div id="prev"></div>
-<button id="send" disabled>Send</button>
+<button id="send" disabled hidden>Attach</button>
 <div id="msg"></div>
 <p class="small">Opened from the CEO Dashboard. Each link sends once. Big files pass through our storage and are deleted after 7 days.</p>
 <script src="/assets/wa-blob-client.js"></script>
@@ -74,24 +74,24 @@ button:disabled{opacity:.5;cursor:default}
     });
   };
   function done(j){
-    if(j.ok){msg.className='ok';msg.textContent='✅ Sent. It shows in the Dashboard chat within a minute. You can close this tab.';btn.textContent='Sent';fileEl.disabled=true;}
-    else {msg.className='bad';msg.textContent='⚠️ Not sent: '+(j.error||'error');btn.textContent='Send';btn.disabled=/already used|expired|not valid/.test(j.error||'');}
+    if(j.ok){msg.className='ok';msg.textContent='✅ Attached. Closing… go back to the Dashboard chat and tap Send.';btn.textContent='Attached';fileEl.disabled=true;
+      setTimeout(function(){try{window.close();}catch(e){} setTimeout(function(){msg.textContent='✅ Attached. You can close this tab and tap Send in the Dashboard.';},400);},1200);}
+    else {msg.className='bad';msg.textContent='⚠️ Not attached: '+(j.error||'error');btn.hidden=false;btn.textContent='Try again';btn.disabled=/already used|expired|not valid/.test(j.error||'');}
   }
   function direct(cap){
     return fetch('/api/wa-upload/',{method:'POST',body:blob,headers:{'Content-Type':btn.dataset.type||'application/octet-stream','x-task':task,'x-key':key,
       'x-name':encodeURIComponent(fname),'x-caption':encodeURIComponent(cap)}}).then(function(r){return r.json().catch(function(){return {ok:false,error:'HTTP '+r.status};});});
   }
   btn.onclick=function(){
-    if(!blob) return; btn.disabled=true; btn.textContent='Sending…'; msg.className=''; msg.textContent='';
+    if(!blob) return; btn.disabled=true; btn.textContent='Uploading…'; msg.className=''; msg.textContent='';
     var cap=document.getElementById('cap').value.trim(), type=btn.dataset.type||'application/octet-stream';
     var viaStore=window.AvBlob?window.AvBlob.upload('wa/out/'+fname.replace(/[^\w.\-]/g,'_'),blob,{access:'public',contentType:type,handleUploadUrl:'/api/wa-blob-token/',
         clientPayload:JSON.stringify({task:task,key:key}),multipart:blob.size>20e6,
-        onUploadProgress:function(p){btn.textContent='Uploading '+Math.round(p.percentage)+'%';}})
-      .then(function(b){btn.textContent='Sending…';return fetch('/api/wa-upload/',{method:'POST',headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({task:task,key:key,url:b.url,name:fname,mime:type,caption:cap})}).then(function(r){return r.json().catch(function(){return {ok:false,error:'HTTP '+r.status};});});})
+        onUploadProgress:function(p){msg.className='';msg.textContent='Uploading '+Math.round(p.percentage)+'%…';}})
+      .then(function(b){btn.textContent='Attaching…';return fetch('/api/wa-upload/',{method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({task:task,key:key,url:b.url,name:fname,mime:type,stage:true})}).then(function(r){return r.json().catch(function(){return {ok:false,error:'HTTP '+r.status};});});})
       :Promise.reject(new Error('no storage'));
     viaStore.catch(function(e){
-      if(blob.size<4.3e6) return direct(cap);   // storage not ready: small files still go the direct way
       return {ok:false,error:(e&&e.message)||'upload failed'};
     }).then(done).catch(function(){msg.className='bad';msg.textContent='⚠️ No connection. Try again.';btn.textContent='Send';btn.disabled=false;});
   };

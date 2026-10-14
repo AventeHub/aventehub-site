@@ -35,6 +35,11 @@ module.exports = async (req, res) => {
     if (u.protocol !== 'https:' || !/\.blob\.vercel-storage\.com$/.test(u.hostname) || !/^\/wa\/out\//.test(u.pathname))
       return res.status(400).json({ ok: false, error: 'bad file link' });
     media = { link: u.href }; link = u.href;
+    if (j.stage) {   // only attach: the Dashboard picks the link up and sends it together with the text on Send
+      const r = await fetch(HS + '/crm/v3/objects/tasks/' + taskId, { method: 'PATCH', headers: hdr(), body: JSON.stringify({ properties: {
+        hs_task_status: 'COMPLETED', hs_task_body: '<p>STAGED 📎 ' + esc(u.href) + '</p><p>' + esc(name) + '</p>' } }) });
+      return res.status(200).json({ ok: r.ok, staged: true, url: u.href, error: r.ok ? undefined : 'could not attach (HubSpot ' + r.status + ')' });
+    }
   } else {
     name = clean(decodeURIComponent(String(req.headers['x-name'] || 'file')));
     caption = decodeURIComponent(String(req.headers['x-caption'] || '')).slice(0, 1024);

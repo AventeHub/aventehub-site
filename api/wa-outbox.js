@@ -41,7 +41,7 @@ module.exports = async (req, res) => {
       if (msg && files.length !== 1) parts.push({ type: 'text', text: { body: msg.slice(0, 4096), preview_url: true } });
       files.forEach(u => { const k = kind(u), o = { link: u };
         if (files.length === 1 && msg) o.caption = msg.slice(0, 1024);
-        if (k === 'document') o.filename = decodeURIComponent(u.split('?')[0].split('/').pop() || 'file');
+        if (k === 'document') o.filename = decodeURIComponent(u.split('?')[0].split('/').pop() || 'file').replace(/-[A-Za-z0-9]{20,}(?=\.\w+$)/, '');
         parts.push({ type: k, [k]: o }); });
       let r, j = {}, wamid = '';
       for (const pt of parts) { r = await send(pt); j = await r.json().catch(() => ({})); if (!r.ok) break; wamid = (j.messages && j.messages[0] && j.messages[0].id) || wamid; }
