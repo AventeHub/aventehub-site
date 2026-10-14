@@ -49,10 +49,10 @@ module.exports = async (req, res) => {
         const nice = v => String(v || '').replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()).replace(/^Other City$/, '');
         const where = [nice(a.city), nice(a.area)].filter(Boolean).join(', ');
         const b = await fetch(GCAL_HOOK_URL, { method: 'POST', redirect: 'follow', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({
-          start, duration: video ? 1800000 : 3600000, email,
+          start, duration: video ? 1800000 : 3600000, email, name: a.name || '', meetingType: a.meetingType || '', door: a.door || '',
           title: (video ? 'Avente Hub video call' : 'Avente Hub sample-board visit') + ' · ' + (a.name || email) + (a.company ? ' (' + a.company + ')' : ''),
           location: video ? 'Video call (link to follow)' : (where || 'To confirm'),
-          description: 'Booked on aventehub.com/meet/\n\n' + props.message + '\n\nQuestions: +1 (416) 450-6656 · Max@aventehub.com' }) });
+          description: 'Booked on aventehub.com/meet/\n\n' + props.message + '\n\nQuestions: WhatsApp https://wa.me/18133778225 · +1 (416) 450-6656 · info@aventehub.com' }) });
         const j = await b.json().catch(() => ({}));
         booked = !!j.ok; if (!booked) bookErr = j.error || ('HTTP ' + b.status);
       } catch (e) { booked = false; bookErr = String(e).slice(0, 120); }
@@ -60,7 +60,16 @@ module.exports = async (req, res) => {
         properties: { hs_timestamp: new Date().toISOString(), hs_note_body: (booked ? '📅 BOOKED in Google Calendar: ' : '⚠️ NOT booked (' + bookErr + '): ') + (a.day || a.dayKey) + ' ' + a.time + ' Toronto, ' + (a.meetingType || '') },
         associations: [{ to: { id }, types: [{ associationCategory: 'HUBSPOT_DEFINED', associationTypeId: 202 }] }] }) });
     }
-    return res.status(200).json({ ok: true, stored: !!id || booked, crm: !!id, booked, bookErr, hsErr, id });
+    // No booking (product pack, pilot, or the slot failed): still send the visitor a confirmation email.
+    let mailed = false;
+    if (!booked && GCAL_HOOK_URL && email) {
+      try {
+        const c = await fetch(GCAL_HOOK_URL, { method: 'POST', redirect: 'follow', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({
+          confirmOnly: true, email, name: a.name || '', door: a.door || '', meetingType: a.meetingType || '' }) });
+        mailed = !!(await c.json().catch(() => ({}))).mailed;
+      } catch (e) { mailed = false; }
+    }
+    return res.status(200).json({ ok: true, mailed, stored: !!id || booked, crm: !!id, booked, bookErr, hsErr, id });
   } catch (e) {
     return res.status(200).json({ ok: true, stored: false, reason: String(e).slice(0, 120) });
   }
