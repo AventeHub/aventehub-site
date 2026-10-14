@@ -1,9 +1,10 @@
 // Avente Hub lead endpoint (Vercel serverless). Creates/updates the HubSpot contact and adds a note with the survey answers.
-// When a day and time were picked it also books the meeting in Max's calendar (HubSpot Meetings link, see api/_tz.js).
+// When a day and time were picked it also books it in Max's Google Calendar through the Apps Script in
+// tools/google-calendar-booking.gs (env GCAL_HOOK_URL + GCAL_HOOK_KEY); the visitor gets a Google invite.
 // Needs the environment variable HUBSPOT_TOKEN: a HubSpot Service Key (Settings > Integrations > Service Keys) with the scopes
 // crm.objects.contacts.read and crm.objects.contacts.write (the note uses the contacts scope too). Sent as a Bearer token.
 // Without the token it answers {ok:true, stored:false} and the website falls back to the email / WhatsApp handover.
-const { TZ, torontoEpoch, SLUG } = require('./_tz');
+const { torontoEpoch } = require('./_tz');
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', 'https://www.aventehub.com');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -39,18 +40,21 @@ module.exports = async (req, res) => {
     // Book the chosen time in Max's calendar (HubSpot Meetings -> Google Calendar max@aventehomes.com).
     let booked = false, bookErr = '';
     const start = a.dayKey && a.time ? torontoEpoch(a.dayKey, a.time) : NaN;
-    if (start > Date.now()) {
+    if (start > Date.now() && process.env.GCAL_HOOK_URL) {
       try {
-        const b = await fetch('https://api.hubapi.com/scheduler/v3/meetings/meeting-links/book?timezone=' + encodeURIComponent(TZ), { method: 'POST', headers: H, body: JSON.stringify({
-          slug: SLUG, email, firstName: firstname || 'Guest', lastName: rest.join(' ') || (a.company || '-'), startTime: start,
-          duration: a.meetingType === 'video_call' ? 1800000 : 3600000, timezone: TZ, locale: 'en-us' }) });
-        booked = b.ok; if (!b.ok) bookErr = b.status + ' ' + (await b.text()).slice(0, 600);
-        if (!booked && /field-level-permission/.test(bookErr)) {   // retry without the name fields
-          const b2 = await fetch('https://api.hubapi.com/scheduler/v3/meetings/meeting-links/book?timezone=' + encodeURIComponent(TZ), { method: 'POST', headers: H, body: JSON.stringify({
-            slug: SLUG, email, startTime: start, duration: a.meetingType === 'video_call' ? 1800000 : 3600000, timezone: TZ, locale: 'en-us' }) });
-          booked = b2.ok; bookErr += ' | retry ' + b2.status + ' ' + (b2.ok ? '' : (await b2.text()).slice(0, 400));
-        }
+        const video = a.meetingType === 'video_call';
+        const where = [a.city, a.area].filter(Boolean).join(', ');
+        const b = await fetch(process.env.GCAL_HOOK_URL, { method: 'POST', redirect: 'follow', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({
+          key: process.env.GCAL_HOOK_KEY, start, duration: video ? 1800000 : 3600000, email,
+          title: (video ? 'Avente Hub video call' : 'Avente Hub sample-board visit') + ' · ' + (a.name || email) + (a.company ? ' (' + a.company + ')' : ''),
+          location: video ? 'Video call (link to follow)' : (where || 'To confirm'),
+          description: 'Booked on aventehub.com/meet/\n\n' + props.message + '\n\nQuestions: +1 (416) 450-6656 · Max@aventehub.com' }) });
+        const j = await b.json().catch(() => ({}));
+        booked = !!j.ok; if (!booked) bookErr = j.error || ('HTTP ' + b.status);
       } catch (e) { booked = false; bookErr = String(e).slice(0, 120); }
+      if (id) await fetch('https://api.hubapi.com/crm/v3/objects/notes', { method: 'POST', headers: H, body: JSON.stringify({
+        properties: { hs_timestamp: new Date().toISOString(), hs_note_body: (booked ? '📅 BOOKED in Google Calendar: ' : '⚠️ NOT booked (' + bookErr + '): ') + (a.day || a.dayKey) + ' ' + a.time + ' Toronto, ' + (a.meetingType || '') },
+        associations: [{ to: { id }, types: [{ associationCategory: 'HUBSPOT_DEFINED', associationTypeId: 202 }] }] }) });
     }
     return res.status(200).json({ ok: true, stored: !!id, booked, bookErr, id });
   } catch (e) {
