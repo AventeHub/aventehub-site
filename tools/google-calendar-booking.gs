@@ -1,30 +1,36 @@
 /**
  * Avente Hub — website booking into Google Calendar (max@aventehomes.com).
- * Free Google Apps Script web app. The website server (api/lead.js) calls it after a visitor
- * picks a time in the /meet/ survey. It double-checks the slot is still free, creates the event
- * in Max's calendar and emails the visitor a Google Calendar invite.
- *
- * Setup (once, signed in as max@aventehomes.com):
- * 1. script.google.com > New project > paste this file > Save.
- * 2. Project Settings > Script properties > Add: KEY = any long secret phrase.
- * 3. Deploy > New deployment > type "Web app" > Execute as: Me > Who has access: Anyone > Deploy > Authorize.
- * 4. Copy the Web app URL. In Vercel add GCAL_HOOK_URL = that URL and GCAL_HOOK_KEY = the same phrase.
+ * Free Google Apps Script web app, called by the website server (api/lead.js) after a visitor picks
+ * a time in the /meet/ survey. It accepts only plausible bookings (weekday, 9:00-18:00 Toronto,
+ * within 6 weeks, max 1 hour, slot free, at most 10 per hour), creates the event in Max's calendar
+ * and emails the visitor a Google Calendar invite.
+ * Deploy: Web app, Execute as: Me, Who has access: Anyone.
  */
 function doPost(e) {
   var out = function (o) { return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON); };
   try {
-    var a = JSON.parse(e.postData.contents || '{}');
-    if (!a.key || a.key !== PropertiesService.getScriptProperties().getProperty('KEY')) return out({ ok: false, error: 'forbidden' });
-    var start = new Date(Number(a.start)), end = new Date(Number(a.start) + Number(a.duration || 3600000));
-    if (!(start > new Date())) return out({ ok: false, error: 'past' });
-    var cal = CalendarApp.getDefaultCalendar();
-    var busy = cal.getEvents(start, end).filter(function (ev) { return !ev.isAllDayEvent(); });
-    if (busy.length) return out({ ok: false, error: 'taken' });
-    var ev = cal.createEvent(String(a.title || 'Avente Hub consultation'), start, end, {
-      description: String(a.description || ''), location: String(a.location || ''),
-      guests: String(a.email || ''), sendInvites: true });
-    ev.setGuestsCanModify(false);
-    ev.addPopupReminder(60);
-    return out({ ok: true, id: ev.getId() });
+    var a = JSON.parse((e && e.postData && e.postData.contents) || '{}');
+    var dur = Math.min(Number(a.duration) || 3600000, 3600000);
+    var start = new Date(Number(a.start)), end = new Date(start.getTime() + dur), now = new Date();
+    if (!(start > now) || start - now > 42 * 864e5) return out({ ok: false, error: 'date out of range' });
+    var day = Utilities.formatDate(start, 'America/Toronto', 'u');          // 1 = Monday ... 7 = Sunday
+    var hm = Number(Utilities.formatDate(start, 'America/Toronto', 'H')) * 60 + Number(Utilities.formatDate(start, 'America/Toronto', 'm'));
+    if (day > 5 || hm < 540 || hm + dur / 60000 > 1080) return out({ ok: false, error: 'outside office hours' });
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(a.email || ''))) return out({ ok: false, error: 'bad email' });
+    var cache = CacheService.getScriptCache(), n = Number(cache.get('n') || 0);
+    if (n >= 10) return out({ ok: false, error: 'too many bookings this hour' });
+    var lock = LockService.getScriptLock(); lock.waitLock(10000);
+    try {
+      var cal = CalendarApp.getDefaultCalendar();
+      var busy = cal.getEvents(start, end).filter(function (ev) { return !ev.isAllDayEvent(); });
+      if (busy.length) return out({ ok: false, error: 'taken' });
+      var ev = cal.createEvent(String(a.title || 'Avente Hub consultation').slice(0, 200), start, end, {
+        description: String(a.description || '').slice(0, 4000), location: String(a.location || '').slice(0, 200),
+        guests: String(a.email), sendInvites: true });
+      ev.setGuestsCanModify(false);
+      ev.addPopupReminder(60);
+      cache.put('n', String(n + 1), 3600);
+      return out({ ok: true, id: ev.getId() });
+    } finally { lock.releaseLock(); }
   } catch (err) { return out({ ok: false, error: String(err).slice(0, 200) }); }
 }

@@ -1,10 +1,12 @@
 // Avente Hub lead endpoint (Vercel serverless). Creates/updates the HubSpot contact and adds a note with the survey answers.
 // When a day and time were picked it also books it in Max's Google Calendar through the Apps Script in
-// tools/google-calendar-booking.gs (env GCAL_HOOK_URL + GCAL_HOOK_KEY); the visitor gets a Google invite.
+// tools/google-calendar-booking.gs (URL in GCAL_HOOK_URL below); the visitor gets a Google invite.
 // Needs the environment variable HUBSPOT_TOKEN: a HubSpot Service Key (Settings > Integrations > Service Keys) with the scopes
 // crm.objects.contacts.read and crm.objects.contacts.write (the note uses the contacts scope too). Sent as a Bearer token.
 // Without the token it answers {ok:true, stored:false} and the website falls back to the email / WhatsApp handover.
 const { torontoEpoch } = require('./_tz');
+// Google Apps Script web app that books into max@aventehomes.com (tools/google-calendar-booking.gs). Not a secret.
+const GCAL_HOOK_URL = process.env.GCAL_HOOK_URL || '';
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', 'https://www.aventehub.com');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -40,12 +42,12 @@ module.exports = async (req, res) => {
     // Book the chosen time in Max's calendar (HubSpot Meetings -> Google Calendar max@aventehomes.com).
     let booked = false, bookErr = '';
     const start = a.dayKey && a.time ? torontoEpoch(a.dayKey, a.time) : NaN;
-    if (start > Date.now() && process.env.GCAL_HOOK_URL) {
+    if (start > Date.now() && GCAL_HOOK_URL) {
       try {
         const video = a.meetingType === 'video_call';
         const where = [a.city, a.area].filter(Boolean).join(', ');
-        const b = await fetch(process.env.GCAL_HOOK_URL, { method: 'POST', redirect: 'follow', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({
-          key: process.env.GCAL_HOOK_KEY, start, duration: video ? 1800000 : 3600000, email,
+        const b = await fetch(GCAL_HOOK_URL, { method: 'POST', redirect: 'follow', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({
+          start, duration: video ? 1800000 : 3600000, email,
           title: (video ? 'Avente Hub video call' : 'Avente Hub sample-board visit') + ' · ' + (a.name || email) + (a.company ? ' (' + a.company + ')' : ''),
           location: video ? 'Video call (link to follow)' : (where || 'To confirm'),
           description: 'Booked on aventehub.com/meet/\n\n' + props.message + '\n\nQuestions: +1 (416) 450-6656 · Max@aventehub.com' }) });
