@@ -20,7 +20,7 @@ h1{font-family:Marcellus,Georgia,serif;font-weight:400;color:var(--goldl);font-s
 .pick input{display:none}
 #prev{margin-top:14px;text-align:center}
 #prev img{max-width:100%;max-height:300px;border-radius:10px}
-textarea{width:100%;margin-top:14px;min-height:70px;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:10px;font:inherit}
+textarea{width:100%;margin:0 0 14px;min-height:70px;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:10px;font:inherit}
 button{margin-top:14px;width:100%;border:0;background:var(--gold);color:#1A1008;border-radius:999px;padding:13px;font:inherit;font-weight:600;font-size:18px;cursor:pointer}
 button:disabled{opacity:.5;cursor:default}
 #msg{margin-top:14px;text-align:center}
@@ -32,9 +32,9 @@ button:disabled{opacity:.5;cursor:default}
 <main>
 <h1>📎 Send on WhatsApp</h1>
 <p class="to" id="to">from Avente Hub · +1 (813) 377-8225</p>
-<label class="pick"><input type="file" id="file" accept="image/*,video/mp4,video/3gpp,application/pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.zip"><b>Choose a photo, video or file</b><br><span class="small">Photos are resized to send fast · videos up to 16 MB · files up to 100 MB</span></label>
-<div id="prev"></div>
 <textarea id="cap" placeholder="Message with it (optional)"></textarea>
+<label class="pick"><input type="file" id="file" accept="image/*,video/mp4,video/3gpp,application/pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.zip"><b>📎 Choose a photo, video or file</b><br><span class="small">It sends right away, with the message above</span><br><span class="small">Photos are resized to send fast · videos up to 16 MB · files up to 100 MB</span></label>
+<div id="prev"></div>
 <button id="send" disabled>Send</button>
 <div id="msg"></div>
 <p class="small">Opened from the CEO Dashboard. Each link sends once. Big files pass through our storage and are deleted after 7 days.</p>
@@ -43,6 +43,7 @@ button:disabled{opacity:.5;cursor:default}
 <script>
 (function(){
   var q=new URLSearchParams(location.search), task=q.get('task')||'', key=q.get('key')||'', who=q.get('name')||'', num=q.get('to')||'';
+  document.getElementById('cap').value=q.get('caption')||'';
   var fileEl=document.getElementById('file'), prev=document.getElementById('prev'), btn=document.getElementById('send'), msg=document.getElementById('msg'), blob=null, fname='file';
   if(who||num) document.getElementById('to').textContent='To '+(who||('+'+num))+(who&&num?' · +'+num:'')+' · from +1 (813) 377-8225';
   if(!task||!key){msg.className='bad';msg.textContent='This link is not complete. Open it again from the CEO Dashboard (📎).';fileEl.disabled=true;}
@@ -69,7 +70,7 @@ button:disabled{opacity:.5;cursor:default}
       else prev.textContent='📄 '+fname;
       var lim=/^video\//.test(r.t)?16e6:/^image\//.test(r.t)?5e6:100e6;
       if(blob.size>lim){msg.className='bad';msg.textContent='This file is '+(blob.size/1e6).toFixed(1)+' MB. WhatsApp allows up to '+(lim/1e6)+' MB for this type.';return;}
-      btn.disabled=false; btn.dataset.type=r.t;
+      btn.disabled=false; btn.dataset.type=r.t; btn.onclick();
     });
   };
   function done(j){
