@@ -57,6 +57,13 @@ module.exports = async (req, res) => {
         out.push({ id: t.id, sent: false, why });
       }
     }
+    // Close 📎 upload links that were never used (older than 2 hours)
+    const old = await fetch(HS + '/crm/v3/objects/tasks/search', { method: 'POST', headers: hdr(), body: JSON.stringify({ limit: 20, properties: ['hs_task_subject'],
+      filterGroups: [{ filters: [{ propertyName: 'hs_task_subject', operator: 'CONTAINS_TOKEN', value: 'WAUPLOAD' },
+        { propertyName: 'hs_task_status', operator: 'NEQ', value: 'COMPLETED' },
+        { propertyName: 'hs_createdate', operator: 'LT', value: String(Date.now() - 2 * 3600e3) }] }] }) });
+    if (old.ok) for (const t of (await old.json()).results || [])
+      await fetch(HS + '/crm/v3/objects/tasks/' + t.id, { method: 'PATCH', headers: hdr(), body: JSON.stringify({ properties: { hs_task_status: 'COMPLETED' } }) });
   } catch (e) { return res.status(200).json({ ok: false, out, reason: String(e).slice(0, 120) }); }
   return res.status(200).json({ ok: true, out });
 };
