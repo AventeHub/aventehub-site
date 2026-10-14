@@ -6,7 +6,7 @@
 // Without the token it answers {ok:true, stored:false} and the website falls back to the email / WhatsApp handover.
 const { torontoEpoch } = require('./_tz');
 // Google Apps Script web app that books into max@aventehomes.com (tools/google-calendar-booking.gs). Not a secret.
-const GCAL_HOOK_URL = process.env.GCAL_HOOK_URL || '';
+const GCAL_HOOK_URL = process.env.GCAL_HOOK_URL || 'https://script.google.com/macros/s/AKfycbyZbrK1iKLe-Ysjr81U8ImgFGkB6egkYK3L5UHgJ-5auW7B3s7JDbVaQrPRQyV0d-1u1g/exec';
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', 'https://www.aventehub.com');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
