@@ -1,0 +1,10 @@
+# Sends WhatsApp replies that Max approved (HubSpot tasks "WASEND ...") every 5 minutes.
+name: WhatsApp outbox
+on:
+  schedule: [{ cron: '*/5 * * * *' }]
+  workflow_dispatch: {}
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    steps:
+      - run: curl -fsS -m 50 -H "x-cron-key: ${{ secrets.WA_CRON_KEY }}" https://www.aventehub.com/api/wa-outbox/ || true
