@@ -1,22 +1,20 @@
 # Sends WhatsApp replies that Max approved on the CEO Dashboard (HubSpot tasks "WASEND ...").
 # GitHub only starts a scheduled job every 5 minutes, so each run keeps checking every 15 seconds
-# for about 9 minutes. Runs queue one after another (never two at once), so a reply goes out in
-# well under a minute. Free: the repository is public.
+# for 4 minutes (no overlap, no cancelled runs). A reply usually goes out in under a minute.
+# The job never fails on a network hiccup (|| true), so it cannot send failure emails.
+# Free: the repository is public.
 name: WhatsApp outbox
 on:
   schedule: [{ cron: '*/5 * * * *' }]
   workflow_dispatch: {}
-concurrency:
-  group: wa-outbox
-  cancel-in-progress: false
 jobs:
   send:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 6
     steps:
-      - name: Check the outbox every 15 seconds for 9 minutes
+      - name: Check the outbox every 15 seconds for 4 minutes
         run: |
-          end=$(( $(date +%s) + 540 ))
+          end=$(( $(date +%s) + 240 ))
           while [ "$(date +%s)" -lt "$end" ]; do
             curl -fsS -m 40 -H "x-cron-key: ${{ secrets.WA_CRON_KEY }}" https://www.aventehub.com/api/wa-outbox/ -o /dev/null || true
             sleep 15
