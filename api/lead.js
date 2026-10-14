@@ -17,7 +17,6 @@ module.exports = async (req, res) => {
   if (typeof a === 'string') { try { a = JSON.parse(a); } catch (e) { a = {}; } }
   if (a.website) return res.status(200).json({ ok: true, stored: false, spam: true });   // honeypot
   const token = process.env.HUBSPOT_TOKEN;
-  if (!token) return res.status(200).json({ ok: true, stored: false, reason: 'no token' });
   const email = (a.email || '').trim().toLowerCase();
   const [firstname, ...rest] = (a.name || '').trim().split(/\s+/);
   const phone = ((a.phoneCode || '') + ' ' + (a.phone || '')).trim();
@@ -26,20 +25,22 @@ module.exports = async (req, res) => {
     lifecyclestage: 'lead', hs_lead_status: 'NEW', jobtitle: a.role || '',
     message: Object.keys(a).filter(k => a[k] && !['website', 'pageUri'].includes(k)).map(k => k + ': ' + a[k]).join('\n') };
   try {
-    let id;
+    let id, hsErr = '';
+    if (token) {
     const create = await fetch('https://api.hubapi.com/crm/v3/objects/contacts', { method: 'POST', headers: H, body: JSON.stringify({ properties: props }) });
     if (create.status === 409) {
       const err = await create.json(); id = (err.message.match(/ID: (\d+)/) || [])[1];
       if (id) await fetch('https://api.hubapi.com/crm/v3/objects/contacts/' + id, { method: 'PATCH', headers: H, body: JSON.stringify({ properties: props }) });
     } else if (create.ok) { id = (await create.json()).id; }
-    else { return res.status(200).json({ ok: true, stored: false, reason: 'hubspot ' + create.status }); }
+    else { hsErr = 'hubspot ' + create.status; }
+    }
     if (id) {
       const note = 'Website meeting request (' + (a.pageUri || 'aventehub.com') + ')\n\n' + props.message;
       await fetch('https://api.hubapi.com/crm/v3/objects/notes', { method: 'POST', headers: H, body: JSON.stringify({
         properties: { hs_timestamp: new Date().toISOString(), hs_note_body: note },
         associations: [{ to: { id }, types: [{ associationCategory: 'HUBSPOT_DEFINED', associationTypeId: 202 }] }] }) });
     }
-    // Book the chosen time in Max's calendar (HubSpot Meetings -> Google Calendar max@aventehomes.com).
+    // Book the chosen time in Max's Google Calendar (works even if HubSpot is down).
     let booked = false, bookErr = '';
     const start = a.dayKey && a.time ? torontoEpoch(a.dayKey, a.time) : NaN;
     if (start > Date.now() && GCAL_HOOK_URL) {
@@ -55,11 +56,11 @@ module.exports = async (req, res) => {
         const j = await b.json().catch(() => ({}));
         booked = !!j.ok; if (!booked) bookErr = j.error || ('HTTP ' + b.status);
       } catch (e) { booked = false; bookErr = String(e).slice(0, 120); }
-      if (id) await fetch('https://api.hubapi.com/crm/v3/objects/notes', { method: 'POST', headers: H, body: JSON.stringify({
+      if (id && token) await fetch('https://api.hubapi.com/crm/v3/objects/notes', { method: 'POST', headers: H, body: JSON.stringify({
         properties: { hs_timestamp: new Date().toISOString(), hs_note_body: (booked ? '📅 BOOKED in Google Calendar: ' : '⚠️ NOT booked (' + bookErr + '): ') + (a.day || a.dayKey) + ' ' + a.time + ' Toronto, ' + (a.meetingType || '') },
         associations: [{ to: { id }, types: [{ associationCategory: 'HUBSPOT_DEFINED', associationTypeId: 202 }] }] }) });
     }
-    return res.status(200).json({ ok: true, stored: !!id, booked, bookErr, id });
+    return res.status(200).json({ ok: true, stored: !!id || booked, crm: !!id, booked, bookErr, hsErr, id });
   } catch (e) {
     return res.status(200).json({ ok: true, stored: false, reason: String(e).slice(0, 120) });
   }
