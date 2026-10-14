@@ -25,11 +25,14 @@ button{margin-top:14px;width:100%;border:0;background:var(--gold);color:#1A1008;
 button:disabled{opacity:.5;cursor:default}
 #msg{margin-top:14px;text-align:center}
 .ok{color:var(--ok)}.bad{color:var(--bad)}
+.back{display:inline-block;margin:0 0 18px;border:1px solid var(--line);border-radius:999px;padding:7px 14px;color:var(--goldl);text-decoration:none;font-size:15px}
+.back.big{display:block;text-align:center;background:var(--gold);color:#1A1008;font-weight:600;font-size:18px;padding:12px;margin-top:16px}
 .small{color:var(--muted);font-size:14px;margin-top:18px;text-align:center}
 </style>
 </head>
 <body>
 <main>
+<a class="back" id="back" href="https://claude.ai/artifact/LdNKgHwqEoKcQBQckutaAE">← Back to Dashboard</a>
 <h1>📎 Attach a file</h1>
 <p class="to" id="to">from Avente Hub · +1 (813) 377-8225</p>
 <textarea id="cap" hidden></textarea>
@@ -75,7 +78,8 @@ button:disabled{opacity:.5;cursor:default}
   };
   function done(j){
     if(j.ok){msg.className='ok';msg.textContent='✅ Attached. Closing… go back to the Dashboard chat and tap Send.';btn.textContent='Attached';fileEl.disabled=true;
-      setTimeout(function(){try{window.close();}catch(e){} setTimeout(function(){msg.textContent='✅ Attached. You can close this tab and tap Send in the Dashboard.';},400);},1200);}
+      var bk=document.getElementById('back');bk.classList.add('big');bk.textContent='← Back to Dashboard · tap Send there';msg.after(bk);
+      setTimeout(function(){try{window.close();}catch(e){}},1200);}
     else {msg.className='bad';msg.textContent='⚠️ Not attached: '+(j.error||'error');btn.hidden=false;btn.textContent='Try again';btn.disabled=/already used|expired|not valid/.test(j.error||'');}
   }
   function direct(cap){
@@ -95,6 +99,7 @@ button:disabled{opacity:.5;cursor:default}
       return {ok:false,error:(e&&e.message)||'upload failed'};
     }).then(done).catch(function(){msg.className='bad';msg.textContent='⚠️ No connection. Try again.';btn.textContent='Send';btn.disabled=false;});
   };
+  document.getElementById('back').addEventListener('click',function(e){try{window.close();}catch(x){} setTimeout(function(){},0);});
 })();
 </script>
 </body>
