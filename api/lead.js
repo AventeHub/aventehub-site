@@ -45,7 +45,8 @@ module.exports = async (req, res) => {
     if (start > Date.now() && GCAL_HOOK_URL) {
       try {
         const video = a.meetingType === 'video_call';
-        const where = [a.city, a.area].filter(Boolean).join(', ');
+        const nice = v => String(v || '').replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()).replace(/^Other City$/, '');
+        const where = [nice(a.city), nice(a.area)].filter(Boolean).join(', ');
         const b = await fetch(GCAL_HOOK_URL, { method: 'POST', redirect: 'follow', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({
           start, duration: video ? 1800000 : 3600000, email,
           title: (video ? 'Avente Hub video call' : 'Avente Hub sample-board visit') + ' · ' + (a.name || email) + (a.company ? ' (' + a.company + ')' : ''),
