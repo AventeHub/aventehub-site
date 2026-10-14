@@ -28,9 +28,22 @@ module.exports = async (req, res) => {
       const text = strip(t.properties.hs_task_body);
       if (!mt || !text) continue;
       const to = mt[1].replace(/\D/g, '');
-      const r = await fetch(GRAPH + '/' + WA_PHONE_ID + '/messages', { method: 'POST',
+      // Lines "📎 https://..." are attachments: photo / video / file sent by link. The rest is the text.
+      const files = [], lines = [];
+      for (const l of text.split('\n')) { const u = l.match(/^\s*📎\s*(https?:\/\/\S+)\s*$/); if (u) files.push(u[1]); else lines.push(l); }
+      const msg = lines.join('\n').trim();
+      const kind = u => /\.(jpe?g|png|webp)(\?|$)/i.test(u) ? 'image' : /\.(mp4|3gp)(\?|$)/i.test(u) ? 'video' : 'document';
+      const send = payload => fetch(GRAPH + '/' + WA_PHONE_ID + '/messages', { method: 'POST',
         headers: { Authorization: 'Bearer ' + WA_TOKEN, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messaging_product: 'whatsapp', to, type: 'text', text: { body: text.slice(0, 4096), preview_url: true } }) });
+        body: JSON.stringify(Object.assign({ messaging_product: 'whatsapp', to }, payload)) });
+      const parts = [];
+      if (msg && files.length !== 1) parts.push({ type: 'text', text: { body: msg.slice(0, 4096), preview_url: true } });
+      files.forEach(u => { const k = kind(u), o = { link: u };
+        if (files.length === 1 && msg) o.caption = msg.slice(0, 1024);
+        if (k === 'document') o.filename = decodeURIComponent(u.split('?')[0].split('/').pop() || 'file');
+        parts.push({ type: k, [k]: o }); });
+      let r;
+      for (const pt of parts) { r = await send(pt); if (!r.ok) break; }
       const j = await r.json().catch(() => ({}));
       const c = await findContactByPhone(to);
       if (r.ok) {

@@ -6,13 +6,16 @@
 // WA_APP_SECRET (Meta app secret, to check that calls really come from Meta).
 const crypto = require('crypto');
 const { esc, findContactByPhone, createContact, addNote } = require('./_hs');
+const { sign } = require('./wa-media');
+const SITE = 'https://www.aventehub.com';
+const MEDIA = { image: '📷 Photo', video: '🎬 Video', document: '📄 File', audio: '🎤 Voice/audio', sticker: '🙂 Sticker' };
 
 function describe(m) {
   switch (m.type) {
     case 'text': return m.text && m.text.body;
     case 'image': case 'video': case 'document': case 'audio': case 'sticker': {
       const x = m[m.type] || {};
-      return `[${m.type}${x.filename ? ': ' + x.filename : ''}]${x.caption ? ' ' + x.caption : ''} (open in the WhatsApp Manager to see it)`; }
+      return x.caption || ''; }
     case 'location': return `[location] ${m.location.name || ''} ${m.location.latitude},${m.location.longitude}`;
     case 'contacts': return '[contact card] ' + (m.contacts || []).map(c => c.name && c.name.formatted_name).join(', ');
     case 'button': return m.button && m.button.text;
@@ -56,7 +59,11 @@ module.exports = async (req, res) => {
         let c = await findContactByPhone(from);
         if (!c) c = await createContact(from, name);
         const when = Number(m.timestamp) * 1000 || Date.now();
-        const html = `<p><strong>💬 WhatsApp IN</strong> from ${esc(name || '+' + from)} (+${esc(from)})</p><p>${esc(describe(m)).replace(/\n/g, '<br>')}</p>`
+        const x = MEDIA[m.type] && m[m.type];
+        const media = x && x.id ? `<p>${MEDIA[m.type]}${x.filename ? ' ' + esc(x.filename) : ''}: <a href="${SITE}/api/wa-media/?id=${esc(x.id)}&s=${sign(x.id)}" data-wa="${m.type}" data-mime="${esc(x.mime_type || '')}">open</a></p>` : '';
+        const text = describe(m);
+        const html = `<p><strong>💬 WhatsApp IN</strong> from ${esc(name || '+' + from)} (+${esc(from)})</p>` + media
+          + (text ? `<p>${esc(text).replace(/\n/g, '<br>')}</p>` : '')
           + `<p style="color:#888">wa:${esc(m.id)}</p>`;
         await addNote(c && c.id, html, when);
         stored++;
