@@ -49,7 +49,7 @@ module.exports = async (req, res) => {
         const nice = v => String(v || '').replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()).replace(/^Other City$/, '');
         const where = [nice(a.city), nice(a.area)].filter(Boolean).join(', ');
         const b = await fetch(GCAL_HOOK_URL, { method: 'POST', redirect: 'follow', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({
-          start, duration: video ? 1800000 : 3600000, email, name: a.name || '', meetingType: a.meetingType || '', door: a.door || '',
+          start, duration: video ? 1800000 : 3600000, email, name: a.name || '', company: a.company || '', meetingType: a.meetingType || '', door: a.door || '',
           title: (video ? 'Avente Hub video call' : 'Avente Hub sample-board visit') + ' · ' + (a.name || email) + (a.company ? ' (' + a.company + ')' : ''),
           location: video ? 'Video call (link to follow)' : (where || 'To confirm'),
           description: 'Booked on aventehub.com/meet/\n\n' + props.message + '\n\nQuestions: WhatsApp https://wa.me/18133778225 · +1 (416) 450-6656 · info@aventehub.com' }) });
@@ -65,7 +65,7 @@ module.exports = async (req, res) => {
     if (!booked && GCAL_HOOK_URL && email) {
       try {
         const c = await fetch(GCAL_HOOK_URL, { method: 'POST', redirect: 'follow', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({
-          confirmOnly: true, email, name: a.name || '', door: a.door || '', meetingType: a.meetingType || '' }) });
+          confirmOnly: true, email, name: a.name || '', company: a.company || '', door: a.door || '', meetingType: a.meetingType || '', description: props.message }) });
         mailed = !!(await c.json().catch(() => ({}))).mailed;
       } catch (e) { mailed = false; }
     }

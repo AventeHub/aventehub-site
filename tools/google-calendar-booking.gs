@@ -7,7 +7,8 @@
  *  - With a time picked: accepts only plausible bookings (weekday, 9:00-18:00 Toronto, within 6 weeks,
  *    max 1 hour, slot free, at most 10 per hour), creates the event in Max's calendar WITH the visitor
  *    as a guest (Google sends them the invite) and a Google Meet link for video calls.
- *  - Always: sends the visitor a short branded confirmation email from info@aventehub.com.
+ *  - Always: sends the visitor a short branded confirmation email from info@aventehub.com,
+ *    and a "New website request" notice to info@aventehub.com with all the answers.
  *
  * SET-UP (once, in the Apps Script editor of the existing booking project):
  *  1. Replace the code with this file.
@@ -36,6 +37,7 @@ function doPost(e) {
     // No time picked (product pack, pilot application): confirmation email only.
     if (a.confirmOnly) {
       var sent0 = sendConfirmation_(a, null);
+      notifyTeam_(a, null);
       return out({ ok: true, booked: false, mailed: sent0 });
     }
 
@@ -73,6 +75,7 @@ function doPost(e) {
       }
     } finally { lock.releaseLock(); }
     var mailed = sendConfirmation_(a, { start: start, meet: meet });
+    notifyTeam_(a, { start: start, meet: meet });
     return out({ ok: true, booked: true, id: id, meet: meet, mailed: mailed });
   } catch (err) { return out({ ok: false, error: String(err).slice(0, 200) }); }
 }
@@ -117,6 +120,21 @@ function sendConfirmation_(a, b) {
     GmailApp.sendEmail(String(a.email).trim(), subject, text, opts);
     return true;
   } catch (err) { return false; }
+}
+
+// Notice to the company inbox (info@aventehub.com) for every website request.
+function notifyTeam_(a, b) {
+  try {
+    var when = b ? Utilities.formatDate(b.start, 'America/Toronto', "EEE MMM d, h:mm a") : '';
+    var subject = (b ? '📅 New booking: ' + when + ' · ' : '📩 New website request · ') + (a.name || a.email) + (a.company ? ' (' + a.company + ')' : '');
+    var body = (b ? 'Booked in the calendar: ' + when + ' Toronto' + (b.meet ? '\nMeet: ' + b.meet : '') + '\n\n' : '')
+      + String(a.description || '').replace(/^Booked on aventehub.com\/meet\/\n\n/, '')
+      + (a.description ? '' : 'Name: ' + (a.name || '') + '\nEmail: ' + a.email + '\nRequest: ' + (a.door || ''))
+      + '\n\nThe visitor got a confirmation email. Contact and note are in HubSpot.';
+    var opts = { name: 'Avente Hub website', replyTo: String(a.email).trim() };
+    try { if (GmailApp.getAliases().indexOf(FROM) > -1) opts.from = FROM; } catch (x) {}
+    GmailApp.sendEmail(FROM, subject, body, opts);
+  } catch (err) {}
 }
 
 function esc_(s) { return String(s || '').replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
