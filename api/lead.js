@@ -44,7 +44,7 @@ module.exports = async (req, res) => {
         const b = await fetch('https://api.hubapi.com/scheduler/v3/meetings/meeting-links/book?timezone=' + encodeURIComponent(TZ), { method: 'POST', headers: H, body: JSON.stringify({
           slug: SLUG, email, firstName: firstname || 'Guest', lastName: rest.join(' ') || (a.company || '-'), startTime: start,
           duration: a.meetingType === 'video_call' ? 1800000 : 3600000, timezone: TZ, locale: 'en-us' }) });
-        booked = b.ok; if (!b.ok) bookErr = b.status + ' ' + (await b.text()).slice(0, 300);
+        booked = b.ok; if (!b.ok) bookErr = b.status + ' ' + (await b.text()).slice(0, 1200);
       } catch (e) { booked = false; bookErr = String(e).slice(0, 120); }
     }
     return res.status(200).json({ ok: true, stored: !!id, booked, bookErr, id });
