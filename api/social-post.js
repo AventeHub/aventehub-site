@@ -118,7 +118,11 @@ module.exports = async (req, res) => {
     catch (e) { return res.status(200).json({ ok: false, reason: String(e.message || e).slice(0, 160) }); }
   }
   const key = process.env.SOCIAL_CRON_KEY || process.env.WA_CRON_KEY;
-  if (key && req.headers['x-cron-key'] !== key) return res.status(403).json({ ok: false });
+  // Vercel Cron (vercel.json "crons") calls with "Authorization: Bearer <CRON_SECRET>" when CRON_SECRET is set,
+  // otherwise with user-agent vercel-cron. The run only publishes posts that already have a due SOCIAL task.
+  const vcron = process.env.CRON_SECRET ? req.headers.authorization === 'Bearer ' + process.env.CRON_SECRET
+                                        : /vercel-cron/i.test(req.headers['user-agent'] || '');
+  if (key && req.headers['x-cron-key'] !== key && !vcron) return res.status(403).json({ ok: false });
   if (!process.env.HUBSPOT_TOKEN || !process.env.META_PAGE_TOKEN) return res.status(200).json({ ok: false, reason: 'missing env' });
   const out = [];
   try {
@@ -134,7 +138,7 @@ module.exports = async (req, res) => {
     const q = await (await fetch(SITE + '/social/queue.json?t=' + Date.now())).json();
     const t = await target();
     for (const task of tasks) {
-      if (Date.now() - started > 40000) break;
+      if (Date.now() - started > 30000) break;
       const subj = task.properties.hs_task_subject, body = task.properties.hs_task_body || '';
       const pid = subj.match(/^SOCIAL\s+(p\d+)/i)[1].toLowerCase();
       const post = (q.posts || []).find(p => p.id === pid);
@@ -151,7 +155,10 @@ module.exports = async (req, res) => {
         if (plat.includes('ig') && !igDone) {
           if (!t.igId) throw new Error('no Instagram professional account is linked to the Facebook Page');
           if (!igc) { igc = await igContainer(t, post); add.push('[igc] ' + igc); if (post.kind !== 'reel') await sleep(3000); }
-          const st = await g('GET', '/' + igc, t.token, { fields: 'status_code,status' });
+          let st = await g('GET', '/' + igc, t.token, { fields: 'status_code,status' });
+          while (st.status_code === 'IN_PROGRESS' && Date.now() - started < 50000) {   // wait for the Reel in the same run
+            await sleep(5000); st = await g('GET', '/' + igc, t.token, { fields: 'status_code,status' });
+          }
           if (st.status_code === 'FINISHED') {
             const m = await g('POST', `/${t.igId}/media_publish`, t.token, { creation_id: igc });
             const pl = await g('GET', '/' + m.id, t.token, { fields: 'permalink' }).catch(() => ({}));
