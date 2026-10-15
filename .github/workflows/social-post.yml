@@ -1,0 +1,16 @@
+# Publishes approved social posts (HubSpot tasks "SOCIAL p0X" whose due time has passed)
+# to the Avente Hub Facebook Page and Instagram @aventehub via /api/social-post/.
+# Every 10 minutes; Instagram Reels need a second run to finish processing, which this covers.
+# Never fails on a network hiccup (|| true), so it sends no failure emails. Free: public repo.
+name: Social autopost
+on:
+  schedule: [{ cron: '3,13,23,33,43,53 * * * *' }]
+  workflow_dispatch: {}
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Publish due social posts
+        run: |
+          curl -fsS -m 70 -H "x-cron-key: ${{ secrets.WA_CRON_KEY }}" https://www.aventehub.com/api/social-post/ || true
