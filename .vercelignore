@@ -1,0 +1,9 @@
+# Big media is NOT copied into each Vercel deployment (saves ~105 MB per deploy).
+# The files stay in GitHub and are served through jsDelivr by the rewrites in vercel.json,
+# so every URL (/<page>/m/..., /media/..., /social/media/...) keeps working.
+/*/m/
+/media/
+/social/media/
+.github/
+README.md
+tools/
