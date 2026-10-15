@@ -58,5 +58,19 @@
   "api/social-post.js": {
    "maxDuration": 60
   }
- }
+ },
+ "rewrites": [
+  {
+   "source": "/social/media/:file*",
+   "destination": "https://cdn.jsdelivr.net/gh/AventeHub/aventehub-site@main/social/media/:file*"
+  },
+  {
+   "source": "/media/:file*",
+   "destination": "https://cdn.jsdelivr.net/gh/AventeHub/aventehub-site@main/media/:file*"
+  },
+  {
+   "source": "/:dir/m/:file*",
+   "destination": "https://cdn.jsdelivr.net/gh/AventeHub/aventehub-site@main/:dir/m/:file*"
+  }
+ ]
 }
