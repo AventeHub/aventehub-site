@@ -9,6 +9,7 @@
 // Env (Vercel): HUBSPOT_TOKEN, META_PAGE_TOKEN (system-user or Page token: pages_manage_posts, pages_read_engagement,
 // pages_show_list, instagram_basic, instagram_content_publish), optional META_PAGE_ID, META_GRAPH_VERSION,
 // SOCIAL_CRON_KEY (falls back to WA_CRON_KEY). GET ?check=1 only reads (which Page / Instagram the token reaches).
+// GET ?insights=1 (with x-cron-key) only reads: views, reach, likes, saves, shares, watch time of the latest posts.
 const { HS, hdr, esc } = require('./_hs');
 const GRAPH = 'https://graph.facebook.com/' + (process.env.META_GRAPH_VERSION || 'v23.0');
 const SITE = 'https://www.aventehub.com';
@@ -70,10 +71,48 @@ async function igContainer(t, post) {
   return (await g('POST', `/${t.igId}/media`, t.token, { media_type: 'CAROUSEL', children: kids.join(','), caption: cap })).id;
 }
 
+// Views, reach, likes, comments, saves, shares, average watch time for the latest posts.
+// Instagram needs instagram_manage_insights on the token; Facebook needs read_insights. Missing rights show as "error" per post.
+async function insights(t) {
+  const out = { instagram: [], facebook: [] };
+  if (t.igId) {
+    const m = await g('GET', `/${t.igId}/media`, t.token, { fields: 'id,caption,media_type,media_product_type,permalink,timestamp,like_count,comments_count', limit: '12' });
+    for (const x of m.data || []) {
+      const row = { id: x.id, when: x.timestamp, type: x.media_product_type || x.media_type, link: x.permalink,
+        title: String(x.caption || '').split('\n')[0].slice(0, 60), likes: x.like_count, comments: x.comments_count };
+      const reel = row.type === 'REELS';
+      const met = reel ? 'views,reach,saved,shares,total_interactions,ig_reels_avg_watch_time,ig_reels_video_view_total_time' : 'views,reach,saved,shares,total_interactions';
+      try { const r = await g('GET', `/${x.id}/insights`, t.token, { metric: met });
+        for (const d of r.data || []) row[d.name] = (d.values && d.values[0] && d.values[0].value) ?? d.total_value?.value; }
+      catch (e) { row.error = String(e.message || e).slice(0, 120); }
+      if (row.ig_reels_avg_watch_time != null) row.avg_watch_s = Math.round(row.ig_reels_avg_watch_time / 100) / 10;
+      out.instagram.push(row);
+    }
+  }
+  try {
+    const v = await g('GET', `/${t.pageId}/videos`, t.token, { fields: 'id,description,created_time,permalink_url,length', limit: '12' });
+    for (const x of v.data || []) {
+      const row = { id: x.id, when: x.created_time, link: x.permalink_url && ('https://www.facebook.com' + x.permalink_url), length_s: x.length,
+        title: String(x.description || '').split('\n')[0].slice(0, 60) };
+      try { const r = await g('GET', `/${x.id}/video_insights`, t.token, { metric: 'total_video_views,total_video_avg_time_watched,total_video_impressions_unique' });
+        for (const d of r.data || []) row[d.name] = d.values && d.values[0] && d.values[0].value; }
+      catch (e) { row.error = String(e.message || e).slice(0, 120); }
+      out.facebook.push(row);
+    }
+  } catch (e) { out.facebook_error = String(e.message || e).slice(0, 160); }
+  return out;
+}
+
 module.exports = async (req, res) => {
   res.setHeader('Cache-Control', 'no-store');
   const started = Date.now();
   const url = new URL(req.url, SITE);
+  if (url.searchParams.get('insights')) {   // read-only: how the last posts perform (IG + FB). Needs the cron key.
+    const key0 = process.env.SOCIAL_CRON_KEY || process.env.WA_CRON_KEY;
+    if (key0 && req.headers['x-cron-key'] !== key0) return res.status(403).json({ ok: false });
+    try { return res.status(200).json(Object.assign({ ok: true }, await insights(await target()))); }
+    catch (e) { return res.status(200).json({ ok: false, reason: String(e.message || e).slice(0, 200) }); }
+  }
   if (url.searchParams.get('check')) {   // read-only: what can the token reach?
     try { const t = await target(); return res.status(200).json({ ok: true, page: t.pageName, instagram: t.igUser || null }); }
     catch (e) { return res.status(200).json({ ok: false, reason: String(e.message || e).slice(0, 160) }); }
@@ -105,6 +144,7 @@ module.exports = async (req, res) => {
       const save = async (props) => fetch(HS + '/crm/v3/objects/tasks/' + task.id, { method: 'PATCH', headers: hdr(), body: JSON.stringify({ properties: props }) });
       try {
         if (!post) throw new Error('post ' + pid + ' not found in social/queue.json');
+        if (post.status === 'removed') throw new Error('post ' + pid + ' was removed from the plan');
         const plat = post.platforms || ['fb', 'ig'];
         let fbDone = has('[fb]'), igDone = has('[ig]'), igc = has('[igc]');
         if (plat.includes('fb') && !fbDone) { const r = await publishFb(t, post); fbDone = r.link; add.push('[fb] ' + r.link); }
