@@ -58,5 +58,15 @@
   "api/social-post.js": {
    "maxDuration": 60
   }
- }
+ },
+ "crons": [
+  {
+   "path": "/api/social-post/",
+   "schedule": "35 16 * * *"
+  },
+  {
+   "path": "/api/social-post/",
+   "schedule": "50 16 * * *"
+  }
+ ]
 }
