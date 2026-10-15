@@ -31,15 +31,18 @@ module.exports = async (req, res) => {
   let name, caption, mime, media, link;
   if (isJson) {
     name = clean(j.name); caption = String(j.caption || '').slice(0, 1024); mime = String(j.mime || 'application/octet-stream');
-    let u; try { u = new URL(String(j.url || '')); } catch (e) { return res.status(400).json({ ok: false, error: 'bad file link' }); }
-    if (u.protocol !== 'https:' || !/\.blob\.vercel-storage\.com$/.test(u.hostname) || !/^\/wa\/out\//.test(u.pathname))
-      return res.status(400).json({ ok: false, error: 'bad file link' });
-    media = { link: u.href }; link = u.href;
-    if (j.stage) {   // only attach: the Dashboard picks the link up and sends it together with the text on Send
+    const okLink = x => { let v; try { v = new URL(String(x || '')); } catch (e) { return null; }
+      return v.protocol === 'https:' && /\.blob\.vercel-storage\.com$/.test(v.hostname) && /^\/wa\/out\//.test(v.pathname) ? v : null; };
+    if (j.stage) {   // only attach: the Dashboard picks the link(s) up and sends them together with the text on Send
+      const urls = (Array.isArray(j.urls) ? j.urls : [j.url]).slice(0, 10).map(okLink);
+      if (!urls.length || urls.some(x => !x)) return res.status(400).json({ ok: false, error: 'bad file link' });
       const r = await fetch(HS + '/crm/v3/objects/tasks/' + taskId, { method: 'PATCH', headers: hdr(), body: JSON.stringify({ properties: {
-        hs_task_status: 'COMPLETED', hs_task_body: '<p>STAGED 📎 ' + esc(u.href) + '</p><p>' + esc(name) + '</p>' } }) });
-      return res.status(200).json({ ok: r.ok, staged: true, url: u.href, error: r.ok ? undefined : 'could not attach (HubSpot ' + r.status + ')' });
+        hs_task_status: 'COMPLETED', hs_task_body: urls.map(x => '<p>STAGED 📎 ' + esc(x.href) + '</p>').join('') } }) });
+      return res.status(200).json({ ok: r.ok, staged: true, urls: urls.map(x => x.href), error: r.ok ? undefined : 'could not attach (HubSpot ' + r.status + ')' });
     }
+    const u = okLink(j.url);
+    if (!u) return res.status(400).json({ ok: false, error: 'bad file link' });
+    media = { link: u.href }; link = u.href;
   } else {
     name = clean(decodeURIComponent(String(req.headers['x-name'] || 'file')));
     caption = decodeURIComponent(String(req.headers['x-caption'] || '')).slice(0, 1024);
