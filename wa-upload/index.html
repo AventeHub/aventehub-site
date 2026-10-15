@@ -19,7 +19,7 @@ h1{font-family:Marcellus,Georgia,serif;font-weight:400;color:var(--goldl);font-s
 .pick b{color:var(--goldl);font-weight:500}
 .pick input{display:none}
 #prev{margin-top:14px;text-align:center}
-#prev img{max-width:100%;max-height:300px;border-radius:10px}
+#prev{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}#prev img{width:96px;height:96px;object-fit:cover;border-radius:10px}#prev .doc{border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:14px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 textarea{width:100%;margin:0 0 14px;min-height:70px;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:10px;font:inherit}
 button{margin-top:14px;width:100%;border:0;background:var(--gold);color:#1A1008;border-radius:999px;padding:13px;font:inherit;font-weight:600;font-size:18px;cursor:pointer}
 button:disabled{opacity:.5;cursor:default}
@@ -33,14 +33,14 @@ button:disabled{opacity:.5;cursor:default}
 <body>
 <main>
 <a class="back" id="back" href="https://claude.ai/artifact/LdNKgHwqEoKcQBQckutaAE">← Back to Dashboard</a>
-<h1>📎 Attach a file</h1>
+<h1>📎 Attach files</h1>
 <p class="to" id="to">from Avente Hub · +1 (813) 377-8225</p>
 <textarea id="cap" hidden></textarea>
-<label class="pick"><input type="file" id="file" accept="image/*,video/mp4,video/3gpp,application/pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.zip"><b>📎 Choose a photo, video or file</b><br><span class="small">It is added to your message in the Dashboard. Then tap Send there.</span><br><span class="small">Photos are resized to send fast · videos up to 16 MB · files up to 100 MB</span></label>
+<label class="pick"><input type="file" id="file" multiple accept="image/*,video/mp4,video/3gpp,application/pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.zip"><b>📎 Choose photos, renders, PDFs or a video</b><br><span class="small">Pick one or several (up to 10). They are added to your message in the Dashboard; then tap Send there.</span><br><span class="small">Photos are resized to send fast · videos up to 16 MB · files up to 100 MB</span></label>
 <div id="prev"></div>
 <button id="send" disabled hidden>Attach</button>
 <div id="msg"></div>
-<p class="small">Opened from the CEO Dashboard. Each link sends once. Big files pass through our storage and are deleted after 7 days.</p>
+<p class="small">Opened from the CEO Dashboard. Each link attaches once. Big files pass through our storage and are deleted after 7 days.</p>
 <script src="/assets/wa-blob-client.js"></script>
 </main>
 <script>
@@ -65,39 +65,47 @@ button:disabled{opacity:.5;cursor:default}
       img.src=url;
     });
   }
+  var items=[];
   fileEl.onchange=function(){
-    var f=fileEl.files[0]; if(!f) return; msg.textContent=''; btn.disabled=true; prev.textContent='Preparing…';
-    shrink(f).then(function(r){
-      blob=r.b; fname=r.n; prev.innerHTML='';
-      if(/^image\//.test(r.t)){var i=document.createElement('img');i.src=URL.createObjectURL(blob);prev.appendChild(i);}
-      else prev.textContent='📄 '+fname;
-      var lim=/^video\//.test(r.t)?16e6:/^image\//.test(r.t)?5e6:100e6;
-      if(blob.size>lim){msg.className='bad';msg.textContent='This file is '+(blob.size/1e6).toFixed(1)+' MB. WhatsApp allows up to '+(lim/1e6)+' MB for this type.';return;}
-      btn.disabled=false; btn.dataset.type=r.t; btn.onclick();
+    var fs=[].slice.call(fileEl.files||[]).slice(0,10); if(!fs.length) return;
+    msg.textContent=''; msg.className=''; prev.textContent='Preparing…'; items=[];
+    Promise.all(fs.map(shrink)).then(function(rs){
+      prev.innerHTML=''; var bad='';
+      rs.forEach(function(r){
+        var lim=/^video\//.test(r.t)?16e6:/^image\//.test(r.t)?5e6:100e6;
+        if(r.b.size>lim){bad+=r.n+' is '+(r.b.size/1e6).toFixed(1)+' MB (max '+(lim/1e6)+' MB). ';return;}
+        items.push(r);
+        if(/^image\//.test(r.t)){var i=document.createElement('img');i.src=URL.createObjectURL(r.b);i.alt=r.n;prev.appendChild(i);}
+        else {var d=document.createElement('div');d.className='doc';d.textContent=(/^video\//.test(r.t)?'🎬 ':'📄 ')+r.n;prev.appendChild(d);}
+      });
+      if(bad){msg.className='bad';msg.textContent='⚠️ '+bad;}
+      if(items.length){btn.hidden=false;btn.disabled=false;btn.textContent='Attach '+items.length+' file'+(items.length>1?'s':'');if(!bad)btn.onclick();}
     });
   };
   function done(j){
-    if(j.ok){msg.className='ok';msg.textContent='✅ Attached. Closing… go back to the Dashboard chat and tap Send.';btn.textContent='Attached';fileEl.disabled=true;
+    if(j.ok){var n=(j.urls||[]).length||1;msg.className='ok';msg.textContent='✅ '+n+' file'+(n>1?'s':'')+' attached. Closing… go back to the Dashboard chat and tap Send.';btn.textContent='Attached';btn.disabled=true;fileEl.disabled=true;
       var bk=document.getElementById('back');bk.classList.add('big');bk.textContent='← Back to Dashboard · tap Send there';msg.after(bk);
-      setTimeout(function(){try{window.close();}catch(e){}},1200);}
+      setTimeout(function(){try{window.close();}catch(e){}},1500);}
     else {msg.className='bad';msg.textContent='⚠️ Not attached: '+(j.error||'error');btn.hidden=false;btn.textContent='Try again';btn.disabled=/already used|expired|not valid/.test(j.error||'');}
   }
-  function direct(cap){
-    return fetch('/api/wa-upload/',{method:'POST',body:blob,headers:{'Content-Type':btn.dataset.type||'application/octet-stream','x-task':task,'x-key':key,
-      'x-name':encodeURIComponent(fname),'x-caption':encodeURIComponent(cap)}}).then(function(r){return r.json().catch(function(){return {ok:false,error:'HTTP '+r.status};});});
-  }
   btn.onclick=function(){
-    if(!blob) return; btn.disabled=true; btn.textContent='Uploading…'; msg.className=''; msg.textContent='';
-    var cap=document.getElementById('cap').value.trim(), type=btn.dataset.type||'application/octet-stream';
-    var viaStore=window.AvBlob?window.AvBlob.upload('wa/out/'+fname.replace(/[^\w.\-]/g,'_'),blob,{access:'public',contentType:type,handleUploadUrl:'/api/wa-blob-token/',
-        clientPayload:JSON.stringify({task:task,key:key}),multipart:blob.size>20e6,
-        onUploadProgress:function(p){msg.className='';msg.textContent='Uploading '+Math.round(p.percentage)+'%…';}})
-      .then(function(b){btn.textContent='Attaching…';return fetch('/api/wa-upload/',{method:'POST',headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({task:task,key:key,url:b.url,name:fname,mime:type,stage:true})}).then(function(r){return r.json().catch(function(){return {ok:false,error:'HTTP '+r.status};});});})
-      :Promise.reject(new Error('no storage'));
-    viaStore.catch(function(e){
-      return {ok:false,error:(e&&e.message)||'upload failed'};
-    }).then(done).catch(function(){msg.className='bad';msg.textContent='⚠️ No connection. Try again.';btn.textContent='Send';btn.disabled=false;});
+    if(!items.length) return; btn.disabled=true; msg.className=''; msg.textContent='';
+    if(!window.AvBlob){done({ok:false,error:'storage not loaded, reload the page'});return;}
+    var urls=[], i=0;
+    (function next(){
+      if(i>=items.length){
+        btn.textContent='Attaching…';
+        return fetch('/api/wa-upload/',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({task:task,key:key,urls:urls,stage:true})})
+          .then(function(r){return r.json().catch(function(){return {ok:false,error:'HTTP '+r.status};});}).then(done)
+          .catch(function(){msg.className='bad';msg.textContent='⚠️ No connection. Try again.';btn.disabled=false;btn.textContent='Try again';});
+      }
+      var it=items[i];
+      window.AvBlob.upload('wa/out/'+it.n.replace(/[^\w.\-]/g,'_'),it.b,{access:'public',contentType:it.t,handleUploadUrl:'/api/wa-blob-token/',
+        clientPayload:JSON.stringify({task:task,key:key}),multipart:it.b.size>20e6,
+        onUploadProgress:function(p){btn.textContent='Uploading '+(i+1)+'/'+items.length+' · '+Math.round(p.percentage)+'%';}})
+        .then(function(b){urls.push(b.url);i++;next();})
+        .catch(function(e){done({ok:false,error:(e&&e.message)||'upload failed'});});
+    })();
   };
   document.getElementById('back').addEventListener('click',function(e){try{window.close();}catch(x){} setTimeout(function(){},0);});
 })();
