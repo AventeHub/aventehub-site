@@ -63,7 +63,8 @@ async function publishFb(t, post) {
 async function igContainer(t, post) {
   const cap = post.caption_ig;
   if (post.kind === 'reel')
-    return (await g('POST', `/${t.igId}/media`, t.token, { media_type: 'REELS', video_url: abs(post.media[0]), caption: cap, share_to_feed: true })).id;
+    return (await g('POST', `/${t.igId}/media`, t.token, Object.assign({ media_type: 'REELS', video_url: abs(post.media[0]), caption: cap, share_to_feed: true },
+      post.cover ? { cover_url: abs(post.cover) } : {}))).id;   // branded cover = the grid tile
   const kids = [];
   for (const m of post.media) kids.push((await g('POST', `/${t.igId}/media`, t.token, { image_url: abs(m), is_carousel_item: true })).id);
   return (await g('POST', `/${t.igId}/media`, t.token, { media_type: 'CAROUSEL', children: kids.join(','), caption: cap })).id;

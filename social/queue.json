@@ -1,5 +1,5 @@
 {
- "about": "Avente Hub social posts. A post goes live only when an agent creates the HubSpot task \"SOCIAL <id>\" after Max approves it; api/social-post.js publishes it at the task due time.",
+ "about": "Avente Hub social posts. A post goes live only when an agent creates the HubSpot task \"SOCIAL <id>\" after Max approves it; api/social-post.js publishes it at the task due time. Design v2 (Oct 15): business-card look; reels = approved slim-frame story + business-card end card, each with a branded cover (IG cover_url); carousels 4:5 (1080x1350).",
  "updated": "2026-10-15",
  "posts": [
   {
@@ -27,10 +27,11 @@
    ],
    "planned": "2026-10-21 11:30 America/Toronto",
    "media": [
-    "/led-crown-moulding/m/Aventehub-LED-Crown-Moulding-AVH-6060-Story.mp4"
+    "/social/media/p02-reel.mp4"
    ],
    "caption_ig": "The ceiling, finished in light.\nAVH-6060 LED crown moulding traces the room with one clean line of light. Made for model suites and sales centres that need a first impression.\nRequest a meeting. Link in bio.\n\n#LEDCrownMoulding #CrownMoulding #LightingDesign #TorontoBuilders #LuxuryInteriors #SalesCentre #GTAConstruction",
-   "caption_fb": "The ceiling, finished in light.\nAVH-6060 LED crown moulding traces the room with one clean line of light. Made for model suites and sales centres that need a first impression.\nRequest a meeting.\nhttps://www.aventehub.com/meet/?from=fb"
+   "caption_fb": "The ceiling, finished in light.\nAVH-6060 LED crown moulding traces the room with one clean line of light. Made for model suites and sales centres that need a first impression.\nRequest a meeting.\nhttps://www.aventehub.com/meet/?from=fb",
+   "cover": "/social/media/p02-cover.jpg"
   },
   {
    "id": "p03",
@@ -42,10 +43,10 @@
    ],
    "planned": "2026-10-23 11:30 America/Toronto",
    "media": [
-    "/social/media/p03-1-led-baseboard.jpg",
-    "/social/media/p03-2-led-crown.jpg",
-    "/social/media/p03-3-magnetic-track.jpg",
-    "/social/media/p03-4-wpc-doors.jpg"
+    "/social/media/p03-1.jpg",
+    "/social/media/p03-2.jpg",
+    "/social/media/p03-3.jpg",
+    "/social/media/p03-4.jpg"
    ],
    "caption_ig": "Two packs. One system.\nLighting pack: LED baseboards, LED crown, magnetic track, LED neon.\nDoor pack: WPC interior doors with wood-grain aluminum baseboards in matching grains.\nSwipe through, then request a meeting. Link in bio.\n\n#AventeHub #TorontoBuilders #Developers #LuxuryHomes #DesignBuild #GTAHomes",
    "caption_fb": "Two packs. One system.\nLighting pack: LED baseboards, LED crown, magnetic track, LED neon.\nDoor pack: WPC interior doors with wood-grain aluminum baseboards in matching grains.\nSwipe through, then request a meeting.\nhttps://www.aventehub.com/meet/?from=fb"
@@ -60,10 +61,11 @@
    ],
    "planned": "2026-10-26 11:30 America/Toronto",
    "media": [
-    "/led-baseboards/m/Aventehub-LED-Baseboard-AVH-A-7-Story.mp4"
+    "/social/media/p04-reel.mp4"
    ],
    "caption_ig": "The baseboard that lights the room.\nAVH-A-7: a black LED baseboard with a line of light along the top. Clean in a hallway, striking on a stair.\nRequest a meeting. Link in bio.\n\n#LEDBaseboard #ModernInteriors #TorontoHomes #Builders #LightingDesign #CustomHomes",
-   "caption_fb": "The baseboard that lights the room.\nAVH-A-7: a black LED baseboard with a line of light along the top. Clean in a hallway, striking on a stair.\nRequest a meeting.\nhttps://www.aventehub.com/meet/?from=fb"
+   "caption_fb": "The baseboard that lights the room.\nAVH-A-7: a black LED baseboard with a line of light along the top. Clean in a hallway, striking on a stair.\nRequest a meeting.\nhttps://www.aventehub.com/meet/?from=fb",
+   "cover": "/social/media/p04-cover.jpg"
   },
   {
    "id": "p05",
@@ -75,10 +77,11 @@
    ],
    "planned": "2026-10-28 11:30 America/Toronto",
    "media": [
-    "/led-crown-moulding/m/Aventehub-LED-Crown-Moulding-AVH-HG22-Story.mp4"
+    "/social/media/p05-reel.mp4"
    ],
    "caption_ig": "One base, three heights.\nThe AVH-HG22 series comes as HG22, HG22A and HG22B, so every ceiling in a project gets the same family of light.\nRequest a meeting. Link in bio.\n\n#CrownMoulding #LEDLighting #CeilingDesign #TorontoBuilders #NewHomes #InteriorArchitecture",
-   "caption_fb": "One base, three heights.\nThe AVH-HG22 series comes as HG22, HG22A and HG22B, so every ceiling in a project gets the same family of light.\nRequest a meeting.\nhttps://www.aventehub.com/meet/?from=fb"
+   "caption_fb": "One base, three heights.\nThe AVH-HG22 series comes as HG22, HG22A and HG22B, so every ceiling in a project gets the same family of light.\nRequest a meeting.\nhttps://www.aventehub.com/meet/?from=fb",
+   "cover": "/social/media/p05-cover.jpg"
   },
   {
    "id": "p06",
@@ -90,10 +93,11 @@
    ],
    "planned": "2026-10-30 11:30 America/Toronto",
    "media": [
-    "/led-neon-flex/m/Aventehub-LED-Neon-Flex-Facade-Story.mp4"
+    "/social/media/p06-reel.mp4"
    ],
-   "caption_ig": "Light changes everything.\nLED neon flex draws the lines of a building after dark.\nFor builders who want a project people remember.\nRequest a meeting. Link in bio.\n\n#LEDNeon #FacadeLighting #ArchitecturalLighting #LuxuryHomes #GTA #OutdoorLighting",
-   "caption_fb": "Light changes everything.\nLED neon flex draws the lines of a building after dark.\nFor builders who want a project people remember.\nRequest a meeting.\nhttps://www.aventehub.com/meet/?from=fb"
+   "caption_ig": "Light changes everything.\nLED neon flex draws the lines of a building after dark.\nFor builders who want a project people remember. Illustration.\nRequest a meeting. Link in bio.\n\n#LEDNeon #FacadeLighting #ArchitecturalLighting #LuxuryHomes #GTA #OutdoorLighting",
+   "caption_fb": "Light changes everything.\nLED neon flex draws the lines of a building after dark.\nFor builders who want a project people remember. Illustration.\nRequest a meeting.\nhttps://www.aventehub.com/meet/?from=fb",
+   "cover": "/social/media/p06-cover.jpg"
   },
   {
    "id": "p07",
@@ -105,10 +109,11 @@
    ],
    "planned": "2026-11-02 11:30 America/Toronto",
    "media": [
-    "/social/media/p07-a34-reel.mp4"
+    "/social/media/p07-reel.mp4"
    ],
-   "caption_ig": "The look of wood, in aluminum.\nAVH-A-34 wood-grain aluminum baseboard is part of our Door pack, next to WPC interior doors in matching grains.\nRequest a meeting to see the samples side by side. Link in bio.\n\n#WoodGrain #AluminumBaseboard #InteriorDoors #TorontoBuilders #ModernHomes #DesignBuild",
-   "caption_fb": "The look of wood, in aluminum.\nAVH-A-34 wood-grain aluminum baseboard is part of our Door pack, next to WPC interior doors in matching grains.\nRequest a meeting to see the samples side by side.\nhttps://www.aventehub.com/meet/?from=fb"
+   "caption_ig": "The look of wood, in aluminum.\nAVH-A-34 wood-grain aluminum baseboard is part of our Door pack, next to WPC interior doors in matching grains.\nRequest a meeting to see the grains side by side. Link in bio.\n\n#WoodGrain #AluminumBaseboard #InteriorDoors #TorontoBuilders #ModernHomes #DesignBuild",
+   "caption_fb": "The look of wood, in aluminum.\nAVH-A-34 wood-grain aluminum baseboard is part of our Door pack, next to WPC interior doors in matching grains.\nRequest a meeting to see the grains side by side.\nhttps://www.aventehub.com/meet/?from=fb",
+   "cover": "/social/media/p07-cover.jpg"
   },
   {
    "id": "p08",
@@ -120,8 +125,8 @@
    ],
    "planned": "2026-11-04 11:30 America/Toronto",
    "media": [
-    "/social/media/p08-1-see-it.jpg",
-    "/social/media/p08-2-pick-a-time.jpg"
+    "/social/media/p08-1.jpg",
+    "/social/media/p08-2.jpg"
    ],
    "caption_ig": "See it in your hands.\nWe bring the sample boards to your office or site, so you judge the light and the finish in your own space.\nPick a time on our meeting page. Link in bio.\n\n#TorontoBuilders #Developers #SampleBoards #LuxuryFinishes #GTAConstruction #AventeHub",
    "caption_fb": "See it in your hands.\nWe bring the sample boards to your office or site, so you judge the light and the finish in your own space.\nPick a time on our meeting page.\nhttps://www.aventehub.com/meet/?from=fb"
@@ -136,10 +141,11 @@
    ],
    "planned": "2026-11-06 11:30 America/Toronto",
    "media": [
-    "/led-crown-moulding/m/Aventehub-LED-Crown-Moulding-AVH-HG23-Story.mp4"
+    "/social/media/p09-reel.mp4"
    ],
    "caption_ig": "Every crown starts with a clean section.\nThe AVH-HG23 series shows the profile first, then the light. Three heights, one family.\nRequest a meeting. Link in bio.\n\n#CrownMoulding #ArchitecturalDetails #LEDLighting #TorontoBuilders #LuxuryInteriors #DesignDetails",
-   "caption_fb": "Every crown starts with a clean section.\nThe AVH-HG23 series shows the profile first, then the light. Three heights, one family.\nRequest a meeting.\nhttps://www.aventehub.com/meet/?from=fb"
+   "caption_fb": "Every crown starts with a clean section.\nThe AVH-HG23 series shows the profile first, then the light. Three heights, one family.\nRequest a meeting.\nhttps://www.aventehub.com/meet/?from=fb",
+   "cover": "/social/media/p09-cover.jpg"
   },
   {
    "id": "p10",
@@ -151,10 +157,11 @@
    ],
    "planned": "2026-11-09 11:30 America/Toronto",
    "media": [
-    "/aluminum-baseboards/m/Aventehub-Aluminum-Baseboard-AVH-A-33-Story.mp4"
+    "/social/media/p10-reel.mp4"
    ],
    "caption_ig": "A clean line in aluminum.\nAVH-A-33 is a slim aluminum baseboard for modern rooms. Watch how it goes on.\nRequest a meeting. Link in bio.\n\n#AluminumBaseboard #ModernDesign #MinimalInteriors #Builders #TorontoHomes #GTAConstruction",
-   "caption_fb": "A clean line in aluminum.\nAVH-A-33 is a slim aluminum baseboard for modern rooms. Watch how it goes on.\nRequest a meeting.\nhttps://www.aventehub.com/meet/?from=fb"
+   "caption_fb": "A clean line in aluminum.\nAVH-A-33 is a slim aluminum baseboard for modern rooms. Watch how it goes on.\nRequest a meeting.\nhttps://www.aventehub.com/meet/?from=fb",
+   "cover": "/social/media/p10-cover.jpg"
   },
   {
    "id": "p11",
@@ -166,10 +173,10 @@
    ],
    "planned": "2026-11-11 11:30 America/Toronto",
    "media": [
-    "/social/media/p11-1-green.jpg",
-    "/social/media/p11-2-resilient.jpg",
-    "/social/media/p11-3-fast.jpg",
-    "/social/media/p11-4-rule.jpg"
+    "/social/media/p11-1.jpg",
+    "/social/media/p11-2.jpg",
+    "/social/media/p11-3.jpg",
+    "/social/media/p11-4.jpg"
    ],
    "caption_ig": "Green. Resilient. Fast.\nEvery product we carry passes three tests: better for the home and the planet, built to outlast the usual materials, quick to install with less labour on site.\nIf it is not all three, we don't carry it. Link in bio.\n\n#GRF #GreenBuilding #SustainableBuilding #TorontoBuilders #Developers #ModernConstruction",
    "caption_fb": "Green. Resilient. Fast.\nEvery product we carry passes three tests: better for the home and the planet, built to outlast the usual materials, quick to install with less labour on site.\nIf it is not all three, we don't carry it.\nhttps://www.aventehub.com/meet/?from=fb"
@@ -184,10 +191,10 @@
    ],
    "planned": "2026-11-13 11:30 America/Toronto",
    "media": [
-    "/social/media/p12-1-model-suite.jpg",
-    "/social/media/p12-2-model-suite.jpg",
-    "/social/media/p12-3-model-suite.jpg",
-    "/social/media/p12-4-model-suite.jpg"
+    "/social/media/p12-1.jpg",
+    "/social/media/p12-2.jpg",
+    "/social/media/p12-3.jpg",
+    "/social/media/p12-4.jpg"
    ],
    "caption_ig": "Give buyers a reason to upgrade.\nLED crown and baseboard turn a model suite into the room people remember, and into an upgrade your sales team can offer.\nRequest a meeting. Link in bio.\n\n#ModelSuite #SalesCentre #NewHomeSales #TorontoBuilders #LEDCrownMoulding #LuxuryHomes",
    "caption_fb": "Give buyers a reason to upgrade.\nLED crown and baseboard turn a model suite into the room people remember, and into an upgrade your sales team can offer.\nRequest a meeting.\nhttps://www.aventehub.com/meet/?from=fb"
