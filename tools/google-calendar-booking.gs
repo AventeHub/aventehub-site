@@ -21,7 +21,7 @@
  */
 var FROM = 'info@aventehub.com';
 var WA = 'https://wa.me/18133778225';
-var PHONE = '+1 (416) 450-6656';
+var PHONE = '{{PHONE_DISPLAY}}';
 
 function doPost(e) {
   var out = function (o) { return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON); };
