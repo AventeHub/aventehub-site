@@ -4,6 +4,8 @@
 // created by an agent only after Max approves the post (same rule as WASEND for WhatsApp).
 // GitHub Actions calls this endpoint every 10 minutes. For each open SOCIAL task that is due it:
 //   Facebook: video post (file_url) or multi-photo post; Instagram: Reel or carousel via the Content Publishing API.
+//   Then the same post as a story on Instagram + the Facebook Page (post.story = its own 9:16 file, else the reel video or
+//   the first carousel image; post.story === false or env SOCIAL_STORIES=off skips it).
 // Instagram videos need processing time, so the work is kept in the task body as "[fb] / [ig] / [igc]" lines
 // and finished on a later run. Done = task COMPLETED with the post links. Failure = task renamed SOCIALFAILED + reason.
 // Env (Vercel): HUBSPOT_TOKEN, META_PAGE_TOKEN (system-user or Page token: pages_manage_posts, pages_read_engagement,
@@ -165,7 +167,40 @@ module.exports = async (req, res) => {
             igDone = pl.permalink || m.id; add.push('[ig] ' + igDone);
           } else if (st.status_code === 'ERROR' || st.status_code === 'EXPIRED') throw new Error('Instagram processing ' + st.status_code + ': ' + (st.status || ''));
         }
-        const finished = !!((!plat.includes('fb') || fbDone) && (!plat.includes('ig') || igDone));
+        const feedDone = !!((!plat.includes('fb') || fbDone) && (!plat.includes('ig') || igDone));
+        // Stories (Max, Oct 17: every post also goes out as a story). Runs after the feed post is live.
+        // A story problem never fails the post: it is noted as [igsx] / [fbsx] and the task still completes.
+        let storiesDone = true;
+        if (feedDone && post.story !== false && process.env.SOCIAL_STORIES !== 'off') {
+          const sm = abs(post.story || post.media[0]), vid = /\.mp4($|\?)/i.test(sm);
+          if (plat.includes('ig') && t.igId && !has('[igs]') && !has('[igsx]')) {
+            try {
+              let sc = has('[igsc]');
+              if (!sc) { sc = (await g('POST', `/${t.igId}/media`, t.token, Object.assign({ media_type: 'STORIES' }, vid ? { video_url: sm } : { image_url: sm }))).id; add.push('[igsc] ' + sc); }
+              let st = await g('GET', '/' + sc, t.token, { fields: 'status_code,status' });
+              while (st.status_code === 'IN_PROGRESS' && Date.now() - started < 50000) { await sleep(4000); st = await g('GET', '/' + sc, t.token, { fields: 'status_code,status' }); }
+              if (st.status_code === 'FINISHED') add.push('[igs] ' + (await g('POST', `/${t.igId}/media_publish`, t.token, { creation_id: sc })).id);
+              else if (st.status_code === 'ERROR' || st.status_code === 'EXPIRED') throw new Error('processing ' + st.status_code + ': ' + (st.status || ''));
+              else storiesDone = false;   // still processing: the next run finishes it
+            } catch (e) { add.push('[igsx] ' + String(e.message || e).slice(0, 160)); }
+          }
+          if (plat.includes('fb') && !has('[fbs]') && !has('[fbsx]')) {
+            try {
+              if (vid) {
+                const s1 = await g('POST', `/${t.pageId}/video_stories`, t.token, { upload_phase: 'start' });
+                const up = await fetch(s1.upload_url, { method: 'POST', headers: { Authorization: 'OAuth ' + t.token, file_url: sm } });
+                if (!up.ok) throw new Error('video upload HTTP ' + up.status);
+                const s3 = await g('POST', `/${t.pageId}/video_stories`, t.token, { upload_phase: 'finish', video_id: s1.video_id });
+                add.push('[fbs] ' + (s3.post_id || s1.video_id));
+              } else {
+                const ph = await g('POST', `/${t.pageId}/photos`, t.token, { url: sm, published: false });
+                const s2 = await g('POST', `/${t.pageId}/photo_stories`, t.token, { photo_id: ph.id });
+                add.push('[fbs] ' + (s2.post_id || ph.id));
+              }
+            } catch (e) { add.push('[fbsx] ' + String(e.message || e).slice(0, 160)); }
+          }
+        }
+        const finished = feedDone && storiesDone;
         const newBody = body + add.map(a => `<p>${esc(a)}</p>`).join('') + (finished ? `<p>✅ Posted ${esc(new Date().toISOString().slice(0, 16).replace('T', ' '))} UTC</p>` : '');
         await save(finished ? { hs_task_body: newBody, hs_task_status: 'COMPLETED' } : { hs_task_body: newBody });
         out.push({ post: pid, finished, add });
