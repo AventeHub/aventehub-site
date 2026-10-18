@@ -254,36 +254,36 @@
   {
    "id": "p16",
    "title": "Move the light, not the wiring.",
-   "kind": "carousel",
+   "kind": "reel",
    "platforms": [
     "fb",
     "ig"
    ],
    "media": [
-    "/social/media/p16-1.jpg",
-    "/social/media/p16-2.jpg",
-    "/social/media/p16-3.jpg"
+    "/social/media/p16-reel.mp4"
    ],
    "caption_ig": "Move the light, not the wiring.\nMagnetic track lighting sits flush in the ceiling. Spots, lines and pendants click on and slide where the room needs them. Room ideas for your next project.\n💬 Comment SAMPLE and we bring the sample board to your office or site.\nOr WhatsApp +1 813-377-8225 · link in bio.\n📍 Vaughan · Toronto · GTA\n\n#MagneticTrackLighting #TrackLighting #LightingDesign #TorontoBuilders #ModernInteriors #GTADevelopers #LuxuryHomes",
    "caption_fb": "Move the light, not the wiring. Magnetic track lighting sits flush in the ceiling; spots, lines and pendants click on and slide where the room needs them.\n💬 Comment SAMPLE and we bring the sample board to you, or book a visit:\nhttps://www.aventehub.com/meet/?from=fb",
-   "planned": "2026-10-19 18:00 America/Toronto"
+   "planned": "2026-10-19 18:00 America/Toronto",
+   "cover": "/social/media/p16-cover.jpg",
+   "was": "carousel (video-first, Oct 18)"
   },
   {
    "id": "p17",
    "title": "Draw with light.",
-   "kind": "carousel",
+   "kind": "reel",
    "platforms": [
     "fb",
     "ig"
    ],
    "media": [
-    "/social/media/p17-1.jpg",
-    "/social/media/p17-2.jpg",
-    "/social/media/p17-3.jpg"
+    "/social/media/p17-reel.mp4"
    ],
    "caption_ig": "Draw with light.\nLED neon flex bends into soft lines along a stair, a corridor or a feature wall. Room ideas for model suites and lobbies.\n💬 Comment SAMPLE and we bring the sample board to your office or site.\nOr WhatsApp +1 813-377-8225 · link in bio.\n📍 Vaughan · Toronto · GTA\n\n#LEDNeon #NeonFlex #LightingDesign #FeatureWall #TorontoBuilders #InteriorDesignToronto #ModelSuite",
    "caption_fb": "Draw with light. LED neon flex bends into soft lines along a stair, a corridor or a feature wall. Ideas for model suites and lobbies.\n💬 Comment SAMPLE and we bring the sample board to you, or book a visit:\nhttps://www.aventehub.com/meet/?from=fb",
-   "planned": "2026-10-20 18:00 America/Toronto"
+   "planned": "2026-10-20 18:00 America/Toronto",
+   "cover": "/social/media/p17-cover.jpg",
+   "was": "carousel (video-first, Oct 18)"
   },
   {
    "id": "p18",
@@ -339,20 +339,19 @@
   {
    "id": "p21",
    "title": "Light along the floor.",
-   "kind": "carousel",
+   "kind": "reel",
    "platforms": [
     "fb",
     "ig"
    ],
    "planned": "2026-10-22 18:00 America/Toronto",
    "media": [
-    "/social/media/p21-1.jpg",
-    "/social/media/p21-2.jpg",
-    "/social/media/p21-3.jpg",
-    "/social/media/p21-4.jpg"
+    "/social/media/p21-reel.mp4"
    ],
    "caption_ig": "Light along the floor.\nLED baseboards turn a corridor, a stair or a kitchen toe-kick into a soft line of light. Room ideas for your next model suite.\n💬 Comment SAMPLE and we bring the sample board to your office or site.\nOr WhatsApp +1 813-377-8225 · link in bio.\n📍 Vaughan · Toronto · GTA\n\n#LEDBaseboard #LightingDesign #ModelSuite #TorontoBuilders #LuxuryInteriors #GTAHomes #AventeHub",
-   "caption_fb": "Light along the floor. LED baseboards turn a corridor, a stair or a kitchen toe-kick into a soft line of light. Room ideas for your next model suite.\n💬 Comment SAMPLE and we bring the sample board to you, or book a visit:\nhttps://www.aventehub.com/meet/?from=fb"
+   "caption_fb": "Light along the floor. LED baseboards turn a corridor, a stair or a kitchen toe-kick into a soft line of light. Room ideas for your next model suite.\n💬 Comment SAMPLE and we bring the sample board to you, or book a visit:\nhttps://www.aventehub.com/meet/?from=fb",
+   "cover": "/social/media/p21-cover.jpg",
+   "was": "carousel (video-first, Oct 18)"
   },
   {
    "id": "p22",
@@ -390,20 +389,19 @@
   {
    "id": "p24",
    "title": "Four modern lines.",
-   "kind": "carousel",
+   "kind": "reel",
    "platforms": [
     "fb",
     "ig"
    ],
    "planned": "2026-10-23 18:00 America/Toronto",
    "media": [
-    "/social/media/p24-1.jpg",
-    "/social/media/p24-2.jpg",
-    "/social/media/p24-3.jpg",
-    "/social/media/p24-4.jpg"
+    "/social/media/p24-reel.mp4"
    ],
    "caption_ig": "Four modern lines.\nWPC interior doors in clean, modern designs: walnut, oak, grey and white tones, with slim metal inlays. Part of our Door pack.\n💬 Comment SAMPLE and we bring the sample board to your office or site.\nOr WhatsApp +1 813-377-8225 · link in bio.\n📍 Vaughan · Toronto · GTA\n\n#InteriorDoors #WPCDoors #ModernDoors #TorontoBuilders #NewHomes #DesignBuild #AventeHub",
-   "caption_fb": "Four modern lines. WPC interior doors in clean, modern designs: walnut, oak, grey and white tones, with slim metal inlays. Part of our Door pack.\n💬 Comment SAMPLE and we bring the sample board to you, or book a visit:\nhttps://www.aventehub.com/meet/?from=fb"
+   "caption_fb": "Four modern lines. WPC interior doors in clean, modern designs: walnut, oak, grey and white tones, with slim metal inlays. Part of our Door pack.\n💬 Comment SAMPLE and we bring the sample board to you, or book a visit:\nhttps://www.aventehub.com/meet/?from=fb",
+   "cover": "/social/media/p24-cover.jpg",
+   "was": "carousel (video-first, Oct 18)"
   },
   {
    "id": "p25",
@@ -441,19 +439,19 @@
   {
    "id": "p27",
    "title": "Light the stair.",
-   "kind": "carousel",
+   "kind": "reel",
    "platforms": [
     "fb",
     "ig"
    ],
    "planned": "2026-10-24 18:00 America/Toronto",
    "media": [
-    "/social/media/p27-1.jpg",
-    "/social/media/p27-2.jpg",
-    "/social/media/p27-3.jpg"
+    "/social/media/p27-reel.mp4"
    ],
    "caption_ig": "Light the stair.\nThe stair is the first thing buyers see in a model home. Three ways to light it: along the floor, along the wall, from the ceiling. Room ideas.\n💬 Comment SAMPLE and we bring the sample board to your office or site.\nOr WhatsApp +1 813-377-8225 · link in bio.\n📍 Vaughan · Toronto · GTA\n\n#StairDesign #LEDBaseboard #LEDNeon #TrackLighting #ModelHome #TorontoBuilders #LuxuryHomes",
-   "caption_fb": "Light the stair. The stair is the first thing buyers see in a model home. Three ways to light it: along the floor, along the wall, from the ceiling. Room ideas.\n💬 Comment SAMPLE and we bring the sample board to you, or book a visit:\nhttps://www.aventehub.com/meet/?from=fb"
+   "caption_fb": "Light the stair. The stair is the first thing buyers see in a model home. Three ways to light it: along the floor, along the wall, from the ceiling. Room ideas.\n💬 Comment SAMPLE and we bring the sample board to you, or book a visit:\nhttps://www.aventehub.com/meet/?from=fb",
+   "cover": "/social/media/p27-cover.jpg",
+   "was": "carousel (video-first, Oct 18)"
   },
   {
    "id": "p28",
@@ -492,36 +490,36 @@
   {
    "id": "p30",
    "title": "Light the kitchen line.",
-   "kind": "carousel",
+   "kind": "reel",
    "platforms": [
     "fb",
     "ig"
    ],
    "planned": "2026-10-25 18:00 America/Toronto",
    "media": [
-    "/social/media/p30-1.jpg",
-    "/social/media/p30-2.jpg",
-    "/social/media/p30-3.jpg"
+    "/social/media/p30-reel.mp4"
    ],
    "caption_ig": "Light the kitchen line.\nA glow at the toe-kick, spots over the island, a soft line over the table. Lighting pack ideas for the room buyers judge first.\n💬 Comment SAMPLE and we bring the sample board to your office or site.\nOr WhatsApp +1 813-377-8225 · link in bio.\n📍 Vaughan · Toronto · GTA\n\n#KitchenLighting #LEDBaseboard #TrackLighting #KitchenDesign #TorontoBuilders #ModelSuite #LuxuryHomes",
-   "caption_fb": "Light the kitchen line. A glow at the toe-kick, spots over the island, a soft line over the table. Lighting pack ideas for the room buyers judge first.\n💬 Comment SAMPLE and we bring the sample board to you, or book a visit:\nhttps://www.aventehub.com/meet/?from=fb"
+   "caption_fb": "Light the kitchen line. A glow at the toe-kick, spots over the island, a soft line over the table. Lighting pack ideas for the room buyers judge first.\n💬 Comment SAMPLE and we bring the sample board to you, or book a visit:\nhttps://www.aventehub.com/meet/?from=fb",
+   "cover": "/social/media/p30-cover.jpg",
+   "was": "carousel (video-first, Oct 18)"
   },
   {
    "id": "p31",
    "title": "Two packs. One order.",
-   "kind": "carousel",
+   "kind": "reel",
    "platforms": [
     "fb",
     "ig"
    ],
    "planned": "2026-10-26 09:00 America/Toronto",
    "media": [
-    "/social/media/p31-1.jpg",
-    "/social/media/p31-2.jpg",
-    "/social/media/p31-3.jpg"
+    "/social/media/p31-reel.mp4"
    ],
    "caption_ig": "Two packs. One order.\nFor developers and builders: the Door pack and the Lighting pack, planned per home and delivered as one order, straight from the factory.\n💬 Comment SAMPLE and we bring the sample board to your office or site.\nOr WhatsApp +1 813-377-8225 · link in bio.\n📍 Vaughan · Toronto · GTA\n\n#Developers #HomeBuilders #TorontoBuilders #GTADevelopers #NewBuild #LuxuryHomes #AventeHub",
-   "caption_fb": "Two packs. One order. For developers and builders: the Door pack and the Lighting pack, planned per home and delivered as one order, straight from the factory.\n💬 Comment SAMPLE and we bring the sample board to you, or book a visit:\nhttps://www.aventehub.com/meet/?from=fb"
+   "caption_fb": "Two packs. One order. For developers and builders: the Door pack and the Lighting pack, planned per home and delivered as one order, straight from the factory.\n💬 Comment SAMPLE and we bring the sample board to you, or book a visit:\nhttps://www.aventehub.com/meet/?from=fb",
+   "cover": "/social/media/p31-cover.jpg",
+   "was": "carousel (video-first, Oct 18)"
   },
   {
    "id": "p32",
@@ -560,19 +558,19 @@
   {
    "id": "p34",
    "title": "One line of light.",
-   "kind": "carousel",
+   "kind": "reel",
    "platforms": [
     "fb",
     "ig"
    ],
    "planned": "2026-10-27 09:00 America/Toronto",
    "media": [
-    "/social/media/p34-1.jpg",
-    "/social/media/p34-2.jpg",
-    "/social/media/p34-3.jpg"
+    "/social/media/p34-reel.mp4"
    ],
    "caption_ig": "One line of light.\nRunning-light LED strips draw a single line through a corridor or along a living-room wall. Room ideas for your next model suite.\n💬 Comment SAMPLE and we bring the sample board to your office or site.\nOr WhatsApp +1 813-377-8225 · link in bio.\n📍 Vaughan · Toronto · GTA\n\n#LEDStrip #LightingDesign #ModelSuite #TorontoBuilders #GTADevelopers #ModernInteriors #AventeHub",
-   "caption_fb": "One line of light. Running-light LED strips draw a single line through a corridor or along a living-room wall. Room ideas for your next model suite.\n💬 Comment SAMPLE and we bring the sample board to you, or book a visit:\nhttps://www.aventehub.com/meet/?from=fb"
+   "caption_fb": "One line of light. Running-light LED strips draw a single line through a corridor or along a living-room wall. Room ideas for your next model suite.\n💬 Comment SAMPLE and we bring the sample board to you, or book a visit:\nhttps://www.aventehub.com/meet/?from=fb",
+   "cover": "/social/media/p34-cover.jpg",
+   "was": "carousel (video-first, Oct 18)"
   },
   {
    "id": "p35",
@@ -609,20 +607,19 @@
   {
    "id": "p37",
    "title": "Slim track, quiet ceiling.",
-   "kind": "carousel",
+   "kind": "reel",
    "platforms": [
     "fb",
     "ig"
    ],
    "planned": "2026-10-28 09:00 America/Toronto",
    "media": [
-    "/social/media/p37-1.jpg",
-    "/social/media/p37-2.jpg",
-    "/social/media/p37-3.jpg",
-    "/social/media/p37-4.jpg"
+    "/social/media/p37-reel.mp4"
    ],
    "caption_ig": "Slim track, quiet ceiling.\nA slim magnetic track sits flush in the ceiling: spots and linear lights click on where the room needs them, and the ceiling stays clean.\n💬 Comment SAMPLE and we bring the sample board to your office or site.\nOr WhatsApp +1 813-377-8225 · link in bio.\n📍 Vaughan · Toronto · GTA\n\n#MagneticTrackLighting #TrackLighting #MinimalDesign #TorontoBuilders #ModernHomes #LightingDesign #AventeHub",
-   "caption_fb": "Slim track, quiet ceiling. A slim magnetic track sits flush in the ceiling: spots and linear lights click on where the room needs them, and the ceiling stays clean.\n💬 Comment SAMPLE and we bring the sample board to you, or book a visit:\nhttps://www.aventehub.com/meet/?from=fb"
+   "caption_fb": "Slim track, quiet ceiling. A slim magnetic track sits flush in the ceiling: spots and linear lights click on where the room needs them, and the ceiling stays clean.\n💬 Comment SAMPLE and we bring the sample board to you, or book a visit:\nhttps://www.aventehub.com/meet/?from=fb",
+   "cover": "/social/media/p37-cover.jpg",
+   "was": "carousel (video-first, Oct 18)"
   },
   {
    "id": "p38",
@@ -695,37 +692,36 @@
   {
    "id": "p42",
    "title": "The crown, up close.",
-   "kind": "carousel",
+   "kind": "reel",
    "platforms": [
     "fb",
     "ig"
    ],
    "planned": "2026-10-29 18:00 America/Toronto",
    "media": [
-    "/social/media/p42-1.jpg",
-    "/social/media/p42-2.jpg",
-    "/social/media/p42-3.jpg"
+    "/social/media/p42-reel.mp4"
    ],
    "caption_ig": "The crown, up close.\nLED crown moulding profiles from our Lighting pack: a clean section, a hidden strip and a soft wash on the ceiling.\n💬 Comment SAMPLE and we bring the sample board to your office or site.\nOr WhatsApp +1 813-377-8225 · link in bio.\n📍 Vaughan · Toronto · GTA\n\n#LEDCrownMoulding #CrownMoulding #CeilingDesign #TorontoBuilders #LuxuryInteriors #DesignDetails #AventeHub",
-   "caption_fb": "The crown, up close. LED crown moulding profiles from our Lighting pack: a clean section, a hidden strip and a soft wash on the ceiling.\n💬 Comment SAMPLE and we bring the sample board to you, or book a visit:\nhttps://www.aventehub.com/meet/?from=fb"
+   "caption_fb": "The crown, up close. LED crown moulding profiles from our Lighting pack: a clean section, a hidden strip and a soft wash on the ceiling.\n💬 Comment SAMPLE and we bring the sample board to you, or book a visit:\nhttps://www.aventehub.com/meet/?from=fb",
+   "cover": "/social/media/p42-cover.jpg",
+   "was": "carousel (video-first, Oct 18)"
   },
   {
    "id": "p43",
    "title": "Four ways to light a living room.",
-   "kind": "carousel",
+   "kind": "reel",
    "platforms": [
     "fb",
     "ig"
    ],
    "planned": "2026-10-30 09:00 America/Toronto",
    "media": [
-    "/social/media/p43-1.jpg",
-    "/social/media/p43-2.jpg",
-    "/social/media/p43-3.jpg",
-    "/social/media/p43-4.jpg"
+    "/social/media/p43-reel.mp4"
    ],
    "caption_ig": "Four ways to light a living room.\nCrown, cove, wall lines or track: the Lighting pack gives each room its own glow. Room ideas for your next model home.\n💬 Comment SAMPLE and we bring the sample board to your office or site.\nOr WhatsApp +1 813-377-8225 · link in bio.\n📍 Vaughan · Toronto · GTA\n\n#LivingRoomDesign #LightingDesign #ModelHome #TorontoBuilders #GTADevelopers #LuxuryInteriors #AventeHub",
-   "caption_fb": "Four ways to light a living room. Crown, cove, wall lines or track: the Lighting pack gives each room its own glow. Room ideas for your next model home.\n💬 Comment SAMPLE and we bring the sample board to you, or book a visit:\nhttps://www.aventehub.com/meet/?from=fb"
+   "caption_fb": "Four ways to light a living room. Crown, cove, wall lines or track: the Lighting pack gives each room its own glow. Room ideas for your next model home.\n💬 Comment SAMPLE and we bring the sample board to you, or book a visit:\nhttps://www.aventehub.com/meet/?from=fb",
+   "cover": "/social/media/p43-cover.jpg",
+   "was": "carousel (video-first, Oct 18)"
   },
   {
    "id": "p44",
@@ -763,20 +759,19 @@
   {
    "id": "p46",
    "title": "Light for the gallery wall.",
-   "kind": "carousel",
+   "kind": "reel",
    "platforms": [
     "fb",
     "ig"
    ],
    "planned": "2026-10-31 09:00 America/Toronto",
    "media": [
-    "/social/media/p46-1.jpg",
-    "/social/media/p46-2.jpg",
-    "/social/media/p46-3.jpg",
-    "/social/media/p46-4.jpg"
+    "/social/media/p46-reel.mp4"
    ],
    "caption_ig": "Light for the gallery wall.\nPendants, grille spots and linear lights on one magnetic track: art, shelves and dining tables each get the light they need.\n💬 Comment SAMPLE and we bring the sample board to your office or site.\nOr WhatsApp +1 813-377-8225 · link in bio.\n📍 Vaughan · Toronto · GTA\n\n#MagneticTrackLighting #GalleryLighting #LightingDesign #TorontoBuilders #LuxuryHomes #InteriorArchitecture #AventeHub",
-   "caption_fb": "Light for the gallery wall. Pendants, grille spots and linear lights on one magnetic track: art, shelves and dining tables each get the light they need.\n💬 Comment SAMPLE and we bring the sample board to you, or book a visit:\nhttps://www.aventehub.com/meet/?from=fb"
+   "caption_fb": "Light for the gallery wall. Pendants, grille spots and linear lights on one magnetic track: art, shelves and dining tables each get the light they need.\n💬 Comment SAMPLE and we bring the sample board to you, or book a visit:\nhttps://www.aventehub.com/meet/?from=fb",
+   "cover": "/social/media/p46-cover.jpg",
+   "was": "carousel (video-first, Oct 18)"
   },
   {
    "id": "p47",
