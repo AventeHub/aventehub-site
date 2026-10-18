@@ -14,7 +14,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 TOKENS = ('{{PHONE_DISPLAY}}', '{{PHONE_DASH}}', '{{PHONE_E164}}')
 PDF = os.path.join(ROOT, 'email', 'Avente-product-packs.pdf')
 # where the number sits in the PDF (page index 1): right after "Phone", Jost SemiBold 9 pt, cream
-PDF_PAGE, PDF_RECT, PDF_ORIGIN = 1, (204.0, 688.5, 300.0, 699.0), (204.785, 696.3)
+PDF_PAGE, PDF_RECT, PDF_ORIGIN = 1, (204.0, 688.5, 310.0, 699.0), (204.785, 696.3)
 CREAM = (0xF1 / 255, 0xE7 / 255, 0xD6 / 255)
 BG = (0x1B / 255, 0x15 / 255, 0x12 / 255)
 
