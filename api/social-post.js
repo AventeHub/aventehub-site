@@ -105,6 +105,19 @@ async function insights(t) {
   return out;
 }
 
+// Verifies a Google ID token (from ScriptApp.getIdentityToken()) with Google's tokeninfo endpoint.
+async function googleClock(tok) {
+  if (!tok || tok.length < 100) return false;
+  try {
+    const r = await fetch('https://oauth2.googleapis.com/tokeninfo?id_token=' + encodeURIComponent(tok));
+    if (!r.ok) return false;
+    const j = await r.json();
+    const allowed = (process.env.SOCIAL_CLOCK_EMAILS || 'max@aventehub.com').toLowerCase().split(',').map(x => x.trim());
+    return /accounts\.google\.com$/.test(j.iss || '') && String(j.email_verified) === 'true'
+      && allowed.includes(String(j.email || '').toLowerCase()) && Number(j.exp || 0) * 1000 > Date.now();
+  } catch (e) { return false; }
+}
+
 module.exports = async (req, res) => {
   res.setHeader('Cache-Control', 'no-store');
   const started = Date.now();
@@ -124,7 +137,10 @@ module.exports = async (req, res) => {
   // otherwise with user-agent vercel-cron. The run only publishes posts that already have a due SOCIAL task.
   const vcron = process.env.CRON_SECRET ? req.headers.authorization === 'Bearer ' + process.env.CRON_SECRET
                                         : /vercel-cron/i.test(req.headers['user-agent'] || '');
-  if (key && req.headers['x-cron-key'] !== key && !vcron) return res.status(403).json({ ok: false });
+  // Apps Script clock (tools/social-tick.gs) proves itself with a Google identity token of an allowed account
+  // (no shared key to copy anywhere). Allowed: SOCIAL_CLOCK_EMAILS (comma list), default max@aventehub.com.
+  const gok = await googleClock(req.headers['x-google-id-token']);
+  if (key && req.headers['x-cron-key'] !== key && !vcron && !gok) return res.status(403).json({ ok: false });
   if (!process.env.HUBSPOT_TOKEN || !process.env.META_PAGE_TOKEN) return res.status(200).json({ ok: false, reason: 'missing env' });
   const out = [];
   try {
