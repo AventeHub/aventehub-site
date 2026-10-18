@@ -205,7 +205,15 @@ module.exports = async (req, res) => {
               if (vid) {
                 const s1 = await g('POST', `/${t.pageId}/video_stories`, t.token, { upload_phase: 'start' });
                 const up = await fetch(s1.upload_url, { method: 'POST', headers: { Authorization: 'OAuth ' + t.token, file_url: sm } });
-                if (!up.ok) throw new Error('video upload HTTP ' + up.status);
+                if (!up.ok) {
+                  // Hosted-URL upload refused (HTTP 422 on p06, Oct 18): send the file bytes instead.
+                  const why1 = 'url HTTP ' + up.status + ' ' + (await up.text().catch(() => '')).slice(0, 60);
+                  const vr = await fetch(sm);
+                  if (!vr.ok) throw new Error(why1 + ' / file GET HTTP ' + vr.status);
+                  const buf = Buffer.from(await vr.arrayBuffer());
+                  const up2 = await fetch(s1.upload_url, { method: 'POST', headers: { Authorization: 'OAuth ' + t.token, offset: '0', file_size: String(buf.length), 'Content-Type': 'application/octet-stream' }, body: buf });
+                  if (!up2.ok) throw new Error(why1 + ' / bytes HTTP ' + up2.status + ' ' + (await up2.text().catch(() => '')).slice(0, 60));
+                }
                 const s3 = await g('POST', `/${t.pageId}/video_stories`, t.token, { upload_phase: 'finish', video_id: s1.video_id });
                 add.push('[fbs] ' + (s3.post_id || s1.video_id));
               } else {
