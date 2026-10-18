@@ -1,0 +1,23 @@
+name: Media CDN refresh
+# Big media is served from GitHub through jsDelivr (see .vercelignore + vercel.json rewrites).
+# jsDelivr caches @main for up to 12 h, so after media changes on main we purge those paths.
+on:
+  push:
+    branches: [main]
+    paths: ['*/m/**', 'media/**', 'social/media/**']
+  workflow_dispatch: {}
+jobs:
+  purge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 2 }
+      - name: Purge changed media on jsDelivr
+        run: |
+          git diff --name-only HEAD~1 HEAD -- '*/m/*' 'media/*' 'social/media/*' > files.txt || true
+          echo "/" >> files.txt
+          while read -r f; do
+            [ -n "$f" ] || continue
+            curl -fsS -m 30 "https://purge.jsdelivr.net/gh/AventeHub/aventehub-site@main/${f#/}" >/dev/null && echo "purged $f" || echo "skip $f"
+          done < files.txt

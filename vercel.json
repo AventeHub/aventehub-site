@@ -84,5 +84,19 @@
    "path": "/api/social-post/",
    "schedule": "40 22 * * *"
   }
+ ],
+ "rewrites": [
+  {
+   "source": "/social/media/:file*",
+   "destination": "https://cdn.jsdelivr.net/gh/AventeHub/aventehub-site@main/social/media/:file*"
+  },
+  {
+   "source": "/media/:file*",
+   "destination": "https://cdn.jsdelivr.net/gh/AventeHub/aventehub-site@main/media/:file*"
+  },
+  {
+   "source": "/:dir/m/:file*",
+   "destination": "https://cdn.jsdelivr.net/gh/AventeHub/aventehub-site@main/:dir/m/:file*"
+  }
  ]
 }
