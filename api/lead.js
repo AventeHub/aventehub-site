@@ -52,7 +52,7 @@ module.exports = async (req, res) => {
           start, duration: video ? 1800000 : 3600000, email, name: a.name || '', meetingType: a.meetingType || '', door: a.door || '',
           title: (video ? 'Avente Hub video call' : 'Avente Hub sample-board visit') + ' · ' + (a.name || email) + (a.company ? ' (' + a.company + ')' : ''),
           location: video ? 'Video call (link to follow)' : (where || 'To confirm'),
-          description: 'Booked on aventehub.com/meet/\n\n' + props.message + '\n\nQuestions: WhatsApp https://wa.me/18133778225 · +1 (416) 450-6656 · info@aventehub.com' }) });
+          description: 'Booked on aventehub.com/meet/\n\n' + props.message + '\n\nQuestions: WhatsApp https://wa.me/18133778225 · +1 (416) 649-8282 · info@aventehub.com' }) });
         const j = await b.json().catch(() => ({}));
         booked = !!j.ok; if (!booked) bookErr = j.error || ('HTTP ' + b.status);
       } catch (e) { booked = false; bookErr = String(e).slice(0, 120); }
