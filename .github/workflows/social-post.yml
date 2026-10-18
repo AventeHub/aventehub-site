@@ -1,7 +1,10 @@
 # Publishes approved social posts (HubSpot tasks "SOCIAL p0X" whose due time has passed)
-# to the Avente Hub Facebook Page and Instagram @aventehub via /api/social-post/.
-# Every 10 minutes; Instagram Reels need a second run to finish processing, which this covers.
-# Never fails on a network hiccup (|| true), so it sends no failure emails. Free: public repo.
+# to the Avente Hub Facebook Page and Instagram @aventehub (feed + story) via /api/social-post/.
+# Triggers: (1) the Apps Script clock (tools/social-tick.gs, every 5 min, the precise one),
+# (2) a manual / API "workflow_dispatch" (starts within seconds), (3) GitHub's schedule as a late backup
+# (GitHub runs it 1-3 h late, so it is never the main clock). Vercel Cron (vercel.json) is a second backup.
+# One run keeps calling until every due post (Reel processing + stories) is finished, max ~8 min.
+# Never fails on a network hiccup, so it sends no failure emails. Free: public repo.
 name: Social autopost
 on:
   schedule: [{ cron: '3,13,23,33,43,53 * * * *' }]
@@ -9,8 +12,13 @@ on:
 jobs:
   post:
     runs-on: ubuntu-latest
-    timeout-minutes: 3
+    timeout-minutes: 10
     steps:
-      - name: Publish due social posts
+      - name: Publish due social posts (feed + story)
         run: |
-          curl -fsS -m 70 -H "x-cron-key: ${{ secrets.WA_CRON_KEY }}" https://www.aventehub.com/api/social-post/ || true
+          for i in 1 2 3 4 5 6 7 8; do
+            r=$(curl -sS -m 70 -H "x-cron-key: ${{ secrets.WA_CRON_KEY }}" https://www.aventehub.com/api/social-post/ || echo '{}')
+            echo "run $i: $r"
+            echo "$r" | grep -q '"finished":false' || break
+            sleep 45
+          done
