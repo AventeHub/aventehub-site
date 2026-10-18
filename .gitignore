@@ -1,3 +1,12 @@
 site-check/
 *.DS_Store
 node_modules/
+
+# social kit build scratch
+tools/social-kit/fonts/
+tools/social-kit/frames/
+tools/social-kit/batch*.json
+tools/social-kit/a.m4a
+tools/social-kit/band.png
+tools/social-kit/endcard_v3.png
+tools/social-kit/main.mp4
