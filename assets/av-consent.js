@@ -1,7 +1,8 @@
 /* Avente Hub: cookie notice + HubSpot tracking (portal 343752125) + Meta Pixel (dataset "Avente Hub Website" 1769431784332041).
    Both load unless the visitor clicked "Decline" (remembered in this browser).
    Decline also tells HubSpot not to track and revokes Meta consent. Notice shows once until OK or Decline.
-   Meta events: PageView on every page; ViewContent with the product category on product pages
+   Meta events: PageView on every page; ViewContent with the product category on product pages;
+   Contact (WhatsApp / email taps), Lead (any /meet/ request) and Schedule (a booked time) for exclusions and results
    (used for remarketing audiences such as "viewed LED crown moulding in the last 30 days"). */
 (function () {
   var K = 'av-cookies', v = null;
@@ -28,6 +29,15 @@
     }
   }
   if (v !== 'no') { load(); pixel(); }
+  /* Oct 16: conversion events for the retargeting plan (exclude people who already booked or wrote).
+     Contact = tap on a WhatsApp or email link; Lead / Schedule are sent by the /meet/ page after a request. */
+  window.avTrack = function (ev, data) { try { if (window.fbq && v !== 'no') fbq('track', ev, data || {}); } catch (e) {} };
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href]'); if (!a) return;
+    var h = a.getAttribute('href') || '';
+    if (/wa\.me\//.test(h)) window.avTrack('Contact', { content_category: 'whatsapp' });
+    else if (/^mailto:/i.test(h)) window.avTrack('Contact', { content_category: 'email' });
+  }, true);
   if (v) return;
   function bar() {
     var b = document.createElement('div');
