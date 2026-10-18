@@ -1,6 +1,6 @@
 {
  "about": "Avente Hub social posts. A post goes live only when an agent creates the HubSpot task \"SOCIAL <id>\" after Max approves it; api/social-post.js publishes it at the task due time. Design v2 (Oct 15): business-card look; reels = approved slim-frame story + business-card end card, each with a branded cover (IG cover_url); carousels 4:5 (1080x1350).",
- "updated": "2026-10-17",
+ "updated": "2026-10-18",
  "posts": [
   {
    "id": "p01",
@@ -556,6 +556,261 @@
    ],
    "caption_ig": "Which room sells the suite? 🏡\nBuilders and developers: where does light make buyers stop?\n1 Lobby · 2 Corridor · 3 Kitchen · 4 Bedroom\nComment a number. We'll share what we hear across the GTA.\n💬 Comment SAMPLE and we bring the sample board to your office or site.\nOr WhatsApp +1 813-377-8225 · link in bio.\n📍 Vaughan · Toronto · GTA\n\n#ModelSuite #SalesCentre #TorontoBuilders #GTADevelopers #LightingDesign #NewHomeSales #LuxuryHomes",
    "caption_fb": "Which room sells the suite? 🏡 Builders and developers: where does light make buyers stop? 1 Lobby · 2 Corridor · 3 Kitchen · 4 Bedroom Comment a number. We'll share what we hear across the GTA.\n💬 Comment SAMPLE and we bring the sample board to you, or book a visit:\nhttps://www.aventehub.com/meet/?from=fb"
+  },
+  {
+   "id": "p34",
+   "title": "One line of light.",
+   "kind": "carousel",
+   "platforms": [
+    "fb",
+    "ig"
+   ],
+   "planned": "2026-10-27 09:00 America/Toronto",
+   "media": [
+    "/social/media/p34-1.jpg",
+    "/social/media/p34-2.jpg",
+    "/social/media/p34-3.jpg"
+   ],
+   "caption_ig": "One line of light.\nRunning-light LED strips draw a single line through a corridor or along a living-room wall. Room ideas for your next model suite.\n💬 Comment SAMPLE and we bring the sample board to your office or site.\nOr WhatsApp +1 813-377-8225 · link in bio.\n📍 Vaughan · Toronto · GTA\n\n#LEDStrip #LightingDesign #ModelSuite #TorontoBuilders #GTADevelopers #ModernInteriors #AventeHub",
+   "caption_fb": "One line of light. Running-light LED strips draw a single line through a corridor or along a living-room wall. Room ideas for your next model suite.\n💬 Comment SAMPLE and we bring the sample board to you, or book a visit:\nhttps://www.aventehub.com/meet/?from=fb"
+  },
+  {
+   "id": "p35",
+   "title": "Light inside the baseboard.",
+   "kind": "reel",
+   "platforms": [
+    "fb",
+    "ig"
+   ],
+   "planned": "2026-10-27 12:00 America/Toronto",
+   "media": [
+    "/social/media/p35-reel.mp4"
+   ],
+   "cover": "/social/media/p35-cover.jpg",
+   "caption_ig": "Light inside the baseboard.\nAVH-A-7 LED baseboard: the strip sits inside the aluminum profile, so the room gets a soft glow along the floor and a clean line on the wall.\n💬 Comment SAMPLE and we bring the sample board to your office or site.\nOr WhatsApp +1 813-377-8225 · link in bio.\n📍 Vaughan · Toronto · GTA\n\n#LEDBaseboard #Baseboards #LightingDesign #TorontoBuilders #LuxuryInteriors #NewHomes",
+   "caption_fb": "Light inside the baseboard. AVH-A-7 LED baseboard: the strip sits inside the aluminum profile, so the room gets a soft glow along the floor and a clean line on the wall.\n💬 Comment SAMPLE and we bring the sample board to you, or book a visit:\nhttps://www.aventehub.com/meet/?from=fb"
+  },
+  {
+   "id": "p36",
+   "title": "Warm or cool?",
+   "kind": "carousel",
+   "platforms": [
+    "fb",
+    "ig"
+   ],
+   "planned": "2026-10-27 18:00 America/Toronto",
+   "media": [
+    "/social/media/p36-1.jpg",
+    "/social/media/p36-2.jpg"
+   ],
+   "caption_ig": "Warm or cool? 💡\nSame corridor, two colour temperatures. For your next model suite: warm 3000K (1) or neutral 4000K (2)?\nComment 1 or 2. We read every answer.\n💬 Comment SAMPLE and we bring the sample board to your office or site.\nOr WhatsApp +1 813-377-8225 · link in bio.\n📍 Vaughan · Toronto · GTA\n\n#LightingDesign #ColourTemperature #ModelSuite #TorontoBuilders #GTADevelopers #InteriorDesignToronto",
+   "caption_fb": "Warm or cool? 💡 Same corridor, two colour temperatures. For your next model suite: warm 3000K (1) or neutral 4000K (2)? Comment 1 or 2. We read every answer.\n💬 Comment SAMPLE and we bring the sample board to you, or book a visit:\nhttps://www.aventehub.com/meet/?from=fb"
+  },
+  {
+   "id": "p37",
+   "title": "Slim track, quiet ceiling.",
+   "kind": "carousel",
+   "platforms": [
+    "fb",
+    "ig"
+   ],
+   "planned": "2026-10-28 09:00 America/Toronto",
+   "media": [
+    "/social/media/p37-1.jpg",
+    "/social/media/p37-2.jpg",
+    "/social/media/p37-3.jpg",
+    "/social/media/p37-4.jpg"
+   ],
+   "caption_ig": "Slim track, quiet ceiling.\nA slim magnetic track sits flush in the ceiling: spots and linear lights click on where the room needs them, and the ceiling stays clean.\n💬 Comment SAMPLE and we bring the sample board to your office or site.\nOr WhatsApp +1 813-377-8225 · link in bio.\n📍 Vaughan · Toronto · GTA\n\n#MagneticTrackLighting #TrackLighting #MinimalDesign #TorontoBuilders #ModernHomes #LightingDesign #AventeHub",
+   "caption_fb": "Slim track, quiet ceiling. A slim magnetic track sits flush in the ceiling: spots and linear lights click on where the room needs them, and the ceiling stays clean.\n💬 Comment SAMPLE and we bring the sample board to you, or book a visit:\nhttps://www.aventehub.com/meet/?from=fb"
+  },
+  {
+   "id": "p38",
+   "title": "Flush to the wall.",
+   "kind": "reel",
+   "platforms": [
+    "fb",
+    "ig"
+   ],
+   "planned": "2026-10-28 12:00 America/Toronto",
+   "media": [
+    "/social/media/p38-reel.mp4"
+   ],
+   "cover": "/social/media/p38-cover.jpg",
+   "caption_ig": "Flush to the wall.\nAVH-A-33 aluminum baseboard: a slim profile that clips on and sits close to the wall, in modern colours.\n💬 Comment SAMPLE and we bring the sample board to your office or site.\nOr WhatsApp +1 813-377-8225 · link in bio.\n📍 Vaughan · Toronto · GTA\n\n#AluminumBaseboard #Baseboards #MinimalDesign #TorontoBuilders #CustomHomesToronto #DesignDetails",
+   "caption_fb": "Flush to the wall. AVH-A-33 aluminum baseboard: a slim profile that clips on and sits close to the wall, in modern colours.\n💬 Comment SAMPLE and we bring the sample board to you, or book a visit:\nhttps://www.aventehub.com/meet/?from=fb"
+  },
+  {
+   "id": "p39",
+   "title": "Pick a finish.",
+   "kind": "carousel",
+   "platforms": [
+    "fb",
+    "ig"
+   ],
+   "planned": "2026-10-28 18:00 America/Toronto",
+   "media": [
+    "/social/media/p39-1.jpg",
+    "/social/media/p39-2.jpg",
+    "/social/media/p39-3.jpg",
+    "/social/media/p39-4.jpg"
+   ],
+   "caption_ig": "Pick a finish. ✨\nAVH-A-5 aluminum baseboard: black (1), brass (2), rose gold (3) or warm white (4)?\nComment a number. We read every answer.\n💬 Comment SAMPLE and we bring the sample board to your office or site.\nOr WhatsApp +1 813-377-8225 · link in bio.\n📍 Vaughan · Toronto · GTA\n\n#AluminumBaseboard #Finishes #InteriorDesignToronto #TorontoBuilders #CustomHomesToronto #LuxuryInteriors #AventeHub",
+   "caption_fb": "Pick a finish. ✨ AVH-A-5 aluminum baseboard: black (1), brass (2), rose gold (3) or warm white (4)? Comment a number. We read every answer.\n💬 Comment SAMPLE and we bring the sample board to you, or book a visit:\nhttps://www.aventehub.com/meet/?from=fb"
+  },
+  {
+   "id": "p40",
+   "title": "Light the facade.",
+   "kind": "carousel",
+   "platforms": [
+    "fb",
+    "ig"
+   ],
+   "planned": "2026-10-29 09:00 America/Toronto",
+   "media": [
+    "/social/media/p40-1.jpg",
+    "/social/media/p40-2.jpg",
+    "/social/media/p40-3.jpg",
+    "/social/media/p40-4.jpg"
+   ],
+   "caption_ig": "Light the facade.\nLED neon flex traces the lines of a house, an entrance canopy or a curved office front. The building reads at night, the way buyers first see it.\n💬 Comment SAMPLE and we bring the sample board to your office or site.\nOr WhatsApp +1 813-377-8225 · link in bio.\n📍 Vaughan · Toronto · GTA\n\n#LEDNeon #FacadeLighting #ArchitecturalLighting #TorontoBuilders #GTADevelopers #ExteriorDesign #AventeHub",
+   "caption_fb": "Light the facade. LED neon flex traces the lines of a house, an entrance canopy or a curved office front. The building reads at night, the way buyers first see it.\n💬 Comment SAMPLE and we bring the sample board to you, or book a visit:\nhttps://www.aventehub.com/meet/?from=fb"
+  },
+  {
+   "id": "p41",
+   "title": "Lines after dark.",
+   "kind": "reel",
+   "platforms": [
+    "fb",
+    "ig"
+   ],
+   "planned": "2026-10-29 12:00 America/Toronto",
+   "media": [
+    "/social/media/p41-reel.mp4"
+   ],
+   "cover": "/social/media/p41-cover.jpg",
+   "caption_ig": "Lines after dark.\nLED neon flex on a house, an entrance and a curved front: continuous lines of light that follow the architecture.\n💬 Comment SAMPLE and we bring the sample board to your office or site.\nOr WhatsApp +1 813-377-8225 · link in bio.\n📍 Vaughan · Toronto · GTA\n\n#LEDNeon #FacadeLighting #ArchitecturalLighting #TorontoBuilders #LuxuryHomes #NightDesign",
+   "caption_fb": "Lines after dark. LED neon flex on a house, an entrance and a curved front: continuous lines of light that follow the architecture.\n💬 Comment SAMPLE and we bring the sample board to you, or book a visit:\nhttps://www.aventehub.com/meet/?from=fb"
+  },
+  {
+   "id": "p42",
+   "title": "The crown, up close.",
+   "kind": "carousel",
+   "platforms": [
+    "fb",
+    "ig"
+   ],
+   "planned": "2026-10-29 18:00 America/Toronto",
+   "media": [
+    "/social/media/p42-1.jpg",
+    "/social/media/p42-2.jpg",
+    "/social/media/p42-3.jpg"
+   ],
+   "caption_ig": "The crown, up close.\nLED crown moulding profiles from our Lighting pack: a clean section, a hidden strip and a soft wash on the ceiling.\n💬 Comment SAMPLE and we bring the sample board to your office or site.\nOr WhatsApp +1 813-377-8225 · link in bio.\n📍 Vaughan · Toronto · GTA\n\n#LEDCrownMoulding #CrownMoulding #CeilingDesign #TorontoBuilders #LuxuryInteriors #DesignDetails #AventeHub",
+   "caption_fb": "The crown, up close. LED crown moulding profiles from our Lighting pack: a clean section, a hidden strip and a soft wash on the ceiling.\n💬 Comment SAMPLE and we bring the sample board to you, or book a visit:\nhttps://www.aventehub.com/meet/?from=fb"
+  },
+  {
+   "id": "p43",
+   "title": "Four ways to light a living room.",
+   "kind": "carousel",
+   "platforms": [
+    "fb",
+    "ig"
+   ],
+   "planned": "2026-10-30 09:00 America/Toronto",
+   "media": [
+    "/social/media/p43-1.jpg",
+    "/social/media/p43-2.jpg",
+    "/social/media/p43-3.jpg",
+    "/social/media/p43-4.jpg"
+   ],
+   "caption_ig": "Four ways to light a living room.\nCrown, cove, wall lines or track: the Lighting pack gives each room its own glow. Room ideas for your next model home.\n💬 Comment SAMPLE and we bring the sample board to your office or site.\nOr WhatsApp +1 813-377-8225 · link in bio.\n📍 Vaughan · Toronto · GTA\n\n#LivingRoomDesign #LightingDesign #ModelHome #TorontoBuilders #GTADevelopers #LuxuryInteriors #AventeHub",
+   "caption_fb": "Four ways to light a living room. Crown, cove, wall lines or track: the Lighting pack gives each room its own glow. Room ideas for your next model home.\n💬 Comment SAMPLE and we bring the sample board to you, or book a visit:\nhttps://www.aventehub.com/meet/?from=fb"
+  },
+  {
+   "id": "p44",
+   "title": "The ceiling, lit.",
+   "kind": "reel",
+   "platforms": [
+    "fb",
+    "ig"
+   ],
+   "planned": "2026-10-30 12:00 America/Toronto",
+   "media": [
+    "/social/media/p44-reel.mp4"
+   ],
+   "cover": "/social/media/p44-cover.jpg",
+   "caption_ig": "The ceiling, lit.\nAVH-HG23 LED crown moulding: the profile, the strip and the glow, from section to finished room.\n💬 Comment SAMPLE and we bring the sample board to your office or site.\nOr WhatsApp +1 813-377-8225 · link in bio.\n📍 Vaughan · Toronto · GTA\n\n#LEDCrownMoulding #CrownMoulding #LightingDesign #TorontoBuilders #NewHomes #ModernInteriors",
+   "caption_fb": "The ceiling, lit. AVH-HG23 LED crown moulding: the profile, the strip and the glow, from section to finished room.\n💬 Comment SAMPLE and we bring the sample board to you, or book a visit:\nhttps://www.aventehub.com/meet/?from=fb"
+  },
+  {
+   "id": "p45",
+   "title": "Which baseboard?",
+   "kind": "carousel",
+   "platforms": [
+    "fb",
+    "ig"
+   ],
+   "planned": "2026-10-30 18:00 America/Toronto",
+   "media": [
+    "/social/media/p45-1.jpg",
+    "/social/media/p45-2.jpg",
+    "/social/media/p45-3.jpg"
+   ],
+   "caption_ig": "Which baseboard? 🏡\nFor your next project: aluminum (1), wood grain (2) or LED (3)?\nComment 1, 2 or 3. We read every answer.\n💬 Comment SAMPLE and we bring the sample board to your office or site.\nOr WhatsApp +1 813-377-8225 · link in bio.\n📍 Vaughan · Toronto · GTA\n\n#Baseboards #AluminumBaseboard #LEDBaseboard #TorontoBuilders #CustomHomesToronto #InteriorDesignToronto #AventeHub",
+   "caption_fb": "Which baseboard? 🏡 For your next project: aluminum (1), wood grain (2) or LED (3)? Comment 1, 2 or 3. We read every answer.\n💬 Comment SAMPLE and we bring the sample board to you, or book a visit:\nhttps://www.aventehub.com/meet/?from=fb"
+  },
+  {
+   "id": "p46",
+   "title": "Light for the gallery wall.",
+   "kind": "carousel",
+   "platforms": [
+    "fb",
+    "ig"
+   ],
+   "planned": "2026-10-31 09:00 America/Toronto",
+   "media": [
+    "/social/media/p46-1.jpg",
+    "/social/media/p46-2.jpg",
+    "/social/media/p46-3.jpg",
+    "/social/media/p46-4.jpg"
+   ],
+   "caption_ig": "Light for the gallery wall.\nPendants, grille spots and linear lights on one magnetic track: art, shelves and dining tables each get the light they need.\n💬 Comment SAMPLE and we bring the sample board to your office or site.\nOr WhatsApp +1 813-377-8225 · link in bio.\n📍 Vaughan · Toronto · GTA\n\n#MagneticTrackLighting #GalleryLighting #LightingDesign #TorontoBuilders #LuxuryHomes #InteriorArchitecture #AventeHub",
+   "caption_fb": "Light for the gallery wall. Pendants, grille spots and linear lights on one magnetic track: art, shelves and dining tables each get the light they need.\n💬 Comment SAMPLE and we bring the sample board to you, or book a visit:\nhttps://www.aventehub.com/meet/?from=fb"
+  },
+  {
+   "id": "p47",
+   "title": "Wood look. Aluminum inside.",
+   "kind": "reel",
+   "platforms": [
+    "fb",
+    "ig"
+   ],
+   "planned": "2026-10-31 12:00 America/Toronto",
+   "media": [
+    "/social/media/p47-reel.mp4"
+   ],
+   "cover": "/social/media/p47-cover.jpg",
+   "caption_ig": "Wood look. Aluminum inside.\nAVH-A-34 wood-grain baseboard: the warmth of wood on a clip-on aluminum profile, in grains that match our WPC doors.\n💬 Comment SAMPLE and we bring the sample board to your office or site.\nOr WhatsApp +1 813-377-8225 · link in bio.\n📍 Vaughan · Toronto · GTA\n\n#WoodGrainBaseboard #AluminumBaseboard #Baseboards #TorontoBuilders #NewBuild #DesignDetails",
+   "caption_fb": "Wood look. Aluminum inside. AVH-A-34 wood-grain baseboard: the warmth of wood on a clip-on aluminum profile, in grains that match our WPC doors.\n💬 Comment SAMPLE and we bring the sample board to you, or book a visit:\nhttps://www.aventehub.com/meet/?from=fb"
+  },
+  {
+   "id": "p48",
+   "title": "See it in your hands.",
+   "kind": "carousel",
+   "platforms": [
+    "fb",
+    "ig"
+   ],
+   "planned": "2026-10-31 18:00 America/Toronto",
+   "media": [
+    "/social/media/p48-1.jpg",
+    "/social/media/p48-2.jpg",
+    "/social/media/p48-3.jpg",
+    "/social/media/p48-4.jpg"
+   ],
+   "caption_ig": "See it in your hands.\nDoors, baseboards and light profiles on one sample board. We bring it to your office or site anywhere in the GTA.\n💬 Comment SAMPLE and we bring the sample board to your office or site.\nOr WhatsApp +1 813-377-8225 · link in bio.\n📍 Vaughan · Toronto · GTA\n\n#SampleBoard #Developers #HomeBuilders #TorontoBuilders #GTADevelopers #NewBuild #AventeHub",
+   "caption_fb": "See it in your hands. Doors, baseboards and light profiles on one sample board. We bring it to your office or site anywhere in the GTA.\n💬 Comment SAMPLE and we bring the sample board to you, or book a visit:\nhttps://www.aventehub.com/meet/?from=fb"
   }
  ],
  "cadence": "Three posts a day (Max, Oct 17): 9:00 carousel · 12:00 reel · 18:00 carousel, Toronto time; each also goes out as a story. The HubSpot task due time is the slot. Vercel Cron runs at :10 and :40 of 13, 16 and 22 UTC (9, 12, 18 EDT); from Nov 1 (EST) move the crons one hour later."
