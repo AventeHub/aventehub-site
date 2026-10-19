@@ -1,5 +1,5 @@
-/* Avente Hub: cookie notice + HubSpot tracking (portal 343752125) + Meta Pixel (dataset "Avente Hub Website" 1769431784332041).
-   Both load unless the visitor clicked "Decline" (remembered in this browser).
+/* Avente Hub: cookie notice + HubSpot tracking (portal 343752125) + Meta Pixel (dataset "Avente Hub Website" 1769431784332041)
+   + Vercel Web Analytics (cookieless). All load unless the visitor clicked "Decline" (remembered in this browser).
    Decline also tells HubSpot not to track and revokes Meta consent. Notice shows once until OK or Decline.
    Meta events: PageView on every page; ViewContent with the product category on product pages;
    Contact (WhatsApp / email taps), Lead (any /meet/ request) and Schedule (a booked time) for exclusions and results
@@ -28,7 +28,14 @@
       fbq('track', 'ViewContent', { content_category: cat, content_ids: model ? [model] : [], content_type: 'product_group' });
     }
   }
-  if (v !== 'no') { load(); pixel(); }
+  /* Oct 19: Vercel Web Analytics (cookieless page views + referrers, free Hobby plan, Max OK). Feeds the Marketing KPIs page. */
+  function vercel() {
+    if (window.va) return;
+    window.va = function () { (window.vaq = window.vaq || []).push(arguments); };
+    var s = document.createElement('script'); s.defer = true; s.src = '/_vercel/insights/script.js';
+    document.head.appendChild(s);
+  }
+  if (v !== 'no') { load(); pixel(); vercel(); }
   /* Oct 16: conversion events for the retargeting plan (exclude people who already booked or wrote).
      Contact = tap on a WhatsApp or email link; Lead / Schedule are sent by the /meet/ page after a request. */
   window.avTrack = function (ev, data) { try { if (window.fbq && v !== 'no') fbq('track', ev, data || {}); } catch (e) {} };
