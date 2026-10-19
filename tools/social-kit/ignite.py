@@ -5,7 +5,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import light
 
 W, H, FPS = 1080, 1920, 30
-D = os.path.dirname(os.path.abspath(__file__))
+D = os.environ.get('EXT_DIR', '/home/claude/ext2027')
 
 def crop_frame(img, cx, zoom):
     h = img.shape[0]
@@ -22,7 +22,7 @@ def writer(path):
 def ease(t):
     t = min(max(t, 0.0), 1.0); return t * t * (3 - 2 * t)
 
-def build(name, cx, off_len, ign_len, hold, z0=1.0, z1=1.12):
+def build(name, cx, off_len, ign_len, hold, z0=1.0, z1=1.04, pan=(None, None)):
     on = cv2.imread(f'{D}/{name}.jpg')
     lines, _, _ = light.masks(on)
     off = light.off_state(on, lines)
@@ -38,7 +38,8 @@ def build(name, cx, off_len, ign_len, hold, z0=1.0, z1=1.12):
     for f in range(N):
         t = f / max(1, N - 1)
         img = offf * (1.10 - 0.10 * t); img[..., 2] *= (1.04 - 0.04 * t)
-        w.stdin.write(crop_frame(np.clip(img, 0, 255).astype(np.uint8), cx, z0 + (z1 - z0) * 0.5 * t).tobytes())
+        c = cx if pan[0] is None else pan[0] + (pan[1] - pan[0]) * 0.5 * t
+        w.stdin.write(crop_frame(np.clip(img, 0, 255).astype(np.uint8), c, z0 + (z1 - z0) * 0.5 * t).tobytes())
     w.stdin.close(); w.wait()
     # 2027 clip: lines draw themselves, staggered
     w = writer(f'{D}/{name}-2027.mp4'); N = int((ign_len + hold) * FPS)
@@ -54,10 +55,13 @@ def build(name, cx, off_len, ign_len, hold, z0=1.0, z1=1.12):
         A = np.clip(cv2.GaussianBlur(rev, (0, 0), 16) / allm, 0, 1)
         A = np.maximum(A, rev)[..., None]
         img = offf + (onf - offf) * A
-        z = z0 + (z1 - z0) * (0.5 + 0.5 * f / max(1, N - 1))
-        w.stdin.write(crop_frame(np.clip(img, 0, 255).astype(np.uint8), cx, z).tobytes())
+        u = f / max(1, N - 1)
+        z = z0 + (z1 - z0) * (0.5 + 0.5 * u)
+        c = cx if pan[0] is None else pan[0] + (pan[1] - pan[0]) * (0.5 + 0.5 * u)
+        w.stdin.write(crop_frame(np.clip(img, 0, 255).astype(np.uint8), c, z).tobytes())
     w.stdin.close(); w.wait()
 
 if __name__ == '__main__':
-    build('home-A-arched-white', 848, 10.0, 9.0, 3.0)
-    build('home-B-modern-stone', 768, 6.0, 9.0, 3.0)
+    # slow pan across the whole facade: 2026 covers the first half of the pan, 2027 the second
+    build('home-A-arched-white', 848, 10.0, 9.0, 3.0, pan=(420, 1150))
+    build('home-B-modern-stone', 768, 6.0, 9.0, 3.0, pan=(1150, 420))
