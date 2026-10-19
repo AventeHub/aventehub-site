@@ -97,22 +97,27 @@ def endcard_png(path, cta='Book a 30-min visit', url='aventehub.com/meet'):
 
 # ---------- series "Luxury 2026 -> Luxury 2027" (Max Oct 19 12:06-12:12; claude/story-styles-v3.md) ----------
 # 9:16 split = two stacked halves (1080x960 each): 2026 on top, 2027 below, same room, same angle and light.
-def split_overlay_png(path, top='2026', bottom='2027', vote=False):
-    """Transparent overlay for the split screen: thin gold divider + year labels; vote=True adds 'Which do you prefer?'."""
+def split_overlay_png(path, top='2026', bottom='2027', vote=False,
+                      question='Builders, developers: which do you prefer?'):
+    """Transparent overlay for the split screen: thin gold divider + year tags; vote=True adds Max's question (12:18)."""
     c = Image.new('RGBA', (W, H), (0, 0, 0, 0))
     d = ImageDraw.Draw(c)
     d.rectangle((0, H // 2 - 2, W, H // 2 + 2), fill=kit.GOLD + (235,))
     f = kit.font('Marcellus.ttf', 64)
-    for txt, y in ((top, SAFE_TOP + 20), (bottom, H // 2 + (110 if vote else 40))):
+    for txt, y in ((top, SAFE_TOP + 20), (bottom, H // 2 + (190 if vote else 40))):
         tw = d.textlength(txt, font=f)
         d.rounded_rectangle((64, y, 64 + tw + 48, y + 92), radius=46, fill=ESP + (150,))
         d.text((88, y + 6), txt, font=f, fill=kit.CREAM)
     if vote:
-        q = 'Which do you prefer?'
-        fq = kit.font('Marcellus.ttf', 76)
-        qw = d.textlength(q, font=fq)
-        d.rounded_rectangle(((W - qw) / 2 - 40, H // 2 - 70, (W + qw) / 2 + 40, H // 2 + 70), radius=24, fill=ESP + (215,))
-        d.text(((W - qw) / 2, H // 2 - 48), q, font=fq, fill=kit.CHAMP)
+        fq = kit.font('Marcellus.ttf', 66)
+        lines = _wrap(d, question, fq, 860)
+        lh = 82
+        bw = max(d.textlength(l, font=fq) for l in lines) + 80
+        bh = lh * len(lines) + 50
+        y0 = H // 2 - bh // 2
+        d.rounded_rectangle(((W - bw) / 2, y0, (W + bw) / 2, y0 + bh), radius=24, fill=ESP + (225,))
+        for i, l in enumerate(lines):
+            d.text(((W - d.textlength(l, font=fq)) / 2, y0 + 22 + i * lh), l, font=fq, fill=kit.CHAMP)
     c.save(path)
 
 
@@ -131,8 +136,8 @@ def split_frame(src26, src27, out, vote=False, t26=None, t27=None):
          '[0][1]vstack[v];[v][2]overlay=0:0', '-frames:v', '1', '-q:v', '3', out])
 
 
-def chip_png(text, source, path, y=1240):
-    """Trend chip: one sourced line (<= 8 words) + small source line; the link itself goes in the caption."""
+def chip_png(text, source, path, y=1180):
+    """Trend chip: small source label + one claim (<= 6 words); the full link goes in the caption."""
     c = Image.new('RGBA', (W, H), (0, 0, 0, 0))
     d = ImageDraw.Draw(c)
     f = kit.font('Jost-500.ttf', 42); fs = kit.font('Jost-400.ttf', 26)
@@ -143,12 +148,12 @@ def chip_png(text, source, path, y=1240):
     d.rectangle((120, y + 18, 126, y + bh - 18), fill=kit.GOLD)
     for i, ln in enumerate(lines):
         d.text((160, y + 22 + i * lh), ln, font=f, fill=kit.CREAM)
-    d.text((160, y + 30 + lh * len(lines)), 'Source: ' + source, font=fs, fill=kit.SUBGOLD)
+    d.text((160, y + 30 + lh * len(lines)), source, font=fs, fill=kit.SUBGOLD)
     c.save(path)
 
 
 def endcard_2027_png(path):
-    """Series end card: motto, rule, 'Comment 2027' (big, gold), 'to get the catalogue'. URL lives in the caption."""
+    """Series end card (Max 12:18): motto, rule, 'Comment 2027' (big, gold), 'for the catalogue.' URL lives in the caption."""
     c = Image.new('RGBA', (W, H), (0, 0, 0, 0))
     d = ImageDraw.Draw(c)
     lg = kit.logo(130)
@@ -161,7 +166,7 @@ def endcard_2027_png(path):
     t = 'Comment 2027'
     d.text(((W - d.textlength(t, font=fb)) / 2, 880), t, font=fb, fill=kit.GOLD)
     f2 = kit.font('Jost-400.ttf', 44)
-    t = 'to get the catalogue'
+    t = 'for the catalogue.'
     d.text(((W - d.textlength(t, font=f2)) / 2, 1040), t, font=f2, fill=kit.CREAM)
     c.save(path)
 
