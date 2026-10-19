@@ -95,6 +95,77 @@ def endcard_png(path, cta='Book a 30-min visit', url='aventehub.com/meet'):
     c.save(path)
 
 
+# ---------- series "Luxury 2026 -> Luxury 2027" (Max Oct 19 12:06-12:12; claude/story-styles-v3.md) ----------
+# 9:16 split = two stacked halves (1080x960 each): 2026 on top, 2027 below, same room, same angle and light.
+def split_overlay_png(path, top='2026', bottom='2027', vote=False):
+    """Transparent overlay for the split screen: thin gold divider + year labels; vote=True adds 'Which do you prefer?'."""
+    c = Image.new('RGBA', (W, H), (0, 0, 0, 0))
+    d = ImageDraw.Draw(c)
+    d.rectangle((0, H // 2 - 2, W, H // 2 + 2), fill=kit.GOLD + (235,))
+    f = kit.font('Marcellus.ttf', 64)
+    for txt, y in ((top, SAFE_TOP + 20), (bottom, H // 2 + (110 if vote else 40))):
+        tw = d.textlength(txt, font=f)
+        d.rounded_rectangle((64, y, 64 + tw + 48, y + 92), radius=46, fill=ESP + (150,))
+        d.text((88, y + 6), txt, font=f, fill=kit.CREAM)
+    if vote:
+        q = 'Which do you prefer?'
+        fq = kit.font('Marcellus.ttf', 76)
+        qw = d.textlength(q, font=fq)
+        d.rounded_rectangle(((W - qw) / 2 - 40, H // 2 - 70, (W + qw) / 2 + 40, H // 2 + 70), radius=24, fill=ESP + (215,))
+        d.text(((W - qw) / 2, H // 2 - 48), q, font=fq, fill=kit.CHAMP)
+    c.save(path)
+
+
+def split_frame(src26, src27, out, vote=False, t26=None, t27=None):
+    """Still preview / cover of the split: each source cropped to 1080x960, stacked, graded, overlay on top."""
+    work = S + '/look2work'; os.makedirs(work, exist_ok=True)
+    halves = []
+    for k, (src, t) in enumerate(((src26, t26), (src27, t27))):
+        p = f'{work}/half{k}.png'
+        pre = ['-ss', str(t)] if t is not None else []
+        run(pre + ['-i', R + '/' + src, '-frames:v', '1', '-vf',
+                   f"scale={W}:{H // 2}:force_original_aspect_ratio=increase,crop={W}:{H // 2},{GRADE}", p])
+        halves.append(p)
+    split_overlay_png(f'{work}/split.png', vote=vote)
+    run(['-i', halves[0], '-i', halves[1], '-i', f'{work}/split.png', '-filter_complex',
+         '[0][1]vstack[v];[v][2]overlay=0:0', '-frames:v', '1', '-q:v', '3', out])
+
+
+def chip_png(text, source, path, y=1240):
+    """Trend chip: one sourced line (<= 8 words) + small source line; the link itself goes in the caption."""
+    c = Image.new('RGBA', (W, H), (0, 0, 0, 0))
+    d = ImageDraw.Draw(c)
+    f = kit.font('Jost-500.ttf', 42); fs = kit.font('Jost-400.ttf', 26)
+    lines = _wrap(d, text, f, W - 2 * 120 - 80)
+    lh = 54
+    bh = 40 + lh * len(lines) + 44
+    d.rounded_rectangle((120, y, W - 120, y + bh), radius=18, fill=ESP + (200,))
+    d.rectangle((120, y + 18, 126, y + bh - 18), fill=kit.GOLD)
+    for i, ln in enumerate(lines):
+        d.text((160, y + 22 + i * lh), ln, font=f, fill=kit.CREAM)
+    d.text((160, y + 30 + lh * len(lines)), 'Source: ' + source, font=fs, fill=kit.SUBGOLD)
+    c.save(path)
+
+
+def endcard_2027_png(path):
+    """Series end card: motto, rule, 'Comment 2027' (big, gold), 'to get the catalogue'. URL lives in the caption."""
+    c = Image.new('RGBA', (W, H), (0, 0, 0, 0))
+    d = ImageDraw.Draw(c)
+    lg = kit.logo(130)
+    c.alpha_composite(lg, ((W - lg.width) // 2, 560))
+    f = kit.font('Marcellus.ttf', 60)
+    t = 'Factory-direct luxury.'
+    d.text(((W - d.textlength(t, font=f)) / 2, 730), t, font=f, fill=kit.CHAMP)
+    d.line((W / 2 - 34, 830, W / 2 + 34, 830), fill=kit.GOLD, width=2)
+    fb = kit.font('Marcellus.ttf', 120)
+    t = 'Comment 2027'
+    d.text(((W - d.textlength(t, font=fb)) / 2, 880), t, font=fb, fill=kit.GOLD)
+    f2 = kit.font('Jost-400.ttf', 44)
+    t = 'to get the catalogue'
+    d.text(((W - d.textlength(t, font=f2)) / 2, 1040), t, font=f2, fill=kit.CREAM)
+    c.save(path)
+
+
 # ---------- shots ----------
 def shot_mp4(sh, out, idx):
     src = R + '/' + sh['src']
