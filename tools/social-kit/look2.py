@@ -165,6 +165,9 @@ def reel(shots, title, out, label=None, end=3.2, work=None):
             ov.append((p, a, b))
     if label:
         p = f'{work}/label.png'; label_png(label, p); ov.append((p, 0, t_end0))
+    for i, sh in enumerate(shots):   # per-shot honesty label (story films mix real footage, renders and concept shots)
+        if sh.get('lab'):
+            p = f'{work}/lab{i}.png'; label_png(sh['lab'], p); ov.append((p, starts[i], starts[i] + durs[i]))
     p = f'{work}/endcard.png'; endcard_png(p); ov.append((p, t_end0 + 0.2, total + 1))
     base_n = len(files)
     oin = sum([['-i', o[0]] for o in ov], [])
