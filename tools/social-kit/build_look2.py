@@ -9,13 +9,14 @@ M = 'social/media/'
 CROWN = 'led-crown-moulding/m/Aventehub-LED-Crown-Moulding-AVH-{}-Story.mp4'
 WIN = '438:780:72:120'    # clean picture window inside our old Story videos, cut above the section drawing (9:16)
 
+FINISHED = '416:740:200:120'  # Max's rule: no open profile ends or wires; this window starts right of the render's cut end
+ROOM = '438:780:140:200'      # real room clip (6060), lit line only
 P09 = [
-    dict(src=CROWN.format('HG23'), a=16.0, b=17.9, speed=0.8, crop=WIN),                      # hook: the glow first
-    dict(src=CROWN.format('HG23'), a=3.0, b=5.8, crop=WIN, cap='The profile first.'),
-    dict(src=CROWN.format('HG23'), a=6.6, b=9.0, crop=WIN, cap='Then the LED.'),
-    dict(src=CROWN.format('HG23'), a=11.6, b=15.0, crop=WIN, cap='Cover on. One clean line.'),
-    dict(src=CROWN.format('HG23B'), a=15.0, b=17.9, crop=WIN, cap='Three heights. One family.'),
-    dict(src=CROWN.format('HG23'), a=18.6, b=20.4, speed=0.7, crop=WIN),
+    dict(src=CROWN.format('HG22'), a=16.0, b=17.9, speed=0.8, crop=FINISHED),                 # hook: the glow first
+    dict(src=CROWN.format('HG23'), a=18.6, b=20.4, speed=0.7, crop=FINISHED, cap='Three heights. One family.'),
+    dict(src=CROWN.format('HG23A'), a=18.0, b=19.6, speed=0.7, crop=FINISHED, cap='Light along the ceiling line.'),
+    dict(src=CROWN.format('6060'), a=7.0, b=10.2, crop=ROOM, cap='No pot lights. Just light.'),
+    dict(src=CROWN.format('HG22'), a=16.4, b=17.5, speed=0.6, crop=FINISHED),
 ]
 P17 = [
     dict(src='led-neon-flex/m/nf-interior-stair-loop.jpg', a=0, b=3.4, crop='1600:728:0:136'),
@@ -26,8 +27,8 @@ P17 = [
 
 if __name__ == '__main__':
     R = look2.R + '/'
-    d = look2.reel(P09, 'A clean section.\nThen light.', R + M + 'p09-reel-v2.mp4', label='Render')
-    look2.cover(CROWN.format('HG23'), 'A clean section.\nThen light.', R + M + 'p09-cover-v2.jpg', t=17.2, crop=WIN, y=430)
+    d = look2.reel(P09, 'The crown,\nlit.', R + M + 'p09-reel-v2.mp4', label='Render')
+    look2.cover(CROWN.format('HG22'), 'The crown,\nlit.', R + M + 'p09-cover-v2.jpg', t=17.5, crop=FINISHED, y=430)
     print('p09', round(d, 1))
     d = look2.reel(P17, 'Draw with light.', R + M + 'p17-reel-v2.mp4', label='Concept render')
     look2.cover('led-neon-flex/m/nf-interior-stair-loop.jpg', 'Draw with light.', R + M + 'p17-cover-v2.jpg', crop='1600:728:0:136', y=430)

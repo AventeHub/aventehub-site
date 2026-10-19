@@ -214,8 +214,18 @@ def story_still(photo, title, sub, out, label=None, cta='Book a 30-min visit · 
     im.alpha_composite(Image.open(f'{work}/stt.png'))
     d = ImageDraw.Draw(im)
     f = kit.font('Jost-400.ttf', 38)
-    for i, ln in enumerate(_wrap(d, sub, f, 820)):
-        d.text(((W - d.textlength(ln, font=f)) / 2, y + 270 + i * 52), ln, font=f, fill=kit.CREAM)
+    ft = kit.font('Marcellus.ttf', 96)
+    n_title = len(title.split('\n') if '\n' in title else _wrap(d, title, ft, 860))
+    sy = y + n_title * int(96 * 1.18) + 48          # right under the gold rule
+    lines = _wrap(d, sub, f, 820)
+    # soft dark scrim behind the subtitle, so it reads over bright light lines
+    tw = max(d.textlength(ln, font=f) for ln in lines)
+    scr = Image.new('RGBA', (W, H), (0, 0, 0, 0)); dsc = ImageDraw.Draw(scr)
+    dsc.rounded_rectangle(((W - tw) / 2 - 40, sy - 18, (W + tw) / 2 + 40, sy + len(lines) * 52 + 14), radius=30, fill=ESP + (170,))
+    im.alpha_composite(scr.filter(ImageFilter.GaussianBlur(10)))
+    d = ImageDraw.Draw(im)
+    for i, ln in enumerate(lines):
+        d.text(((W - d.textlength(ln, font=f)) / 2, sy + i * 52), ln, font=f, fill=kit.CREAM)
     f3 = kit.font('Jost-500.ttf', 30)
     tw = d.textlength(cta, font=f3)
     d.rounded_rectangle(((W - tw) / 2 - 30, 1390, (W + tw) / 2 + 30, 1460), radius=35, fill=ESP + (190,))
