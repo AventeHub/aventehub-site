@@ -180,8 +180,15 @@ def end_card():
     return e
 
 
+# The one brand track "Midnight Glow Delight" (StockTune, decided Oct 7; Max Oct 18: never a supplier's audio).
+# Read from our own A-34 Story video (52 s, the track from 0 s); the licensed file itself is not stored in this public repo.
+BRAND_TRACK_SRC = 'aluminum-baseboards/m/Aventehub-Wood-Grain-Baseboard-AVH-A-34-Story.mp4'
+MUSIC_OFFSET = 0.0  # seconds into the brand track
+
+
 def music(out, dur):
-    subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', REPO + '/social/media/p05-reel.mp4', '-vn',
+    # Brand rule: the brand track only, never the audio of a supplier video.
+    subprocess.run(['ffmpeg', '-v', 'error', '-y', '-ss', str(MUSIC_OFFSET), '-i', REPO + '/' + BRAND_TRACK_SRC, '-vn',
                     '-af', f'atrim=0:{dur},afade=t=in:d=0.4,afade=t=out:st={dur-1.5}:d=1.5', '-ac', '2', '-ar', '44100',
                     '-c:a', 'aac', '-b:a', '128k', out], check=True)
 
