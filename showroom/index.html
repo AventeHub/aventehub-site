@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Avente Hub Virtual Showroom</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Marcellus&display=swap">
+<style>
+:root{--ink:#F3EADB;--muted:#BBA88F;--gold:#C9A227;--gold-l:#F3E2A0;--foil:linear-gradient(100deg,#8A6A22,#D9B65A 30%,#F3E2A0 50%,#D9B65A 70%,#8A6A22);--hair:rgba(201,162,39,.42);--glass:rgba(18,14,12,.62);color-scheme:dark}
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:#0c0908;color:var(--ink);font:300 16px/1.5 Jost,system-ui,sans-serif;overflow:hidden}
+h1,h2,h3{font-family:Marcellus,Georgia,serif;font-weight:400;margin:0}
+button{font-family:inherit;cursor:pointer;color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.pv{position:fixed;left:50%;top:6px;transform:translateX(-50%);z-index:90;font-size:11px;letter-spacing:1.5px;color:#cdbb9c;background:rgba(10,8,7,.75);border:1px solid var(--hair);padding:3px 10px;border-radius:20px;pointer-events:none}
+/* stage */
+#stage{position:fixed;inset:0;overflow:hidden;background:#000}
+.scene{position:absolute;inset:0;opacity:0;transition:opacity .7s ease;pointer-events:none}
+.scene.on{opacity:1;pointer-events:auto}
+.bg{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1.04);transition:transform 6s cubic-bezier(.2,.6,.2,1)}
+.scene.on .bg{transform:scale(1)}
+.shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.45),transparent 18%,transparent 62%,rgba(0,0,0,.7))}
+/* top bar */
+.top{position:fixed;left:0;right:0;top:0;z-index:60;display:flex;justify-content:space-between;align-items:center;padding:calc(14px + env(safe-area-inset-top)) 22px 0}
+.logo{display:flex;flex-direction:column;align-items:center;line-height:1;text-decoration:none;color:var(--ink)}
+.logo b{font-family:Marcellus,serif;font-weight:400;font-size:24px;letter-spacing:6px}
+.logo i{font-style:normal;font-size:10px;letter-spacing:5px;margin-top:5px;color:var(--gold-l)}
+.vip{border:1px solid var(--hair);background:var(--glass);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:10px 16px;border-radius:24px;font-size:14px}
+.vip:hover{border-color:var(--gold);color:var(--gold-l)}
+/* glass + buttons */
+.glass{background:var(--glass);border:1px solid var(--hair);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-radius:14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 22px;border-radius:10px;font-size:16px;font-weight:500;border:1px solid var(--gold);background:rgba(10,8,7,.55)}
+.btn.gold{background:var(--foil);color:#2A1C13;border:0}
+.btn:hover{filter:brightness(1.08)}
+/* welcome */
+.welcome{position:absolute;right:6%;top:50%;transform:translateY(-50%);width:min(500px,46vw);padding:30px 32px}
+.welcome .k{font-size:13px;letter-spacing:2.5px;color:var(--gold-l);text-transform:uppercase}
+.welcome h1{font-size:clamp(28px,3.4vw,44px);line-height:1.12;margin:12px 0 10px}
+.welcome h1 em{font-style:normal;color:var(--gold-l)}
+.welcome p{color:#DCCDB4;margin:0 0 22px}
+.welcome .row{display:flex;flex-wrap:wrap;gap:12px}
+.packs{display:flex;gap:6px;margin-top:22px;border-top:1px solid var(--hair);padding-top:16px;flex-wrap:wrap}
+.packs button{flex:1;min-width:76px;background:none;border:0;padding:8px 4px;font-size:13px;color:#DCCDB4;display:flex;flex-direction:column;align-items:center;gap:6px;border-radius:8px}
+.packs button:hover{background:rgba(201,162,39,.12);color:var(--gold-l)}
+.packs svg{width:26px;height:26px;stroke:var(--gold-l);fill:none;stroke-width:1.3}
+/* subtitle (host voice) */
+.sub{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:55;max-width:min(760px,92vw);padding:12px 20px 12px 16px;display:flex;gap:12px;align-items:center;font-size:16px;opacity:0;transition:opacity .5s}
+.sub.on{opacity:1}
+.sub .tag{font-size:10.5px;letter-spacing:1.5px;color:var(--gold-l);border:1px solid var(--hair);border-radius:12px;padding:3px 8px;white-space:nowrap}
+.sub button{background:none;border:0;padding:4px;color:var(--gold-l)}
+/* map */
+.side{position:absolute;left:0;top:0;bottom:0;width:250px;z-index:5;padding:90px 18px 20px;background:linear-gradient(90deg,rgba(12,9,8,.92),rgba(12,9,8,.78));border-right:1px solid var(--hair);display:flex;flex-direction:column;gap:6px}
+.side h2{font-size:26px}.side .s{font-size:13px;color:var(--muted);margin:2px 0 18px;font-style:italic}
+.side button{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:none;border:1px solid transparent;border-radius:10px;padding:11px 12px;font-size:16px}
+.side button:hover,.side button.on{border-color:var(--gold);background:rgba(201,162,39,.12);color:var(--gold-l)}
+.side svg{width:24px;height:24px;stroke:var(--gold-l);fill:none;stroke-width:1.3}
+.side .soon{margin-top:auto;font-size:12.5px;color:#8f826f;border-top:1px solid var(--hair);padding-top:12px}
+.mapwrap{position:absolute;left:250px;right:0;top:0;bottom:0}
+.mapwrap .bg{transform:none!important;background-size:cover}
+.zone{position:absolute;border:2px solid transparent;border-radius:6px;background:none;transition:all .3s}
+.zone:hover,.zone:focus-visible{border-color:var(--gold);box-shadow:0 0 30px rgba(243,226,160,.45) inset,0 0 20px rgba(243,226,160,.35)}
+.zone span{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);white-space:nowrap;padding:6px 12px;border-radius:20px;font-size:13px;opacity:0;transition:opacity .3s}
+.zone:hover span,.zone:focus-visible span{opacity:1}
+.zone.soon{cursor:default}.zone.soon:hover{border-color:rgba(201,162,39,.35);box-shadow:none}
+/* room */
+.stand{position:absolute;background:none;border:2px solid transparent;border-radius:8px;transition:all .3s}
+.stand:hover,.stand:focus-visible{border-color:var(--gold);box-shadow:0 0 26px rgba(243,226,160,.4)}
+.stand span{position:absolute;left:50%;bottom:-16px;transform:translateX(-50%);white-space:nowrap;padding:6px 12px;border-radius:20px;font-size:13px;border:1px solid var(--gold)}
+.arrow{position:absolute;left:50%;bottom:16%;transform:translateX(-50%);width:110px;height:90px;background:none;border:0;animation:bob 1.6s ease-in-out infinite}
+.arrow svg{width:100%;height:100%;filter:drop-shadow(0 0 10px rgba(243,226,160,.9))}
+@keyframes bob{50%{transform:translate(-50%,-8px)}}
+.pill{position:absolute;left:22px;bottom:calc(24px + env(safe-area-inset-bottom));padding:10px 16px;border-radius:24px;font-size:14px;z-index:4}
+.mini{position:absolute;right:22px;bottom:calc(24px + env(safe-area-inset-bottom));width:170px;height:170px;border-radius:50%;overflow:hidden;border:2px solid var(--hair);background:#000 center/cover;z-index:4;cursor:pointer}
+.mini i{position:absolute;width:14px;height:14px;border-radius:50%;background:var(--gold-l);box-shadow:0 0 12px var(--gold-l);transform:translate(-50%,-50%)}
+.mini b{position:absolute;left:0;right:0;bottom:16px;text-align:center;font-weight:400;font-size:12px;text-shadow:0 1px 4px #000}
+.exit{position:absolute;right:22px;top:calc(80px + env(safe-area-inset-top));font-size:13px;padding:8px 14px;border-radius:20px;z-index:4}
+/* product panel */
+#panel{position:fixed;inset:0;z-index:70;display:none;align-items:center;justify-content:center;background:rgba(5,4,3,.55);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);padding:20px}
+#panel.on{display:flex}
+.pcard{position:relative;width:min(1000px,96vw);max-height:92vh;overflow:auto;display:grid;grid-template-columns:1fr 1.1fr;gap:0}
+.pcard .pimg{background:#0e0b09 center/cover;min-height:420px;border-radius:14px 0 0 14px}
+.pcard .pbody{padding:28px}
+.pcard .k{font-size:12px;letter-spacing:2px;color:var(--gold-l);text-transform:uppercase}
+.pcard h3{font-size:30px;margin:6px 0 4px}
+.pcard .d{color:#DCCDB4;margin:0 0 14px}
+.pvid{position:relative;aspect-ratio:16/9;border-radius:10px;overflow:hidden;border:1px solid var(--hair);background:#000 center/cover;margin-bottom:12px}
+.pvid video{width:100%;height:100%;object-fit:cover;display:block}
+.pvid .cap{position:absolute;left:10px;bottom:8px;font-size:12px;color:var(--gold-l);text-shadow:0 1px 4px #000}
+.fns{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+.fns button{background:rgba(10,8,7,.5);border:1px solid var(--hair);border-radius:10px;padding:10px 4px;font-size:13px}
+.fns button.on{border-color:var(--gold);color:var(--gold-l);background:rgba(201,162,39,.12)}
+.fin{display:flex;align-items:center;gap:14px;margin:6px 0 12px;font-size:14px;color:var(--muted)}
+.fin button{width:38px;height:38px;border-radius:50%;border:2px solid transparent;padding:0}
+.fin button.on{border-color:var(--gold-l)}
+.fin .rg{background:radial-gradient(circle at 35% 30%,#F2C3A6,#B9785A 60%,#7A4A35)}
+.fin .gb{background:radial-gradient(circle at 35% 30%,#8a8a8e,#3B3B3D 60%,#18181a)}
+.specs{margin:0 0 16px;padding:0;list-style:none;font-size:14px;color:#DCCDB4}
+.specs li::before{content:"✓ ";color:var(--gold-l)}
+.pcard .row{display:flex;gap:10px;flex-wrap:wrap}
+.x{position:absolute;right:12px;top:10px;width:40px;height:40px;border:0;background:none;font-size:26px;color:var(--gold-l);z-index:2}
+/* desk */
+.deskcard{position:absolute;right:6%;top:50%;transform:translateY(-50%);width:min(420px,44vw);padding:26px 28px}
+.deskcard .k{font-size:13px;color:var(--gold-l);font-style:italic}
+.deskcard h2{font-size:34px;margin:4px 0 12px}
+.deskcard ul{list-style:none;padding:0;margin:0 0 16px;font-size:15px}
+.deskcard li{padding:3px 0}.deskcard li::before{content:"◆  ";color:var(--gold);font-size:11px}
+.deskcard input{width:100%;margin:0 0 8px;padding:12px 14px;border-radius:8px;border:1px solid var(--hair);background:rgba(10,8,7,.5);color:var(--ink);font:inherit;font-size:15px}
+.deskcard label{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:#DCCDB4;margin:6px 0 14px}
+.deskcard .fine{font-size:12px;color:var(--muted);text-align:center;margin-top:8px}
+.thanks{display:none;font-size:15px;color:#DCCDB4}
+
+.pano{position:absolute;inset:0;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.pano::-webkit-scrollbar{display:none}
+.pin{position:absolute}
+.pin>img{position:absolute;inset:0;width:100%;height:100%;display:block;user-select:none;-webkit-user-drag:none}
+.dot{position:absolute;left:50%;top:50%;width:18px;height:18px;margin:-9px;border-radius:50%;background:var(--gold-l);box-shadow:0 0 0 6px rgba(243,226,160,.25),0 0 18px var(--gold-l);animation:pulse 1.8s infinite;display:none}
+@keyframes pulse{50%{box-shadow:0 0 0 12px rgba(243,226,160,.05),0 0 18px var(--gold-l)}}
+.stand span,.zone span{opacity:0;transition:opacity .3s}
+.stand:hover span,.stand:focus-visible span{opacity:1}
+.cards{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);display:flex;gap:18px;width:min(1000px,92vw);justify-content:center}
+.cards button{flex:1;max-width:300px;padding:0;border:1px solid var(--hair);border-radius:14px;overflow:hidden;background:var(--glass);backdrop-filter:blur(10px);text-align:left}
+.cards button:hover{border-color:var(--gold);box-shadow:0 0 26px rgba(243,226,160,.35)}
+.cards img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
+.cards b{display:block;font-family:Marcellus,serif;font-weight:400;font-size:18px;padding:12px 14px 2px}
+.cards i{display:block;font-style:normal;font-size:13px;color:var(--muted);padding:0 14px 14px}
+.swipe{position:absolute;left:50%;top:calc(76px + env(safe-area-inset-top));transform:translateX(-50%);font-size:12px;padding:6px 12px;border-radius:16px;display:none;z-index:4}
+@media (max-width:760px){.dot{display:block}.stand span{display:none}.swipe{display:block}.pv{display:none}
+ .cards{top:auto;bottom:calc(130px + env(safe-area-inset-bottom));transform:translateX(-50%);overflow-x:auto;justify-content:flex-start;width:94vw}.cards button{flex:0 0 70vw}
+ .mapwrap .zone span{display:none}}
+
+/* walk transition */
+#stage.walking .scene.on .pin,#stage.walking .scene.on .bg{transform:scale(1.45)!important;filter:blur(2.5px) brightness(1.15);transition:transform .95s cubic-bezier(.55,0,.75,.4),filter .95s}
+.scene.arrive .pin,.scene.arrive .bg{transform:scale(1.18);filter:blur(2px)}
+.scene .pin{transition:transform 1.3s cubic-bezier(.2,.7,.2,1),filter 1.3s;transform-origin:50% 60%}
+#stage.walking::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 35%,rgba(0,0,0,.55));pointer-events:none;z-index:3}
+/* mobile */
+@media (max-width:760px){
+ .logo b{font-size:19px;letter-spacing:4px}.vip{font-size:12px;padding:8px 12px}
+ .welcome,.deskcard{left:12px;right:12px;width:auto;top:auto;bottom:calc(96px + env(safe-area-inset-bottom));transform:none;padding:20px}
+ .welcome h1{font-size:26px}.welcome .row{flex-direction:column}.welcome .btn{width:100%}
+ .packs{display:none}
+ .bg{background-position:22% center}
+ .side{top:auto;bottom:0;left:0;right:0;width:auto;height:auto;padding:12px;flex-direction:row;overflow-x:auto;border-right:0;border-top:1px solid var(--hair);background:rgba(12,9,8,.92)}
+ .side h2,.side .s,.side .soon{display:none}.side button{flex:0 0 auto;width:auto;padding:10px 12px;font-size:14px}
+ .mapwrap{left:0;bottom:70px}
+ .mini{width:96px;height:96px;top:calc(70px + env(safe-area-inset-top));bottom:auto;right:12px}.mini b{display:none}
+ .pill{left:12px;bottom:calc(92px + env(safe-area-inset-bottom));font-size:12.5px}
+ .exit{display:none}
+ .sub{left:10px;right:10px;transform:none;max-width:none;font-size:13.5px;padding:10px 12px;bottom:calc(10px + env(safe-area-inset-bottom))}
+ body.card .sub{display:none}
+ .welcome,.deskcard{bottom:calc(16px + env(safe-area-inset-bottom))!important}
+ .pv{top:auto;bottom:2px;font-size:9px;opacity:.7}
+ .pill{bottom:calc(118px + env(safe-area-inset-bottom))}
+ .arrow{bottom:26%}
+ .pcard{grid-template-columns:1fr}.pcard .pimg{min-height:240px;border-radius:14px 14px 0 0}.pcard .pbody{padding:20px}
+ .deskcard h2{font-size:26px}.deskcard ul{display:none}
+}
+/* v1.3 stand screen: silent loop + shining play (Max Nov 8 16:01) */
+.stand .scr{position:absolute;left:76%;right:1%;top:28%;height:64%;display:block;border-radius:6px;overflow:hidden;border:1px solid rgba(243,226,160,.55);box-shadow:0 0 22px rgba(243,226,160,.25);background:#000;pointer-events:none}
+.scr video,.scr img{width:100%;height:100%;object-fit:cover;display:block}
+.scr img{animation:kb 8s ease-in-out infinite alternate}
+@keyframes kb{from{transform:scale(1)}to{transform:scale(1.12) translateY(-3%)}}
+.pb{position:absolute;left:50%;top:50%;width:54px;height:54px;margin:-27px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFF3C4,#D9B65A 55%,#8A6A22);box-shadow:0 0 0 0 rgba(243,226,160,.7),0 0 18px rgba(243,226,160,.9);animation:shine 1.8s ease-out infinite;display:flex;align-items:center;justify-content:center}
+.pb::after{content:"";margin-left:5px;border-left:16px solid #2A1C13;border-top:10px solid transparent;border-bottom:10px solid transparent}
+.pb::before{content:"";position:absolute;inset:0;border-radius:50%;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.75) 50%,transparent 65%);background-size:250% 100%;animation:sweep 2.6s linear infinite}
+@keyframes shine{0%{box-shadow:0 0 0 0 rgba(243,226,160,.7),0 0 18px rgba(243,226,160,.9)}70%{box-shadow:0 0 0 18px rgba(243,226,160,0),0 0 26px rgba(243,226,160,1)}100%{box-shadow:0 0 0 0 rgba(243,226,160,0),0 0 18px rgba(243,226,160,.9)}}
+@keyframes sweep{from{background-position:150% 0}to{background-position:-100% 0}}
+.stand:hover .pb{transform:scale(1.12)}
+.cards .cw{position:relative;display:block;overflow:hidden;padding:0}
+.cards .cw img{animation:kb 8s ease-in-out infinite alternate}
+.cards .stand{position:relative;border:1px solid var(--hair)}
+.cards .stand span{display:none}
+.cards .pb{display:flex;padding:0;top:50%}
+.deskcard{max-height:calc(100vh - 200px);overflow:auto;top:calc(50% - 50px)!important}
+@media (max-width:760px){.deskcard{max-height:calc(100vh - 150px);top:auto!important}}
+.ph{display:flex;gap:8px}.ph input{flex:1}
+.btn.sm{min-height:46px;padding:0 14px;font-size:13px;margin-bottom:8px;white-space:nowrap}
+.selbox{border:1px solid var(--hair);border-radius:10px;padding:10px 12px;margin:0 0 12px;font-size:13.5px}
+.selbox b{display:block;font-weight:500;color:var(--gold-l);margin-bottom:6px}
+.selbox span{display:inline-block;border:1px solid var(--hair);border-radius:14px;padding:2px 10px;margin:0 6px 6px 0;font-size:12.5px}
+.hint{font-size:12px;color:var(--muted);margin:-4px 0 8px}
+.stand.here{border-color:var(--gold);box-shadow:0 0 34px rgba(243,226,160,.6);animation:here 1.3s ease-in-out 2}
+@keyframes here{50%{box-shadow:0 0 50px rgba(243,226,160,.95)}}
+.stand .watch{position:absolute;left:50%;top:calc(50% + 34px);font-weight:500;transform:translateX(-50%);font-size:11px;letter-spacing:1.5px;color:var(--gold-l);text-shadow:0 1px 4px #000;white-space:nowrap}
+@media (max-width:760px){.stand .dot{display:none}.pb{width:44px;height:44px;margin:-22px}}
+/* v1.2 video pop-up (Max Nov 8 15:59) */
+#pop{position:fixed;inset:0;z-index:72;display:none;align-items:center;justify-content:center;background:rgba(5,4,3,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:16px}
+#pop.on{display:flex}
+.popc{width:min(960px,96vw,calc((100vh - 150px) * 1.78 + 28px));padding:14px;position:relative}
+.popv{position:relative;aspect-ratio:16/9;border-radius:10px;overflow:hidden;background:#000 center/cover;border:1px solid var(--hair)}
+.popv video{width:100%;height:100%;object-fit:cover;display:block}
+.popv .soon{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;background:rgba(0,0,0,.35);font-size:14px;color:var(--gold-l)}
+.popv .soon svg{width:64px;height:64px;stroke:var(--gold-l);fill:none;stroke-width:1.2}
+.popbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 4px 2px;flex-wrap:wrap}
+.popbar h3{font-size:22px}.popbar .k{font-size:11px;letter-spacing:2px;color:var(--gold-l);text-transform:uppercase}
+.popbar .row{display:flex;gap:10px}
+@media (max-width:760px){.popbar .row{width:100%}.popbar .btn{flex:1}}
+/* v1.7 L1 stand template (Max Nov 10): Cascade stand look. h = horizontal product: screen top, product below. v = vertical product: product left, screen right */
+.cards .sst{position:relative;flex:1;max-width:310px;aspect-ratio:3/4.3;padding:0;border:0;border-radius:3px;overflow:hidden;text-align:center;
+ background:radial-gradient(ellipse 45% 18% at 30% 0,rgba(255,221,170,.28),transparent 70%),radial-gradient(ellipse 45% 18% at 70% 0,rgba(255,221,170,.28),transparent 70%),linear-gradient(115deg,transparent 0 38%,rgba(255,240,220,.06) 39%,transparent 41% 62%,rgba(255,240,220,.05) 63%,transparent 65%),linear-gradient(160deg,#4a3428,#33241b 45%,#22170f);
+ box-shadow:0 0 0 1px rgba(255,214,150,.4),0 0 24px rgba(255,190,110,.35),0 40px 60px -30px rgba(0,0,0,.9);backdrop-filter:none;transition:transform .35s,box-shadow .35s}
+.cards .sst:hover{transform:translateY(-4px);box-shadow:0 0 0 1px rgba(255,214,150,.7),0 0 36px rgba(255,190,110,.6),0 50px 70px -30px rgba(0,0,0,.9);border:0}
+.sst::before,.sst::after{content:"";position:absolute;top:0;bottom:0;width:3px;background:linear-gradient(#ffd9a0,#ffbf7a);box-shadow:0 0 14px 3px rgba(255,190,110,.65);z-index:1}
+.sst::before{left:0}.sst::after{right:0}
+.sst .tk{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-around;padding:0 24%}
+.sst .tk i{display:block;width:14px;height:18px;background:#0d0d0d;border-radius:0 0 7px 7px;box-shadow:0 10px 18px rgba(255,214,160,.4)}
+.sst .sc{position:absolute;left:8%;right:8%;top:8%;height:33%;background:#000;border:1px solid rgba(243,226,160,.55);border-radius:4px;overflow:hidden;box-shadow:0 0 20px rgba(243,226,160,.25)}
+.sst .sc img,.sst .sc video{width:100%;height:100%;object-fit:cover;display:block;animation:kb 8s ease-in-out infinite alternate}
+.sst .pr{position:absolute;left:8%;right:8%;top:45%;bottom:21%;background:#f4efe8;border-radius:2px;overflow:hidden;box-shadow:0 0 0 1px rgba(201,164,106,.6),0 16px 34px rgba(0,0,0,.6)}
+.sst .pr img{width:100%;height:100%;object-fit:cover;display:block;animation:none}
+.sst.v .pr{left:6%;right:auto;width:50%;top:9%;bottom:21%}
+.sst.v .sc{left:60%;right:6%;top:20%;height:44%}
+.sst .pl{position:absolute;left:0;right:0;bottom:0;height:17%;background:linear-gradient(#1b1512,#0c0907);border-top:1px solid rgba(201,164,106,.45);display:flex;flex-direction:column;justify-content:center;padding:0 8px}
+.sst .pl::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,transparent,#ffcf8f,transparent);box-shadow:0 0 12px rgba(255,190,110,.7)}
+.cards .sst b{font-family:Marcellus,serif;font-size:18px;padding:0;color:var(--gold-l)}
+.cards .sst em{display:block;font-style:normal;font-size:11.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);padding:2px 0 0}
+.sst .sc .pb{top:50%}
+@media (max-width:760px){.cards .sst{flex:0 0 66vw;max-width:none}.cards .sst b{font-size:16px}}
+/* v1.7b: real stand photo (ChatGPT, Max-approved) + play on its screen + name label below */
+.cards .sti{position:relative;flex:1;max-width:340px;padding:0;border:1px solid var(--hair);border-radius:10px;overflow:hidden;background:#0c0908;text-align:center}
+.cards .sti>img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;animation:none}
+.sti .scrz{position:absolute;display:block;overflow:visible;background:none}
+.sti .scrz img{width:100%;height:100%;object-fit:cover;display:block;opacity:.92;animation:kbpan 14s ease-in-out infinite alternate}
+@keyframes kbpan{from{transform:scale(1.35) translateX(12%)}to{transform:scale(1.35) translateX(-12%)}}
+.sti .scrz::after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(255,255,255,.12),transparent 35%)}
+.sti .slogo{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;line-height:1;pointer-events:none}
+.cards .sti .slogo b{font-family:Marcellus,serif;font-size:clamp(11px,1.5vw,17px);letter-spacing:.32em;color:#F3E2A0;padding:0;text-shadow:0 0 8px rgba(0,0,0,.6)}
+.sti .slogo i{font-style:normal;font-size:clamp(6px,.6vw,8px);letter-spacing:.5em;color:#e6cc98;margin-top:3px}
+.sti .sws{position:absolute;left:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:5px;font-size:clamp(8px,.8vw,11px);color:#f1e6d2;white-space:nowrap;text-shadow:0 1px 3px #000;pointer-events:none}
+.sti .sws i{display:inline-block;width:clamp(8px,.9vw,12px);height:clamp(8px,.9vw,12px);border-radius:50%;border:1px solid rgba(255,235,200,.7)}
+.sti .lab{display:block;padding:10px 10px 12px;border-top:1px solid var(--hair)}
+.cards .sti b{font-family:Marcellus,serif;font-size:18px;padding:0;color:var(--gold-l)}
+.cards .sti em{display:block;font-style:normal;font-size:11.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted)}
+.cards .sti:hover{border-color:var(--gold);box-shadow:0 0 26px rgba(243,226,160,.35)}
+.cards{width:min(1120px,94vw)}
+@media (max-width:760px){.cards .sti{flex:0 0 78vw;max-width:none}}
+
+/* v1.9 Level 1 walk: real host videos room by room */
+#vwrap{position:fixed;inset:0;z-index:0;background:#000;display:none}
+#vwrap video,#vwrap .vend{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+body.vmode #vwrap{display:block}
+body.vmode #stage{background:transparent;pointer-events:none}
+body.vmode #stage .scene.on{pointer-events:auto}
+body.vmode .scene .bg,body.vmode .scene .shade{display:none}
+#vui{position:fixed;inset:0;z-index:50;pointer-events:none}
+#vui>*{pointer-events:auto}
+.vskip{position:absolute;right:22px;bottom:calc(96px + env(safe-area-inset-bottom));padding:10px 18px;border-radius:24px;font-size:14px}
+.vpill{position:absolute;left:22px;top:calc(80px + env(safe-area-inset-top));padding:8px 14px;border-radius:20px;font-size:13px}
+.vmapb{position:absolute;right:22px;top:calc(80px + env(safe-area-inset-top));padding:8px 14px;border-radius:20px;font-size:13px}
+.sbar{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(96px + env(safe-area-inset-bottom));display:flex;gap:10px;max-width:94vw;overflow-x:auto;padding:4px;scrollbar-width:none}
+.sbar::-webkit-scrollbar{display:none}
+.sbar button{flex:0 0 150px;padding:0;border:1px solid var(--hair);border-radius:12px;overflow:hidden;background:var(--glass);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);text-align:left;position:relative}
+.sbar button:hover{border-color:var(--gold);box-shadow:0 0 22px rgba(243,226,160,.4)}
+.sbar img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
+.sbar b{display:block;font-family:Marcellus,serif;font-weight:400;font-size:14px;padding:7px 9px 8px;color:var(--gold-l);line-height:1.2}
+.sbar .pb{width:34px;height:34px;margin:-17px;top:38%}
+.sbar .pb::after{border-left-width:11px;border-top-width:7px;border-bottom-width:7px;margin-left:3px}
+.vnext{position:absolute;right:22px;bottom:calc(96px + env(safe-area-inset-bottom));min-height:50px}
+.sbar.vin{animation:rise .6s ease both}@keyframes rise{from{opacity:0;transform:translate(-50%,20px)}to{opacity:1;transform:translate(-50%,0)}}
+@media (max-width:760px){.sbar{bottom:calc(150px + env(safe-area-inset-bottom))}.sbar button{flex:0 0 120px}.vnext{left:12px;right:12px;bottom:calc(84px + env(safe-area-inset-bottom))}.vskip{right:12px;bottom:calc(84px + env(safe-area-inset-bottom))}.vpill{left:12px}.vmapb{right:12px}}
+.sub{pointer-events:none}.sub button{pointer-events:auto}
+@media (orientation:portrait){#vwrap video,#vwrap .vend{object-fit:contain}#vwrap{background:radial-gradient(ellipse at center,#2a1d15,#0c0908 70%)}}
+@media (max-width:760px){body.vmode .sub{top:calc(118px + env(safe-area-inset-top));bottom:auto}.sbar{bottom:calc(84px + env(safe-area-inset-bottom))}.vnext{bottom:calc(16px + env(safe-area-inset-bottom))}.vskip{bottom:calc(16px + env(safe-area-inset-bottom))}.vpill{top:calc(70px + env(safe-area-inset-top))}.vmapb{top:calc(70px + env(safe-area-inset-top))}}
+.popbar .gold.l2{display:none}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style><style>
+#gate{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at center,rgba(30,22,16,.86),rgba(8,6,5,.96))}
+#gate .in{text-align:center;padding:28px 24px;max-width:460px}
+#gate .k{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold-l);margin-bottom:10px}
+#gate h1{font-family:Marcellus,serif;font-weight:400;font-size:clamp(26px,5vw,38px);margin:0 0 10px;color:var(--ink)}
+#gate p{color:var(--muted);font-size:14.5px;margin:0 0 22px}
+#gate .mute{display:block;margin:14px auto 0;background:none;border:0;color:var(--muted);text-decoration:underline;font-size:13px;cursor:pointer}
+#snd{font-size:18px;cursor:pointer}
+body.talking .sub{display:flex!important}
+body.vmode .sub.voice .tag{background:rgba(201,162,39,.18)}
+</style><style>
+/* v2.3: stand screens in the scene (no card bar) */
+#vstands{position:fixed;pointer-events:none;z-index:40}
+#vstands .stz{position:absolute;pointer-events:auto;border:0;padding:0;background:transparent;cursor:pointer;border-radius:4px}
+#vstands .stz .sbg{position:absolute;right:8%;bottom:6%;width:clamp(26px,2.6vw,40px);height:clamp(26px,2.6vw,40px);border-radius:50%;background:radial-gradient(circle at 35% 30%,#F3E2A0,#C9A227 60%,#8A6A22);box-shadow:0 0 0 2px rgba(243,226,160,.35),0 0 18px rgba(243,226,160,.55);display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(.4);transition:opacity .45s,transform .45s}
+#vstands.on .stz .sbg{opacity:1;transform:scale(1)}
+#vstands .stz .sbg:after{content:'';margin-left:3px;border-left:clamp(8px,.8vw,12px) solid #2A1C13;border-top:clamp(5px,.5vw,8px) solid transparent;border-bottom:clamp(5px,.5vw,8px) solid transparent}
+#vstands .stz:hover .sbg{box-shadow:0 0 0 3px rgba(243,226,160,.6),0 0 26px rgba(243,226,160,.8)}
+#vstands .stz.playing{outline:1px solid rgba(243,226,160,.7);box-shadow:0 0 24px rgba(243,226,160,.45);overflow:hidden;background:#000}
+#vstands .stz.playing .sbg{display:none}
+#vstands .scrn{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+#vstands .soon{position:absolute;left:0;right:0;bottom:0;padding:3px 4px;font-size:10px;letter-spacing:.5px;text-align:center;background:rgba(0,0,0,.6);color:#F3E2A0}
+#vstands .x{position:absolute;top:3px;right:3px;width:20px;height:20px;border-radius:50%;border:0;background:rgba(0,0,0,.65);color:#F3E2A0;font-size:12px;line-height:20px;padding:0;cursor:pointer}
+#vstands .i{position:absolute;top:3px;left:3px;height:20px;border-radius:10px;border:0;background:rgba(0,0,0,.65);color:#F3E2A0;font-size:10.5px;padding:0 7px;cursor:pointer}
+</style><style>
+/* v2.4 Hub Desk card: luxury */
+.deskcard{background:linear-gradient(160deg,rgba(38,28,20,.94),rgba(14,10,8,.96))!important;border:1px solid transparent!important;border-radius:18px!important;
+ background-clip:padding-box!important;box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 0 1px rgba(201,162,39,.55),inset 0 1px 0 rgba(243,226,160,.18),0 0 40px rgba(201,162,39,.12)!important;padding:30px 30px 24px!important;width:min(440px,44vw)!important}
+.deskcard:before{content:'';position:absolute;inset:8px;border:1px solid rgba(201,162,39,.18);border-radius:12px;pointer-events:none}
+.deskcard .emb{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.deskcard .emb img{width:34px;height:34px;filter:drop-shadow(0 0 8px rgba(243,226,160,.35))}
+.deskcard .emb .ln{flex:1;height:1px;background:linear-gradient(90deg,rgba(201,162,39,.8),transparent)}
+.deskcard .k{font-style:normal!important;font-size:10.5px!important;letter-spacing:2.2px;text-transform:uppercase;color:var(--gold-l)!important}
+.deskcard h2{font-family:Marcellus,serif!important;font-weight:400!important;font-size:38px!important;letter-spacing:.5px;margin:2px 0 4px!important;background:var(--foil);-webkit-background-clip:text;background-clip:text;color:transparent}
+.deskcard .sub2{font-size:13px;color:#CDBB9E;margin:0 0 16px}
+.deskcard input:not([type=checkbox]){background:rgba(255,255,255,.03)!important;border:0!important;border-bottom:1px solid rgba(201,162,39,.45)!important;border-radius:0!important;padding:11px 2px!important;margin:0 0 10px!important;font-size:15px!important;transition:border-color .3s,box-shadow .3s}
+.deskcard input:not([type=checkbox]):focus{outline:none;border-bottom-color:#F3E2A0!important;box-shadow:0 8px 14px -12px rgba(243,226,160,.9)}
+.deskcard input::placeholder{color:#9C8B73;letter-spacing:.3px}
+.deskcard .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.deskcard .ph{display:flex;gap:10px;align-items:flex-end}
+.deskcard .ph .btn{border-radius:999px!important;padding:8px 16px!important;border:1px solid rgba(201,162,39,.7)!important;background:transparent!important;color:#F3E2A0!important;white-space:nowrap;margin-bottom:10px}
+.deskcard label{font-size:12px!important;color:#B9A88E!important;margin:4px 0 10px!important}
+.deskcard input[type=checkbox]{accent-color:#C9A227}
+.deskcard .btn.gold{border-radius:999px!important;padding:14px!important;font-size:15.5px!important;letter-spacing:.6px;background:var(--foil)!important;background-size:200% 100%!important;color:#2A1C13!important;box-shadow:0 10px 30px rgba(201,162,39,.35);animation:foil 6s linear infinite}
+@keyframes foil{0%{background-position:0 0}100%{background-position:200% 0}}
+.deskcard .keys{display:flex;gap:8px;justify-content:center;margin-top:12px}
+.deskcard .keys span{font-size:11px;letter-spacing:.4px;padding:5px 10px;border-radius:999px;border:1px solid rgba(201,162,39,.35);color:#D9C7A6}
+.deskcard .keys .g{border-color:rgba(243,226,160,.7);color:#F3E2A0}
+.deskcard .fine{display:none}
+body.deskon .sub{opacity:0!important;pointer-events:none}
+@media (max-width:760px){.deskcard{width:auto!important;padding:22px 20px 18px!important}.deskcard h2{font-size:30px!important}.deskcard .two{grid-template-columns:1fr;gap:0}}
+/* v2.4 captions: subtitle style, only while she speaks */
+.sub{background:rgba(12,9,7,.55)!important;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:0!important;box-shadow:none!important;padding:8px 14px!important;font-size:15px!important}
+.sub .tag{font-size:9px!important;padding:2px 7px!important;opacity:.85}
+</style><style>#appt{position:fixed;left:14px;bottom:14px;z-index:60;display:flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;border:1px solid rgba(217,182,90,.7);background:rgba(27,21,18,.78);backdrop-filter:blur(6px);color:#F3E2A0;font:500 13px/1 Jost,sans-serif;letter-spacing:.06em;text-decoration:none;text-transform:uppercase;box-shadow:0 4px 18px rgba(0,0,0,.35)}#appt:hover{background:linear-gradient(90deg,#8A6A22,#D9B65A,#F3E2A0);color:#1B1512}@media(max-width:700px),(max-height:500px){#appt{left:10px;bottom:auto;top:118px;padding:7px 11px;font-size:10.5px}}</style></head><body>
+
+<header class="top"><a class="logo" href="#" onclick="go('entrance');return false" aria-label="Avente Hub, back to the entrance"><b>AVENTE</b><i>HUB</i></a><button class="vip" onclick="go('desk')">Request Your Hub Key 🔑</button></header>
+<div id="gate"><div class="in"><div class="k">Avente Hub · Virtual Showroom</div><h1>Your host is ready</h1><p>Walk the showroom with her, room by room. Best with sound on.</p><button class="btn gold" id="gateGo">🔊 Enter the showroom</button><button class="mute" id="gateMute">Enter without sound</button></div></div><div id="vwrap"><video id="v" muted playsinline preload="auto"></video></div><main id="stage"></main><div id="vui"></div>
+<div class="sub glass" id="sub" role="status" aria-live="polite"><span class="tag">Client Care</span><span id="subtxt"></span><button id="snd" aria-label="Sound" title="Sound on / off">🔇</button></div>
+<div id="pop" role="dialog" aria-modal="true" aria-label="Product video"></div>
+<div id="panel" role="dialog" aria-modal="true" aria-label="Product"></div>
+<script>
+const COMPANY=(()=>{const q=new URLSearchParams(location.search).get('from')||(location.hash.match(/from-([\w-]+)/)||[])[1];return q?decodeURIComponent(q).replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase()):''})();
+const ICON={floor:'<svg viewBox="0 0 24 24"><path d="M3 20h18M3 16h18M7 16v4M13 16v4M5 12h14l2 4H3z"/></svg>',smart:'<svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>',door:'<svg viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="18" rx="1"/><circle cx="15" cy="12" r=".8"/></svg>',light:'<svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3 11v2h6v-2a6 6 0 0 0-3-11z"/></svg>',kitchen:'<svg viewBox="0 0 24 24"><path d="M3 11h18v9H3zM8 11V7a3 3 0 0 1 6 0M14 7h3"/></svg>',bath:'<svg viewBox="0 0 24 24"><path d="M3 12h18v3a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5zM6 12V5a2 2 0 0 1 4 0"/></svg>',play:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4z"/></svg>'};
+// zones on the clean aerial (percent of 1672x941)
+const P=(x0,y0,x1,y1)=>({l:x0/16.72,t:y0/9.41,w:(x1-x0)/16.72,h:(y1-y0)/9.41});
+const ROOMS={
+ flooring:{n:0,title:'Flooring',icon:'floor',zone:P(1070,595,1660,905),dot:[82,80],crop:'85% 85%',
+  line:'This is our Flooring area. Here we have engineered wood SPC flooring, wood-grain baseboards and modern baseboards. We have different types here, so choose whatever you like. Tap a stand to watch it. When you are ready, follow me.',
+  l1:1,stands:[{id:'spc',name:'Engineered Wood SPC',line:'Real wood on a rigid core',lay:'v',st:'img/st-fl-spc6.jpg',scr:[84,80,12,14],img:'img/fl-spc-room.jpg',vid:'img/st-fl-spc6.jpg',d:'A real wood surface on a rigid core, in wide planks. The warmth of real oak with an easy click-lock install.',specs:['Real wood veneer surface','Rigid core, click-lock','Wide plank, about 1900 × 190 mm','Water resistant']},
+          {id:'wg-bb',name:'Wood-Grain Baseboard',line:'Aluminium, the look of wood',lay:'h',st:'img/st-fl-wg4.jpg',scr:[84,80,12,14],img:'img/fl-wg-1.jpg',vid:'img/st-fl-wg4.jpg',d:'Aluminium baseboard with a real wood-grain finish. No swelling, no repainting, tones matched to the floor.',specs:['Aluminium profile, wood-grain finish','Clip-on mount, inside and outside corners','60 mm and 80 mm heights']},
+          {id:'mod-bb',name:'Modern Baseboard',line:'Aluminium, clean lines',lay:'h',st:'img/st-fl-mod3.jpg',scr:[84,80,12,14],img:'img/fl-mod-1.jpg',vid:'img/st-fl-mod3.jpg',d:'Slim aluminium baseboard in brushed metal finishes, for a clean modern line.',specs:['Aluminium, brushed metal finishes','Exposed and slim shadow-line profiles','Rose gold, champagne, black, gold and more']}]},
+ doors:{n:1,title:'Doors & Walls',icon:'door',zone:P(190,60,600,280),dot:[22,13],crop:'22% 10%',l1:1,
+  line:'This is our Doors and Walls area. Here we have stone-look wall panels, hidden doors, interior doors and smart locks, all made for your project. Tap a stand to watch it. When you are ready, follow me.',
+  stands:[{id:'stone-wall',name:'Stone-Look Wall Panels',line:'Large-format stone look for walls',lay:'v',st:'img/st-dw-stone.jpg',scr:[84,80,12,14],img:'img/st-dw-stone.jpg',vid:'img/st-dw-stone.jpg',d:'Large-format stone-look panels for feature walls, fireplaces and double-height walls.',specs:['Large format','Lightweight','Marble look']},
+   {id:'wpc-concealed',name:'WPC Concealed Doors',line:'Flush with the wall, no visible frame',lay:'v',st:'img/st-dw-hidden.jpg',scr:[84,80,12,14],img:'img/st-dw-hidden.jpg',vid:'img/st-dw-hidden.jpg',d:'WPC concealed door, flush with the wall, with concealed hinges and a magnetic lock. Made to order for your project.',specs:['WPC core','Concealed hinges','Magnetic lock','Made to order']},
+   {id:'wpc-interior',name:'WPC Interior Doors',line:'Pre-hung with frame and casing',lay:'v',st:'img/st-dw-interior.jpg',scr:[84,80,12,14],img:'img/st-dw-interior.jpg',vid:'img/st-dw-interior.jpg',d:'WPC pre-hung interior doors with frame and casing, in 5 finishes. Made to order for your project.',specs:['Pre-hung','Frame and casing','5 finishes','Made to order']},
+   {id:'smart-locks',name:'Smart Door Locks',line:'Fingerprint and keypad lever for interior doors',lay:'v',st:'img/st-dw-locks.jpg',scr:[84,80,12,14],img:'img/st-dw-locks.jpg',vid:'img/st-dw-locks.jpg',d:'Fingerprint and keypad lever lock for interior doors, with app control and low-battery alert.',specs:['Fingerprint','Keypad','Bluetooth app','Low-battery alert']}]},
+  doorsOld:{
+  line:'',
+  stands:[{id:'door-inlay',name:'Flush Door · Metal Inlay',img:'img/zl01.webp',d:'Factory-finished flush interior door with fine metal inlay lines.',specs:['Factory finished, ready to hang','Metal inlay lines','Matched frame and hardware prep'],box:P(345,165,725,665)},
+          {id:'door-flat',name:'Flush Door · Light Oak',img:'img/zl02.webp',d:'Clean flat face in a light oak grain.',specs:['Factory finished','Light oak grain','Matched frame'],box:P(750,165,1170,665)},
+          {id:'alu-bb',name:'Aluminum Baseboard',img:'img/alu-bb.webp',d:'Wood-grain aluminum baseboard that matches the doors.',specs:['Aluminum, no swelling','Grains match the doors','No repainting'],box:P(1215,155,1645,580)}]},
+ lighting:{n:2,title:'Lighting',icon:'light',zone:P(95,305,555,595),dot:[18,48],crop:'15% 45%',l1:1,stands:[
+   {id:'shadow-gap',name:'Shadow Gap LED',line:'Hidden light along the ceiling and floor line',lay:'v',st:'img/st-li-shadow.jpg',scr:[84,80,12,14],img:'img/st-li-shadow.jpg',vid:'img/st-li-shadow.jpg',d:'A hidden ceiling edge and a floating floor line: two thin warm lines of light that make the wall seem to float.',specs:['Ceiling edge','Floor line','Warm 3000K','No visible dots']},
+   {id:'exposed-led',name:'Exposed LED Baseboard',line:'Light that washes up the wall',lay:'h',st:'img/st-li-exposed.jpg',scr:[84,80,12,14],img:'img/st-li-exposed.jpg',vid:'img/st-li-exposed.jpg',d:'Aluminium LED baseboard with a light line along the top that washes softly up the wall.',specs:['Wall-wash up-light','Warm 3000K','50 & 80 mm','Clip-on mount']},
+   {id:'plaster-in',name:'Plaster-In LED',line:'Light lines set into the wall and ceiling',lay:'v',st:'img/st-li-plaster.jpg',scr:[84,80,12,14],img:'img/st-li-plaster.jpg',vid:'img/st-li-plaster.jpg',d:'Straight and curved light lines set flush into plaster walls and ceilings.',specs:['Straight lines','Curves','Flush finish','Warm 3000K']},
+   {id:'magnetic-track',name:'Magnetic Track Lighting',line:'Concealed track, light built in',lay:'v',st:'img/st-li-track.jpg',scr:[84,80,12,14],img:'img/st-li-track.jpg',vid:'img/st-li-track.jpg',d:'A trimless magnetic track set flush into the ceiling and wall, with lights built in, plus a spotlight and pendant where you need them.',specs:['Trimless track','Click-in heads','Built-in lights','Warm 3000K']},
+   {id:'led-neon',name:'LED Neon',line:'Flexible light that follows any shape',lay:'v',st:'img/st-li-neon.jpg',scr:[84,80,12,14],img:'img/st-li-neon.jpg',vid:'img/st-li-neon.jpg',d:'Flexible LED neon that bends into lines, waves and curves, with an even glow, indoors and outdoors.',specs:['Bends any shape','Even glow','Indoor & outdoor','Warm 3000K']}],
+  line:'This is our Lighting area. Here we have shadow gap LED, exposed LED baseboards, plaster-in LED lines, magnetic track lighting and LED neon. Tap a stand to watch it. When you are ready, follow me.',
+  oldStands:[{id:'led-baseboard',name:'LED Baseboard',img:'img/led-baseboard.webp',video:'img/led-baseboard.mp4',d:'A soft line of light built into the baseboard. It lights the floor, not the eyes.',specs:['Aluminum profile, warm 3000K line','Continuous light, no dots','Matte black or champagne'],box:P(270,140,640,560)},
+          {id:'shadow-gap',name:'Shadow-gap Ceiling Line',img:'img/crown.webp',video:'img/crown.mp4',d:'A thin slot of light where wall meets ceiling. Calm, even, architectural.',specs:['Recessed aluminum profile','Warm, even wash','Drywall-ready'],box:P(700,140,1075,560)},
+          {id:'track',name:'Magnetic Track Lighting',img:'img/track.webp',d:'Recessed trimless track. Spots and linear bars click in where you need them.',specs:['48V recessed magnetic track','Spots, linear bars, grilles','Trimless finish'],box:P(1135,140,1535,560)}]},
+ kitchen:{n:3,title:'Kitchen',icon:'kitchen',zone:P(1115,305,1660,600),dot:[83,48],crop:'85% 45%',l1:1,stands:[
+   {id:'workstation',name:'Workstation Sinks',line:'A complete kitchen station',lay:'h',st:'img/st-ki-station.jpg',scr:[84,80,12,14],img:'img/st-ki-station.jpg',vid:'img/st-ki-station.jpg',d:'A complete smart kitchen station: piano-key controls, rain curtain, cup washer and drinking-water faucet, in rose gold or gunmetal.',specs:['Piano-key controls','Rain curtain','Cup washer','Drinking water']},
+   {id:'faucets',name:'Kitchen Faucets',line:'Modern pull-out, rose gold detail',lay:'v',st:'img/st-ki-faucet.jpg',scr:[84,80,12,14],img:'img/st-ki-faucet.jpg',vid:'img/st-ki-faucet.jpg',d:'Modern pull-out kitchen faucet in matte black with rose gold detail.',specs:['Pull-out spray','Solid brass','PVD finish','Ceramic cartridge']},
+   {id:'luxury-sinks',name:'Luxury Sinks',line:'Handmade farmhouse sink in rose gold',lay:'h',st:'img/st-ki-luxsink.jpg',scr:[84,80,12,14],img:'img/st-ki-luxsink.jpg',vid:'img/st-ki-luxsink.jpg',d:'Handmade farmhouse kitchen sink in brushed rose gold, with board and grid included.',specs:['Handmade 304 steel','Apron front','PVD finish','Accessories included']}],
+  line:'This is our Kitchen area. Here we have workstation sinks, kitchen faucets and luxury sinks, in rose gold and gun black. Tap any stand to see it. When you are ready, follow me.',
+  oldStands:[{id:'sink',name:'Handmade Workstation Sink',img:'img/kitchen-room.webp',d:'Deep handmade stainless sink with a ledge for boards, racks and colanders.',specs:['304 stainless steel','Workstation ledge + accessories','Undermount'],box:P(880,60,1330,320)},
+          {id:'kfaucet',name:'Pull-out Kitchen Faucet',img:'img/kitchen-room.webp',d:'Pull-out kitchen faucet in our two signature finishes.',specs:['Solid brass body','PVD finish: rose gold or gun black','Pull-out spray'],box:P(470,60,770,320),fin:1},
+          {id:'island',name:'Island Set · Sink + Gun Black Faucet',img:'img/kitchen-room.webp',d:'The workstation sink and pull-out faucet together, as they sit in a finished island.',specs:['Matched set','Gun black or rose gold faucet','Builder-ready spec sheet'],box:P(540,380,1600,670),fin:1}]},
+ bathroom:{n:4,title:'Bathroom',icon:'bath',zone:P(1080,60,1660,300),dot:[82,15],crop:'85% 10%',l1:1,stands:[
+   {id:'vanity',name:'Vanity Sets',line:'Smart double vanity with rose gold detail',lay:'v',st:'img/st-ba-vanity.jpg',scr:[84,80,12,14],img:'img/st-ba-vanity.jpg',vid:'img/st-ba-vanity.jpg',d:'Floating double vanity with stone top, rose gold fittings and a smart touch-screen mirror cabinet.',specs:['Floating cabinet','Stone top','Touch-screen mirror','Rose gold fittings']},
+   {id:'cascade',name:'Avente Cascade',line:'Exposed shower system',lay:'v',st:'img/st-ba-cascade.jpg',scr:[84,80,12,14],img:'img/st-ba-cascade.jpg',vid:'img/st-ba-cascade.jpg',d:'Multi-function shower system: rainfall, massage jets, mist and hand shower on one control bar.',specs:['Rainfall','Massage jets','Mist','Hand shower']},
+   {id:'concealed-shower',name:'Concealed Shower Systems',line:'Hidden valve, clean wall',lay:'v',st:'img/st-ba-concealed.jpg',scr:[84,80,12,14],img:'img/st-ba-concealed.jpg',vid:'img/st-ba-concealed.jpg',d:'Concealed shower system: flush ceiling rain head, waterfall spout, hidden thermostatic valve and hand shower, in rose gold.',specs:['Thermostatic','Rain + waterfall','Hidden valve','Hand shower']},
+   {id:'stone-tray',name:'Stone Shower Trays',line:'Sintered stone, one piece',lay:'v',st:'img/st-ba-tray2.jpg',scr:[84,80,12,14],img:'img/st-ba-tray2.jpg',vid:'img/st-ba-tray2.jpg',d:'One-piece sintered stone shower tray with a built-in slope, matte non-slip surface and a rose gold linear drain. Made to size for your project.',specs:['Sintered stone','Non-slip','Built-in slope','Linear drain']},
+   {id:'smart-toilet',name:'Smart Toilets',line:'Coming soon',lay:'v',st:'img/st-ba-toilet.jpg',scr:[84,80,12,14],img:'img/st-ba-toilet.jpg',vid:'img/st-ba-toilet.jpg',d:'One-piece smart toilet with a heated seat, auto flush, warm wash and night light, with rose gold detail. Coming soon.',specs:['Heated seat','Auto flush','Warm wash','Night light']}],
+  line:'This is our Bathroom area. Here we have smart vanity sets, the Avente Cascade shower system, concealed shower systems, sintered stone shower trays and, coming soon, smart toilets, in rose gold and gun black. Tap a stand to watch it. When you are ready, follow me to our Smart Home.',
+  oldStands:[{id:'cascade',name:'Avente Cascade Shower System',img:'img/cascade-rosegold.webp',img2:'img/cascade-gunblack.webp',vid:'img/cascade-rosegold-rain.webp',vid2:'img/cascade-gunblack-rain.webp',d:'Multi-function shower system: rainfall, body jets, mist and hand shower on one control bar.',specs:['304 stainless / solid brass','PVD finish, durable','Thermostatic digital control'],fns:['Rainfall','Massage','Mist','Hand shower'],fin:1,box:P(310,90,690,610)},
+          {id:'vanity',name:'Floating Vanity Set',img:'img/cascade-rosegold-760.webp',d:'Floating vanity with lit mirror, in our signature finishes. Function video coming this week.',specs:['Floating cabinet','Lit mirror','Rose gold or gun black fittings'],fin:1,box:P(710,90,1165,610)},
+          {id:'basin',name:'Tall Basin Faucet',img:'img/cascade-rosegold-760.webp',d:'Tall basin faucet. Function video coming this week.',specs:['Solid brass','PVD finish','Ceramic cartridge'],fin:1,box:P(1185,90,1560,610)}]},
+ smart:{n:5,title:'Smart Home',icon:'smart',zone:P(90,595,565,905),dot:[20,80],crop:'15% 85%',l1:1,
+  line:'Welcome to our Smart Home, the room people love most. Here we have the wireless smart home with one large wall screen for the whole home, soon our wired KNX system, and smart locks from the front door to every room. Tap a stand to watch it. When you are ready, follow me to the desk.',
+  stands:[{id:'wireless',name:'Wireless Smart Home',line:'One wall screen, the whole home',lay:'v',st:'img/st-sh-wireless.jpg',scr:[84,80,12,14],img:'img/st-sh-wireless.jpg',vid:'img/st-sh-wireless.jpg',d:'A large frameless wall screen runs the whole home: lighting, climate, blinds and scenes, with wireless presence, leak and CO2 sensors and a scene knob. Designed per home, made to order.',specs:['Touch screen','Zigbee wireless','Voice control','Scenes']},
+   {id:'knx',name:'Wired Smart Home',line:'KNX · coming soon',lay:'v',st:'img/st-sh-knx.jpg',scr:[84,80,12,14],img:'img/st-sh-knx.jpg',vid:'img/st-sh-knx.jpg',d:'The professional KNX wired system: a 15 inch wall panel, designer keypads and presence sensors running lighting, climate and scenes across the whole home. Coming soon.',specs:['15 inch panel','KNX wired','Presence sensing','Whole-home scenes']},
+   {id:'smart-locks-sh',name:'Smart Locks',line:'From front door to every room',lay:'v',st:'img/st-sh-locks.jpg',scr:[84,80,12,14],img:'img/st-sh-locks.jpg',vid:'img/st-sh-locks.jpg',d:'From the all-in-one entrance lock with face ID, camera, screen and video intercom, to the simple fingerprint lever lock for interior doors.',specs:['Face ID','Video intercom','Fingerprint','App unlock']}],
+  oldStands:[{id:'smart-p1',name:'Package 1 · Luxury',img:'img/smart-p1.webp',d:'A complete smart home that works together: control panel, glass switches and dimmers, sensors, thermostat and smart lock.',specs:['Control panel with built-in hub','Glass switches + dimmers','Motion, door, leak + climate sensors','Thermostat + smart lock']},
+          {id:'smart-p2',name:'Package 2 · Upper Luxury',img:'img/smart-p2.webp',d:'Everything in Luxury, plus a higher-end panel, video doorbell and cameras shown on the panel, and more sensors.',specs:['Higher-end control panel','Video doorbell + cameras on the panel','More sensors','Smart lock']},
+          {id:'smart-p3',name:'Package 3 · Premium Luxury',img:'img/smart-p3.webp',d:'Our top panel runs the whole home: lighting, HVAC and cameras, and it is ready to control curtains and sound.',specs:['Top control panel for the whole home','Lighting, HVAC, cameras','Ready to control curtains + sound (supplied by your trades)','Designed per home, made to order']}]}
+};
+const ORDER=['flooring','doors','lighting','kitchen','bathroom','smart'];
+let mode='free',cur='entrance';
+const $=s=>document.querySelector(s),stage=$('#stage');
+function say(t){const s=$('#sub');$('#subtxt').textContent=t;s.classList.add('on')}
+function hush(){$('#sub').classList.remove('on')}
+function scene(id,html){document.body.classList.toggle('card',id==='entrance'||id==='desk'||id==='map');let el=document.getElementById('sc-'+id);if(!el){el=document.createElement('section');el.className='scene';el.id='sc-'+id;stage.appendChild(el)}el.innerHTML=html;document.querySelectorAll('.scene').forEach(s=>s.classList.toggle('on',s===el));return el}
+function entrance(){
+ const g=COMPANY?`Thank you, <em>${COMPANY}</em>, for coming to our virtual showroom.`:'Thank you for coming to our virtual showroom.';
+ scene('entrance',`<div class="bg" style="background-image:url(img/p1-entrance.webp)"></div><div class="shade"></div>
+ <div class="welcome glass"><div class="k">Avente Hub Virtual Showroom</div><h1>${g}</h1><p>You have two ways to visit: walk through the whole showroom with me, or go straight to the section you want.</p>
+ <div class="row"><button class="btn gold" onclick="startTour()">${ICON.play.replace('<svg','<svg width=20 height=20 style=stroke:#2A1C13;fill:none;stroke-width:1.6')} Start the walkthrough</button><button class="btn" onclick="go('map')">Choose a section</button></div>
+ <div class="packs">${ORDER.map(k=>`<button onclick="openRoom('${k}','free')">${ICON[ROOMS[k].icon]}${ROOMS[k].title}</button>`).join('')}</div></div>`);
+ say((COMPANY?`Thank you, ${COMPANY}, `:'Thank you ')+'for coming to our virtual showroom. You have two ways to visit: walk through the whole showroom with me, or go straight to the section you want. Just choose below.');
+}
+function map(){
+ const z=ORDER.map(k=>{const r=ROOMS[k],b=r.zone;return `<button class="zone" style="left:${b.l}%;top:${b.t}%;width:${b.w}%;height:${b.h}%" onclick="openRoom('${k}','free')" aria-label="${r.title}"><span class="glass">${r.title} · ${r.stands.length} stands · Enter →</span></button>`}).join('')+
+ [['Windows',P(640,60,1040,250)]].map(([n,b])=>`<button class="zone soon" style="left:${b.l}%;top:${b.t}%;width:${b.w}%;height:${b.h}%" onclick="say('${n} is opening soon.')" aria-label="${n}, opening soon"><span class="glass">${n} · opening soon</span></button>`).join('');
+ scene('map',`<aside class="side"><h2>Virtual Showroom</h2><div class="s">Choose a room or start the tour</div>
+  <button class="on" onclick="startTour()">${ICON.play} Start the walkthrough</button>${ORDER.map(k=>`<button onclick="openRoom('${k}','free')">${ICON[ROOMS[k].icon]} ${ROOMS[k].title}</button>`).join('')}
+  <div class="soon">Windows<br>(opening soon)</div></aside>
+  <div class="mapwrap"><div class="bg" style="background-image:url(img/aerial.webp)"></div><div id="zones" style="position:absolute;inset:0">${z}</div></div>`);
+ fitZones();say('Here is the whole showroom from above. Choose a room, or start the walkthrough with me.');
+}
+function fitPano(sc,startX){const pn=sc.querySelector('.pano'),pin=sc.querySelector('.pin');if(!pn)return;const W=pn.clientWidth,H=pn.clientHeight,ar=1672/941;let w,hh;if(W/H>ar){w=W;hh=W/ar}else{hh=H;w=H*ar}pin.style.width=w+'px';pin.style.height=hh+'px';pin.style.top=Math.min(0,(H-hh)/2)+'px';pin.style.left='0px';if(startX!=null)pn.scrollLeft=(w-W)*startX}
+function fitZones(){const w=$('.mapwrap');if(!w)return;const W=w.clientWidth,H=w.clientHeight,ar=1672/941;let iw=W,ih=W/ar;if(ih<H){ih=H;iw=H*ar}const zs=$('#zones');zs.style.width=iw+'px';zs.style.height=ih+'px';zs.style.left=(W-iw)/2+'px';zs.style.top=(H-ih)/2+'px';zs.style.inset='auto'}
+addEventListener('resize',()=>{fitZones();const s=document.querySelector('.scene.on');if(s)fitPano(s)});
+
+function walkTo(fn){const st=document.getElementById('stage');hush();st.classList.add('walking');setTimeout(()=>{st.classList.remove('walking');fn();const s=document.querySelector('.scene.on');if(s){s.classList.add('arrive');requestAnimationFrame(()=>requestAnimationFrame(()=>s.classList.remove('arrive')))}},900)}
+function startTour(){mode='tour';walkTo(()=>openRoom(ORDER[0],'tour'))}
+function openRoom(k,m){
+ mode=m||mode;const r=ROOMS[k],i=ORDER.indexOf(k),nx=ORDER[i+1];
+ const next=mode==='tour'?`<button class="arrow" onclick="${nx?`walkTo(()=>openRoom('${nx}','tour'))`:'walkTo(()=>go(\'desk\'))'}" aria-label="${nx?'Walk to '+ROOMS[nx].title:'Walk to the Hub Desk'}"><svg viewBox="0 0 110 90" fill="none" stroke="#F3E2A0" stroke-width="6" stroke-linecap="round"><path d="M15 50 55 25 95 50"/><path d="M15 80 55 55 95 80"/></svg></button>`:'';
+ let body;
+ if(r.img){
+  const st=r.stands.map((s,j)=>`<button class="stand" style="left:${s.box.l}%;top:${s.box.t}%;width:${s.box.w}%;height:${s.box.h}%" onclick="product('${k}',${j})" aria-label="Watch ${s.name}"><i class="dot"></i><i class="scr">${s.video?`<video src="${s.video}" autoplay muted loop playsinline></video>`:`<img src="${s.vid||s.img}" alt="">`}<i class="pb"></i><b class="watch">WATCH</b></i><span class="glass">${s.name} · Watch</span></button>`).join('');
+  /* note: .scr = the stand's video screen; positions are placeholders until each stand photo is final */
+  body=`<div class="pano"><div class="pin"><img src="${r.img}" alt="${r.title} area of the Avente Hub showroom">${st}</div></div><div class="shade" style="pointer-events:none"></div><div class="swipe glass">‹ swipe to look around ›</div>`;
+ }else{
+  body=`<div class="bg" style="background-image:url(img/aerial.webp);background-size:300%;background-position:${r.crop};filter:blur(3px) brightness(.55)"></div><div class="cards">${r.stands.map((s,j)=>r.l1&&s.st?`<button class="sti" onclick="product('${k}',${j})" aria-label="Watch ${s.name}"><img src="${s.st}" alt="${s.name} stand"><span class="scrz" style="left:${s.scr[0]}%;top:${s.scr[1]}%;width:${s.scr[2]}%;height:${s.scr[3]}%">${s.live?`<img src="${s.live}" alt="">`:''}<i class="pb"></i></span>${s.lg?`<span class="slogo" style="left:${s.lg[0]}%;top:${s.lg[1]}%"><b>AVENTE</b><i>HUB</i></span>`:''}${s.sw?`<span class="sws" style="top:${s.swy}%">Available in ${s.sw.map(c=>`<i style="background:${c}"></i>`).join('')}</span>`:''}<span class="lab"><b>${s.name}</b><em>${s.line||''}</em></span></button>`:r.l1?`<button class="sst ${s.lay||'h'}" onclick="product('${k}',${j})" aria-label="Watch ${s.name}"><span class="tk"><i></i><i></i></span><span class="sc"><img src="${s.vid||s.img}" alt=""><i class="pb"></i></span><span class="pr"><img src="${s.img}" alt="${s.name}"></span><span class="pl"><b>${s.name}</b><em>${s.line||''}</em></span></button>`:`<button class="stand" style="position:relative" onclick="product('${k}',${j})"><i class="cw"><img src="${s.img}" alt=""><i class="pb"></i></i><b>${s.name}</b><i>Tap to watch</i></button>`).join('')}</div>`;
+ }
+ const sc=scene('room',`${body}${next}
+  <div class="pill glass">${ICON[r.icon].replace('<svg','<svg width=18 height=18 style=vertical-align:-3px;stroke:#F3E2A0;fill:none')} Room ${i+1} of ${ORDER.length} · ${r.title}</div>
+  <button class="exit glass" onclick="go('map')">${mode==='tour'?'Exit to map':'All sections'}</button>
+  <div class="mini" onclick="go('map')" style="background-image:url(img/aerial.webp)" title="Open the map"><i style="left:${r.dot[0]}%;top:${r.dot[1]}%"></i><b>You are here</b></div>`);
+ fitPano(sc,0);
+ const solo=r.line.replace('This is our','Welcome to our').replace(/ When you are ready, follow me[^.]*\./,'');say(mode==='tour'?(i>0?`Shall we go on? ${r.line}`:r.line):solo);cur=k;
+}
+let fin='rg';const LEARN=[];
+/* v1.2: click a stand = video pops up; Learn more = product page; Back = same spot */
+function product(k,j){
+ const s=ROOMS[k].stands[j],p=$('#pop');
+ const media=s.video?`<video src="${s.video}" autoplay muted loop playsinline controls poster="${s.img}"></video>`:`<div class="soon">${ICON.play}<span>Video of this stand coming soon</span></div>`;
+ p.innerHTML=`<div class="popc glass"><button class="x" onclick="closePop()" aria-label="Close">×</button>
+ <div class="popv" style="background-image:url(${s.vid||s.img})">${media}</div>
+ <div class="popbar"><div><div class="k">${ROOMS[k].title}</div><h3>${s.name}</h3></div>
+ <div class="row"><button class="btn" onclick="closePop()">✕ Back to showroom</button><button class="btn gold" onclick="learnMore('${k}',${j})">Learn more →</button></div></div></div>`;
+ p.classList.add('on');say('Here it is in action. Tap Learn more for every model and finish, or go back to keep walking.');
+}
+/* v1.4: back from the product page = same room, in front of the same stand, stand glows */
+function backTo(k,j){closeP();if(cur!==k)openRoom(k);const sc=document.querySelector('.scene.on'),b=sc&&sc.querySelectorAll('.stand')[j],pn=sc&&sc.querySelector('.pano');if(b&&pn){const r=b.getBoundingClientRect(),pr=pn.getBoundingClientRect();pn.scrollTo({left:pn.scrollLeft+(r.left+r.width/2)-(pr.left+pr.width/2),behavior:'smooth'});b.classList.add('here');setTimeout(()=>b.classList.remove('here'),2600)}say('Here we are, back at the '+ROOMS[k].stands[j].name+'. Take your time, then follow me when you are ready.')}
+function closePop(){const p=$('#pop');p.querySelectorAll('video').forEach(v=>v.pause());p.classList.remove('on');p.innerHTML='';if(cur in ROOMS)say(ROOMS[cur].line)}
+function learnMore(k,j){const n=ROOMS[k].stands[j].name;if(!LEARN.includes(n))LEARN.push(n);/* PREVIEW: live version logs this interest to HubSpot */const p=$('#pop');p.querySelectorAll('video').forEach(v=>v.pause());p.classList.remove('on');p.innerHTML='';productPage(k,j)}
+$('#pop').addEventListener('click',e=>{if(e.target.id==='pop')closePop()});
+function productPage(k,j){
+ const s=ROOMS[k].stands[j],p=$('#panel');fin='rg';
+ const media=s.video?`<video src="${s.video}" autoplay muted loop playsinline poster="${s.img}"></video>`:'';
+ p.innerHTML=`<div class="pcard glass"><button class="x" onclick="backTo('${k}',${j})" aria-label="Back to showroom">×</button><div class="pimg" id="pimg" style="background-image:url(${s.img})"></div><div class="pbody">
+ <div class="k">${ROOMS[k].title}</div><h3>${s.name}</h3><p class="d">${s.d}</p>
+ <div class="pvid" id="pvid" style="background-image:url(${s.vid||s.img})">${media}<span class="cap" id="pcap">${s.video?'Function video':s.vid?'Rainfall':'Function video coming this week'}</span></div>
+ ${s.fns?`<div class="fns">${s.fns.map((f,n)=>`<button class="${n?'':'on'}" onclick="fn(this,'${f}')">${f}</button>`).join('')}</div>`:''}
+ ${s.fin?`<div class="fin">Finish <button class="rg on" aria-label="Rose gold" onclick="setFin('${k}',${j},'rg',this)"></button><button class="gb" aria-label="Gun black" onclick="setFin('${k}',${j},'gb',this)"></button><span id="finname">Rose gold</span></div>`:''}
+ <ul class="specs">${s.specs.map(x=>`<li>${x}</li>`).join('')}</ul>
+ <div class="row"><button class="btn" onclick="backTo('${k}',${j})">← Back to showroom</button><button class="btn gold" onclick="closeP();go('desk')">Builder price</button><button class="btn" onclick="saveSel('${s.name}',this)">Save to my selection</button></div></div></div>`;
+ p.classList.add('on');say(s.fns?'Tap a function to see it in action.':'Have a look. Close it when you are ready.');
+}
+function fn(b,f){b.parentNode.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));$('#pcap').textContent=f+' · loop coming this week'}
+function setFin(k,j,f,b){const s=ROOMS[k].stands[j];b.parentNode.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));$('#finname').textContent=f==='rg'?'Rose gold':'Gun black';if(s.img2){$('#pimg').style.backgroundImage=`url(${f==='rg'?s.img:s.img2})`;$('#pvid').style.backgroundImage=`url(${f==='rg'?s.vid:s.vid2})`}}
+const SEL=[];function saveSel(n,b){if(!SEL.includes(n))SEL.push(n);b.textContent='Saved ✓ ('+SEL.length+')'}
+function closeP(){$('#panel').classList.remove('on');if(cur in ROOMS)say(ROOMS[cur].line)}
+$('#panel').addEventListener('click',e=>{if(e.target.id==='panel')closeP()});
+addEventListener('keydown',e=>{if(e.key==='Escape'){closePop();closeP()}});
+function desk(){
+ scene('desk',`<div class="bg" style="background-image:url(img/p6-desk.webp)"></div><div class="shade"></div>
+ <form class="deskcard glass" onsubmit="return sent(event)"><div class="emb"><img src="img/avh-mark.png" alt=""><span class="ln"></span></div><div class="k">For developers, builders and trade professionals</div><h2>Hub Desk</h2><p class="sub2">Your Hub Key opens your prices for everything you selected.</p>
+ ${SEL.length?`<div class="selbox"><b>Your selection (${SEL.length})</b>${SEL.map(n=>`<span>${n}</span>`).join('')}</div>`:''}
+ <div class="two"><input required name="name" placeholder="Name" autocomplete="name"><input required name="company" placeholder="Company" autocomplete="organization" value="${COMPANY}"></div>
+ <input required type="email" name="email" placeholder="Business email (required)" autocomplete="email">
+ <input name="site" id="site" placeholder="Company website" autocomplete="url">
+ <input required type="tel" name="phone" id="phone" placeholder="Mobile phone" autocomplete="tel">
+ <label><input type="checkbox" id="nosite" onchange="noSite(this)" style="width:auto;margin:3px 0 0"> No official company email or website? Send your social media link instead. We confirm within 24 hours.</label>
+ <input id="social" name="social" placeholder="Instagram, LinkedIn or Facebook link" style="display:none">
+ <label><input type="checkbox" name="updates" style="width:auto;margin:3px 0 0"> Send me new luxury product updates</label>
+ <button class="btn gold" style="width:100%">Request Your Hub Key 🔑</button><div class="keys"><span class="g">🟡 Gold Key · trade</span><span>⚫ Black Key · homeowner</span></div><div class="fine"></div>
+ <div class="thanks" id="thanks"></div></form>`);
+ say('This is our Hub Desk. Request your Hub Key here: it opens trade pricing, your saved selection, and a first look at new luxury products. Thank you for visiting; feel free to look around again any time.');
+}
+function sendCode(){if(!$('#phone').value.trim()){$('#phone').focus();return}$('#code').style.display='block';$('#codehint').style.display='block';$('#code').focus();say('We just sent a 6-digit code to your phone. Type it here to confirm it is you.')}
+function noSite(c){$('#social').style.display=c.checked?'block':'none';$('#social').required=c.checked}
+function sent(e){e.preventDefault();const f=e.target,fd=new FormData(f),a={};fd.forEach((v,k)=>{if(k!=='site')a[k]=v});a.companyWebsite=fd.get('site')||'';a.request='Hub Key (virtual showroom)';a.selection=SEL.join(', ');a.updates=fd.get('updates')?'yes':'';a.pageUri=location.href;
+ try{fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(a)}).catch(()=>{})}catch(x){}
+ const slow=$('#nosite').checked;f.querySelectorAll('input,button,label,.ph,.hint,.selbox,.fine').forEach(x=>x.style.display='none');const t=$('#thanks');t.style.display='block';
+ t.innerHTML='🔑 <b>Thank you, your Hub Key request is in.</b> Our team checks your company and emails your private access within 24 hours'+(SEL.length?', with your selection of '+SEL.length+' items saved.':'.');
+ say('Thank you. Your Hub Key request is in. We will email your private access within 24 hours.');return false}
+function go(id){if($('#pop').classList.contains('on'))closePop();closeP();cur=id;if(id==='entrance')entrance();else if(id==='map')map();else if(id==='desk')desk();else if(ROOMS[id])openRoom(id)}
+$('#snd').onclick=()=>say('The host voice comes with her video clips. For now, read along here.');
+entrance();
+</script>
+<script>
+/* ===== v1.9: Level 1 walk with the host videos (Max Nov 12) ===== */
+const VIDS={entrance:'vid/00-entrance-v2.mp4',flooring:['vid/01-flooring-A.mp4','vid/01-flooring-X.mp4'],doors:['vid/02-doors-A.mp4','vid/02-doors-X.mp4'],lighting:['vid/03-lighting-A.mp4','vid/03-lighting-X.mp4'],kitchen:['vid/04-kitchen-A.mp4','vid/04-kitchen-X.mp4'],bathroom:['vid/05-bathroom-A.mp4','vid/05-bathroom-X.mp4'],smart:['vid/06-smarthome-A.mp4','vid/06-smarthome-X.mp4'],desk:'vid/07-hubdesk-A.mp4'};
+/* new clockwise aerial (1672x941): zones + mini-map dots */
+const ZN={flooring:[P(55,470,525,705),[17,62]],doors:[P(110,255,565,445),[20,37]],lighting:[P(170,55,625,245),[24,15]],kitchen:[P(1050,55,1510,245),[76,15]],bathroom:[P(1100,255,1565,445),[80,37]],smart:[P(1140,470,1615,705),[82,62]]};
+for(const k in ZN){ROOMS[k].zone=ZN[k][0];ROOMS[k].dot=ZN[k][1]}
+const HUBZ=P(655,225,1020,440);
+const V=document.getElementById('v'),VUI=document.getElementById('vui');
+let vTok=0;
+function vstop(){VUI.innerHTML='';V.onended=null}
+function vplay(src,onEnd,ui){
+ const t=++vTok;document.body.classList.add('vmode');document.querySelectorAll('#vwrap .vend').forEach(x=>x.remove());VUI.innerHTML=ui||'';
+ vEnd=onEnd?()=>{if(t===vTok){vTok++;onEnd()}}:null;V.onended=()=>{if(vEnd){const f=vEnd;vEnd=null;f()}};
+ if(V.getAttribute('src')!==src){V.src=src}else{V.currentTime=0}
+ const p=V.play();if(p)p.catch(()=>{V.muted=true;V.play().catch(()=>{})});
+}
+let vEnd=null;function vskip(){const f=vEnd;vEnd=null;V.pause();const src=V.getAttribute('src')||'';if(/-A(-lv2?|-hd)?\.mp4|entrance/.test(src)){const im=document.createElement('img');im.className='vend';im.src=src.replace(/-(lv2?|hd)\.mp4$/,'.mp4').replace('.mp4','-end.jpg');document.getElementById('vwrap').appendChild(im)}if(f)f()}
+function novideo(){document.body.classList.remove('vmode');V.pause();vstop()}
+function pill(k){const r=ROOMS[k],i=ORDER.indexOf(k);return `<div class="vpill glass">${ICON[r.icon].replace('<svg','<svg width=16 height=16 style=vertical-align:-3px;stroke:#F3E2A0;fill:none')} Room ${i+1} of ${ORDER.length} · ${r.title}</div><button class="vmapb glass" onclick="go('map')">Map</button>`}
+const SKIP='<button class="vskip glass" onclick="vskip()">Skip ›</button>';
+
+entrance=function(){
+ cur='entrance';scene('entrance','');
+ vplay(VIDS.entrance,()=>{VUI.innerHTML='';welcomeCard()},SKIP);
+ say('Welcome to Avente Hub.');
+};
+function welcomeCard(){
+ const g=COMPANY?`Thank you, <em>${COMPANY}</em>, for coming to our virtual showroom.`:'Welcome to Avente Hub.';
+ scene('entrance',`<div class="welcome glass"><div class="k">Avente Hub Virtual Showroom</div><h1>${g}</h1><p>Walk the whole showroom with me, room by room, or go straight to the section you want. Choose what you like as we go; your prices are waiting for you at the Hub Desk.</p>
+ <div class="row"><button class="btn gold" onclick="startTour()">${ICON.play.replace('<svg','<svg width=20 height=20 style=stroke:#2A1C13;fill:none;stroke-width:1.6')} Start the walkthrough</button><button class="btn" onclick="go('map')">Choose a section</button></div>
+ <div class="packs">${ORDER.map(k=>`<button onclick="openRoom('${k}','free')">${ICON[ROOMS[k].icon]}${ROOMS[k].title}</button>`).join('')}</div></div>`);
+ say('Welcome to Avente Hub. Walk the whole showroom with me, or pick a room on the map. Choose what you like as we go; your prices are waiting for you at the Hub Desk.');
+}
+startTour=function(){mode='tour';openRoom(ORDER[0],'tour')};
+openRoom=function(k,m){
+ mode=m||mode;cur=k;closeAll();scene('room','');
+ const r=ROOMS[k];
+ vplay(VIDS[k][0],()=>roomWait(k),pill(k)+SKIP);
+ say(r.line.replace(/ Tap (a|any) stand[^.]*\./,'').replace(/ When you are ready, follow me[^.]*\./,''));
+};
+function roomWait(k){
+ const r=ROOMS[k],i=ORDER.indexOf(k),nx=ORDER[i+1];
+ const next=mode==='tour'?`<button class="btn gold vnext" onclick="walkOut('${k}')">${nx?'Next room: '+ROOMS[nx].title:'Go to the Hub Desk'} →</button>`:`<button class="btn vnext" onclick="go('map')">All sections</button>`;
+ VUI.innerHTML=pill(k)+`<div class="sbar vin">${r.stands.map((s,j)=>`<button onclick="product('${k}',${j})" aria-label="Watch ${s.name}"><img src="${s.st||s.img}" alt=""><i class="pb"></i><b>${s.name}</b></button>`).join('')}</div>`+next;
+ say('Tap any stand to see it. Take your time, I will wait right here.'+(mode==='tour'?' When you are ready, tap Next room.':''));
+}
+function walkOut(k){const i=ORDER.indexOf(k),nx=ORDER[i+1];hush();vplay(VIDS[k][1],()=>nx?openRoom(nx,'tour'):go('desk'),pill(k))}
+function closeAll(){if($('#pop').classList.contains('on'))closePop();$('#panel').classList.remove('on')}
+const _desk=desk;
+desk=function(){cur='desk';scene('desk','');vplay(VIDS.desk,()=>{VUI.innerHTML='';_desk();document.querySelector('#sc-desk .bg')&&(document.querySelector('#sc-desk .bg').style.display='none')},SKIP);say('Welcome to the Hub Desk.')};
+const _map=map;
+map=function(){novideo();_map();const zs=document.getElementById('zones');document.querySelector('.mapwrap .bg').style.backgroundImage='url(img/aerial-v3.webp)';
+ zs.innerHTML=ORDER.map(k=>{const r=ROOMS[k],b=r.zone;return `<button class="zone" style="left:${b.l}%;top:${b.t}%;width:${b.w}%;height:${b.h}%" onclick="openRoom('${k}','free')" aria-label="${r.title}"><span class="glass">${ORDER.indexOf(k)+1} · ${r.title} · Enter →</span></button>`}).join('')+`<button class="zone" style="left:${HUBZ.l}%;top:${HUBZ.t}%;width:${HUBZ.w}%;height:${HUBZ.h}%" onclick="go('desk')" aria-label="Hub Desk"><span class="glass">7 · Hub Desk →</span></button>`;
+ document.querySelectorAll('.zone span').forEach(x=>x.style.opacity=1);fitZones()};
+go=function(id){closeAll();vstop();if(id==='entrance')entrance();else if(id==='map')map();else if(id==='desk')desk();else if(ROOMS[id])openRoom(id)};
+/* stand pop-up: Level 2 (Learn more) comes later */
+const _product=product;product=function(k,j){_product(k,j);const b=[...document.querySelectorAll('#pop .btn.gold')].find(x=>/Learn more/.test(x.textContent));if(b)b.style.display='none'};
+closePop=function(){const p=$('#pop');p.querySelectorAll('video').forEach(v=>v.pause());p.classList.remove('on');p.innerHTML='';if(cur in ROOMS)say('Take your time. Tap another stand, or Next room when you are ready.')};
+document.querySelector('.logo').setAttribute('onclick',"go('entrance');return false");
+</script>
+<script>
+/* v2.0: host voice (Sarah) + captions synced to the video */
+const CUES={"entrance": [[14.2, "Hi, welcome to Avente Hub! I'm so glad you're here."], [18.11, "Walk the showroom with me, or tap any room on the map. And your prices?"], [21.7, "They're waiting for you at the Hub Desk."]], "flooring": [[11.3, "This is our Flooring room."], [13.07, "Here, engineered wood SPC, real wood on a rigid core."], [18.13, "Next to it, wood-grain baseboards in aluminium."], [21.73, "And here, modern metal baseboards. Tap any stand to see its video."], [26.98, "I'll wait right here."]], "doors": [[0.5, "Doors and walls! Here, stone-look wall panels."], [5.5, "Next, hidden doors that sit flush with the wall."], [9.0, "Then our classic WPC doors, and smart locks, all made to order for your project."], [15.48, "Tap any stand to explore."]], "lighting": [[0.6, "Now, lighting. Here's shadow-gap LED, hidden along the ceiling lines."], [6.28, "Next, LED baseboards, then plaster-in LED and magnetic tracks."], [12.59, "And LED neon that follows any shape. Tap a stand to see it light up!"]], "kitchen": [[0.5, "Welcome to the kitchen! Here are our workstation sinks."], [9.0, "Next, our kitchen faucets."], [13.6, "And here, our luxury sinks, all in rose gold and gun black."], [19.0, "Mix and match freely, and come back when you're done."]], "bathroom": [[0.5, "This is the bathroom. Here are our vanity sets."], [7.0, "Next, the Avente Cascade shower."], [11.6, "Then concealed shower systems,"], [16.8, "and our stone shower trays."], [21.0, "Smart toilets are coming soon."], [26.4, "Explore freely, and come back when you're ready."]], "smart": [[0.8, "Our last room, the smart home. Here's our wireless smart home system."], [11.6, "Wired systems are coming soon."], [15.8, "And here, our smart locks."], [19.0, "Take your time, then let's go to the Hub Desk together."]], "desk": [[1.0, "This is the Hub Desk."], [2.54, "Request your Hub Key here, and it opens your prices for everything you picked."], [6.95, "Thank you so much for coming!"]]};
+VIDS.entrance='vid/00-entrance-v2-hd.mp4';VIDS.desk='vid/07-hubdesk-A-hd.mp4';
+['flooring','doors','lighting','kitchen','bathroom','smart'].forEach(k=>{VIDS[k][0]=VIDS[k][0].replace('.mp4','-hd.mp4')});
+
+const CK={};CK[VIDS.entrance]='entrance';CK[VIDS.desk]='desk';['flooring','doors','lighting','kitchen','bathroom','smart'].forEach(k=>CK[VIDS[k][0]]=k);
+let SOUND=false;
+function setSound(on){SOUND=on;V.muted=!on;const b=document.getElementById('snd');b.textContent=on?'🔊':'🔇';b.setAttribute('aria-label',on?'Sound on':'Sound off')}
+const _vplay=vplay;const _vskip=vskip;vskip=function(){document.body.classList.remove('talking');_vskip()};
+vplay=function(src,onEnd,ui){V.muted=!SOUND;_vplay(src,onEnd,ui);V.muted=!SOUND;const p=V.play();if(p)p.catch(()=>{V.muted=true;V.play().catch(()=>{})})};
+let lastCue='';
+V.addEventListener('timeupdate',()=>{const k=CK[V.getAttribute('src')];if(!k)return;const cs=CUES[k];let t=null;for(const c of cs){if(V.currentTime>=c[0]-0.05)t=c[1]}if(t&&t!==lastCue){lastCue=t;say(t);document.getElementById('sub').classList.add('voice')}});
+V.addEventListener('emptied',()=>{lastCue='';document.body.classList.remove('talking')});
+V.addEventListener('playing',()=>{document.body.classList.toggle('talking',!!CK[V.getAttribute('src')])});
+V.addEventListener('ended',()=>document.body.classList.remove('talking'));
+document.getElementById('snd').onclick=e=>{e.stopPropagation();setSound(!SOUND);if(SOUND&&!V.paused)V.play().catch(()=>{})};
+/* rooms: before her voice starts, show the room name only */
+const _openRoom=openRoom;openRoom=function(k,m){_openRoom(k,m);lastCue='';say(ROOMS[k].title)};
+const _entr=entrance;entrance=function(){_entr();lastCue='';say('Avente Hub · Virtual Showroom')};
+const _dsk=desk;desk=function(){_dsk();lastCue='';say('Hub Desk')};
+function enter(on){document.getElementById('gate').remove();setSound(on);entrance()}
+document.getElementById('gateGo').onclick=()=>enter(true);
+document.getElementById('gateMute').onclick=()=>enter(false);
+</script>
+<script>
+/* v2.3: product screens sit on each stand in the video scene */
+const SCR={"flooring": [[30.2, 19, 8.8, 24], [50.6, 19, 8.8, 24], [80.6, 19, 8.8, 24]], "doors": [[25.8, 22, 8, 26], [44.6, 22, 8, 26], [63.6, 22, 8, 26], [82.9, 22, 8, 26]], "lighting": [[23.4, 21, 6.6, 26], [36.2, 21, 6.6, 26], [55.5, 21, 6.6, 26], [71.7, 21, 6.6, 26], [87.8, 21, 6.6, 26]], "kitchen": [[29.25, 20.5, 10.5, 22], [54.25, 20.5, 10.5, 22], [80.25, 20.5, 10.5, 22]], "bathroom": [[21.8, 21, 6.6, 40], [38.6, 21, 6.6, 40], [55.9, 21, 6.6, 40], [73.1, 21, 6.6, 40], [89.6, 21, 6.6, 40]], "smart": [[30.0, 20, 9.2, 30], [57.2, 20, 9.2, 30], [84.5, 20, 9.2, 30]]};
+const VS=document.createElement('div');VS.id='vstands';document.body.appendChild(VS);
+function fitVS(){const W=innerWidth,H=innerHeight,ar=16/9;const cover=getComputedStyle(V).objectFit!=='contain';let w,h;if(cover?W/H>ar:W/H<ar){w=W;h=W/ar}else{h=H;w=H*ar}VS.style.left=(W-w)/2+'px';VS.style.top=(H-h)/2+'px';VS.style.width=w+'px';VS.style.height=h+'px'}
+addEventListener('resize',fitVS);addEventListener('orientationchange',()=>setTimeout(fitVS,250));if(window.visualViewport)visualViewport.addEventListener('resize',fitVS);V.addEventListener('loadedmetadata',fitVS);
+function standsOff(){VS.classList.remove('on');VS.innerHTML=''}
+function standsOn(k){fitVS();const r=ROOMS[k],S=SCR[k]||[];VS.innerHTML=r.stands.map((s,j)=>S[j]?`<button class="stz" data-j="${j}" style="left:${S[j][0]}%;top:${S[j][1]}%;width:${S[j][2]}%;height:${S[j][3]}%" aria-label="Watch ${s.name}" onclick="playStand('${k}',${j},this)"><i class="sbg"></i></button>`:'').join('');requestAnimationFrame(()=>requestAnimationFrame(()=>VS.classList.add('on')))}
+function playStand(k,j,el){VS.querySelectorAll('.stz.playing').forEach(x=>{if(x!==el)stopStand(x)});if(el.classList.contains('playing'))return;const s=ROOMS[k].stands[j];el.classList.add('playing');
+ el.innerHTML=(s.video?`<video class="scrn" src="${s.video}" autoplay loop playsinline ${SOUND?'':'muted'}></video>`:`<img class="scrn" src="${s.img||s.st}" alt=""><span class="soon">Video coming soon</span>`)+`<span class="i" onclick="event.stopPropagation();product('${k}',${j})">Details</span><span class="x" role="button" aria-label="Close" onclick="event.stopPropagation();stopStand(this.parentNode)">✕</span>`;
+ say(s.name+(s.line?' · '+s.line:''))}
+function stopStand(el){el.classList.remove('playing');el.innerHTML='<i class="sbg"></i>'}
+const _rw=roomWait;roomWait=function(k){_rw(k);const b=VUI.querySelector('.sbar');if(b)b.remove();standsOn(k)};
+const _vp2=vplay;vplay=function(src,onEnd,ui){standsOff();_vp2(src,onEnd,ui)};
+const _nv=novideo;novideo=function(){standsOff();_nv()};
+</script>
+<script>window.__CE={"entrance": [18.11, 21.7, 24.96], "flooring": [13.07, 18.13, 21.73, 26.98, 28.31], "doors": [4.68, 8.9, 15.48, 17.61], "lighting": [6.28, 12.59, 17.76], "kitchen": [4.25, 11.11, 18.48, 21.74], "bathroom": [4.02, 9.84, 14.03, 18.9, 22.98, 29.1], "smart": [5.73, 13.74, 17.95, 22.29], "desk": [2.54, 6.95, 8.97]};window.__CEND={"entrance": 24.96, "flooring": 28.31, "doors": 17.61, "lighting": 17.76, "kitchen": 21.74, "bathroom": 29.1, "smart": 22.29, "desk": 8.97};
+/* v2.4: captions only while she speaks; hidden over the Hub Desk card */
+(function(){const _say=say;let cueOn=false;
+ window.say=function(t){if(cueOn)_say(t)};
+ V.addEventListener('timeupdate',()=>{const k=CK[V.getAttribute('src')];if(!k){return}const cs=CUES[k];let t=null,e=0;for(const c of cs){if(V.currentTime>=c[0]-0.05){t=c[1]}}const last=cs[cs.length-1];
+  let speaking=false;cs.forEach((c,i)=>{if(V.currentTime>=c[0]-0.05&&V.currentTime<=__CE[k][i]+0.4){t=c[1];speaking=true}});
+  if(speaking){cueOn=true;_say(t);cueOn=false}else{hush()}});
+ V.addEventListener('ended',()=>setTimeout(hush,400));
+ const _d=desk;desk=function(){_d();document.body.classList.add('deskon')};
+ const _o=openRoom;openRoom=function(k,m){document.body.classList.remove('deskon');_o(k,m)};
+ const _m=map;map=function(){document.body.classList.remove('deskon');_m()};
+ const _e=entrance;entrance=function(){document.body.classList.remove('deskon');_e()};
+})();
+</script>
+<a id="appt" href="/meet/?from=showroom" target="_top" aria-label="Make an appointment">📅 Make an appointment</a></body></html>
