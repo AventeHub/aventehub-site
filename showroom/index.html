@@ -328,10 +328,40 @@ body.deskon .sub{opacity:0!important;pointer-events:none}
 @media(max-width:900px){#sfoot .co{display:none}#sfoot{gap:12px}}
 @media(max-width:600px){.vip{white-space:nowrap;font-size:12px!important;padding:8px 12px!important}#sfoot{font-size:10.5px;gap:10px;padding:6px 10px calc(6px + env(safe-area-inset-bottom))}#sfoot .tag{display:none}#sfoot #appt{padding:6px 10px;font-size:10px}.logo.lg2 img{width:32px}.logo.lg2 .wm b{font-size:13px;letter-spacing:2px}.logo.lg2 .wm i{font-size:7px;letter-spacing:2px}}
 @media(max-height:500px){#sfoot .co{display:none}}
+</style><style>
+#vhold{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .35s ease;pointer-events:none;z-index:2}
+#vhold.on{opacity:1;transition:none}
+#vwrap video{position:relative;z-index:1}
+/* v2.5 header: compact logo, room pill centred so the host's face stays clear */
+.logo.lg2{padding:5px 10px 5px 6px!important;gap:8px!important}
+.logo.lg2 img{width:30px!important}
+.logo.lg2 .wm b{font-size:15px!important;letter-spacing:3px!important}
+.logo.lg2 .wm i{font-size:7.5px!important;letter-spacing:2.4px!important;margin-top:3px!important}
+.vpill{left:50%!important;transform:translateX(-50%);top:calc(16px + env(safe-area-inset-top))!important;white-space:nowrap;font-size:12.5px!important;padding:7px 14px!important}
+.vmapb{top:calc(64px + env(safe-area-inset-top))!important}
+@media(max-width:700px){.vpill{top:calc(62px + env(safe-area-inset-top))!important;font-size:11px!important}.vmapb{top:calc(62px + env(safe-area-inset-top))!important}.logo.lg2 .wm i{display:none}}
+/* v2.5 Hub Desk: luxury card */
+.deskcard{margin-top:28px}
+.deskcard{background:linear-gradient(155deg,rgba(52,36,24,.96),rgba(22,16,12,.97) 55%,rgba(36,25,17,.96))!important;border:1px solid transparent!important;background-clip:padding-box!important;box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 0 1px rgba(217,182,90,.55),0 0 40px rgba(217,182,90,.18)!important;border-radius:18px!important;overflow:hidden;max-height:calc(100vh - 140px)!important;overflow-y:auto;scrollbar-width:none}
+.deskcard::-webkit-scrollbar{display:none}
+.deskcard:after{content:'';position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,#8A6A22,#D9B65A,#F3E2A0,#D9B65A,#8A6A22)}
+.deskcard:before{inset:10px!important;border:1px solid rgba(217,182,90,.32)!important;border-radius:12px!important}
+.deskcard h2{background:linear-gradient(90deg,#B8913A,#F3E2A0 45%,#D9B65A 60%,#B8913A);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent!important;animation:foil 6s ease-in-out infinite;font-size:40px!important;margin:2px 0 6px!important}
+@keyframes foil{0%,100%{background-position:0 0}50%{background-position:100% 0}}
+.deskcard .sweep{position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 35%,rgba(243,226,160,.10) 50%,transparent 65%);background-size:250% 100%;animation:sweep 7s ease-in-out infinite}
+@keyframes sweep{0%{background-position:120% 0}60%,100%{background-position:-60% 0}}
+.deskcard input{background:rgba(255,240,210,.04)!important;border:0!important;border-bottom:1px solid rgba(217,182,90,.55)!important;border-radius:6px 6px 0 0!important;padding:11px 12px!important;transition:background .25s,box-shadow .25s}
+.deskcard input:focus{outline:0;background:rgba(243,226,160,.08)!important;box-shadow:0 2px 0 #F3E2A0,0 10px 24px rgba(217,182,90,.12)}
+.deskcard .btn.gold{position:relative;overflow:hidden;background:linear-gradient(90deg,#8A6A22,#D9B65A 35%,#F3E2A0 50%,#D9B65A 65%,#8A6A22)!important;background-size:200% 100%!important;color:#1B1512!important;font-weight:600;letter-spacing:.6px;box-shadow:0 8px 26px rgba(217,182,90,.35);animation:foil 5s ease-in-out infinite}
+.deskcard .btn.gold:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.deskcard .keys span{border:1px solid rgba(217,182,90,.4)!important;background:rgba(243,226,160,.05)!important}
+.deskcard .sub2{color:#E9DCC2}
+.deskcard .alt{display:flex;gap:10px;align-items:center;justify-content:center;margin-top:12px;font-size:13px;color:#cdbf9f}
+.deskcard .alt a{color:#F3E2A0;text-decoration:none;border-bottom:1px solid rgba(243,226,160,.5)}
 </style></head><body>
 
 <header class="top"><a class="logo lg2" href="#" onclick="go('entrance');return false" aria-label="Avente Hub, back to the entrance"><img src="img/avh-mark.png" alt="" width="44" height="35"><span class="wm"><b>AVENTE HUB</b><i>LUXURY BUILDING SYSTEMS</i></span></a><button class="vip" onclick="go('desk')">Request Your Hub Key 🔑</button></header>
-<div id="gate"><div class="in"><div class="k">Avente Hub · Virtual Showroom</div><h1>Your host is ready</h1><p>Walk the showroom with her, room by room. Best with sound on.</p><button class="btn gold" id="gateGo">🔊 Enter the showroom</button><button class="mute" id="gateMute">Enter without sound</button></div></div><div id="vwrap"><video id="v" muted playsinline preload="auto"></video></div><main id="stage"></main><div id="vui"></div>
+<div id="gate"><div class="in"><div class="k">Avente Hub · Virtual Showroom</div><h1>Your host is ready</h1><p>Walk the showroom with her, room by room. Best with sound on.</p><button class="btn gold" id="gateGo">🔊 Enter the showroom</button><button class="mute" id="gateMute">Enter without sound</button></div></div><div id="vwrap"><canvas id="vhold"></canvas><video id="v" muted playsinline preload="auto"></video></div><main id="stage"></main><div id="vui"></div>
 <div class="sub glass" id="sub" role="status" aria-live="polite"><span class="tag">Client Care</span><span id="subtxt"></span><button id="snd" aria-label="Sound" title="Sound on / off">🔇</button></div>
 <div id="pop" role="dialog" aria-modal="true" aria-label="Product video"></div>
 <div id="panel" role="dialog" aria-modal="true" aria-label="Product"></div>
@@ -477,7 +507,7 @@ $('#panel').addEventListener('click',e=>{if(e.target.id==='panel')closeP()});
 addEventListener('keydown',e=>{if(e.key==='Escape'){closePop();closeP()}});
 function desk(){
  scene('desk',`<div class="bg" style="background-image:url(img/p6-desk.webp)"></div><div class="shade"></div>
- <form class="deskcard glass" onsubmit="return sent(event)"><div class="emb"><img src="img/avh-mark.png" alt=""><span class="ln"></span></div><div class="k">For developers, builders and trade professionals</div><h2>Hub Desk</h2><p class="sub2">Your Hub Key opens your prices for everything you selected.</p>
+ <form class="deskcard glass" onsubmit="return sent(event)"><span class="sweep"></span><div class="emb"><img src="img/avh-mark.png" alt=""><span class="ln"></span></div><div class="k">For developers, builders and trade professionals</div><h2>Hub Desk</h2><p class="sub2">Your Hub Key opens your prices for everything you selected.</p>
  ${SEL.length?`<div class="selbox"><b>Your selection (${SEL.length})</b>${SEL.map(n=>`<span>${n}</span>`).join('')}</div>`:''}
  <div class="two"><input required name="name" placeholder="Name" autocomplete="name"><input required name="company" placeholder="Company" autocomplete="organization" value="${COMPANY}"></div>
  <input required type="email" name="email" placeholder="Business email (required)" autocomplete="email">
@@ -486,7 +516,7 @@ function desk(){
  <label><input type="checkbox" id="nosite" onchange="noSite(this)" style="width:auto;margin:3px 0 0"> No official company email or website? Send your social media link instead. We confirm within 24 hours.</label>
  <input id="social" name="social" placeholder="Instagram, LinkedIn or Facebook link" style="display:none">
  <label><input type="checkbox" name="updates" style="width:auto;margin:3px 0 0"> Send me new luxury product updates</label>
- <button class="btn gold" style="width:100%">Request Your Hub Key 🔑</button><div class="keys"><span class="g">🟡 Gold Key · trade</span><span>⚫ Black Key · homeowner</span></div><div class="fine"></div>
+ <button class="btn gold" style="width:100%">Request Your Hub Key 🔑</button><div class="keys"><span class="g">🟡 Gold Key · trade</span><span>⚫ Black Key · homeowner</span></div><div class="alt">Prefer to talk first? <a href="/meet/?from=hubdesk" target="_top">📅 Make an appointment</a></div><div class="fine"></div>
  <div class="thanks" id="thanks"></div></form>`);
  say('This is our Hub Desk. Request your Hub Key here: it opens trade pricing, your saved selection, and a first look at new luxury products. Thank you for visiting; feel free to look around again any time.');
 }
@@ -514,10 +544,10 @@ function vstop(){VUI.innerHTML='';V.onended=null}
 function vplay(src,onEnd,ui){
  const t=++vTok;document.body.classList.add('vmode');document.querySelectorAll('#vwrap .vend').forEach(x=>x.remove());VUI.innerHTML=ui||'';
  vEnd=onEnd?()=>{if(t===vTok){vTok++;onEnd()}}:null;V.onended=()=>{if(vEnd){const f=vEnd;vEnd=null;f()}};
- if(V.getAttribute('src')!==src){V.src=src}else{V.currentTime=0}
+ if(V.getAttribute('src')!==src){holdFrame();V.src=src}else{V.currentTime=0}
  const p=V.play();if(p)p.catch(()=>{V.muted=true;V.play().catch(()=>{})});
 }
-let vEnd=null;function vskip(){const f=vEnd;vEnd=null;V.pause();const src=V.getAttribute('src')||'';if(/-A(-lv2?|-hd)?\.mp4|entrance/.test(src)){const im=document.createElement('img');im.className='vend';im.src=src.replace(/-(lv2?|hd)\.mp4$/,'.mp4').replace('.mp4','-end.jpg');document.getElementById('vwrap').appendChild(im)}if(f)f()}
+let vEnd=null;function vskip(){const f=vEnd;vEnd=null;V.pause();const src=V.getAttribute('src')||'';if(/-A(-lv2?|-hd\d?)?\.mp4|entrance/.test(src)){const im=document.createElement('img');im.className='vend';im.src=src.replace(/-(lv2?|hd\d?)\.mp4$/,'.mp4').replace('.mp4','-end.jpg');document.getElementById('vwrap').appendChild(im)}if(f)f()}
 function novideo(){document.body.classList.remove('vmode');V.pause();vstop()}
 function pill(k){const r=ROOMS[k],i=ORDER.indexOf(k);return `<div class="vpill glass">${ICON[r.icon].replace('<svg','<svg width=16 height=16 style=vertical-align:-3px;stroke:#F3E2A0;fill:none')} Room ${i+1} of ${ORDER.length} · ${r.title}</div><button class="vmapb glass" onclick="go('map')">Map</button>`}
 const SKIP='<button class="vskip glass" onclick="vskip()">Skip ›</button>';
@@ -563,9 +593,9 @@ document.querySelector('.logo').setAttribute('onclick',"go('entrance');return fa
 </script>
 <script>
 /* v2.0: host voice (Sarah) + captions synced to the video */
-const CUES={"entrance": [[14.2, "Hi, welcome to Avente Hub! I'm so glad you're here."], [18.11, "Walk the showroom with me, or tap any room on the map. And your prices?"], [21.7, "They're waiting for you at the Hub Desk."]], "flooring": [[11.3, "This is our Flooring room."], [13.07, "Here, engineered wood SPC, real wood on a rigid core."], [18.13, "Next to it, wood-grain baseboards in aluminium."], [21.73, "And here, modern metal baseboards. Tap any stand to see its video."], [26.98, "I'll wait right here."]], "doors": [[0.5, "Doors and walls! Here, stone-look wall panels."], [5.5, "Next, hidden doors that sit flush with the wall."], [9.0, "Then our classic WPC doors, and smart locks, all made to order for your project."], [15.48, "Tap any stand to explore."]], "lighting": [[0.6, "Now, lighting. Here's shadow-gap LED, hidden along the ceiling lines."], [6.28, "Next, LED baseboards, then plaster-in LED and magnetic tracks."], [12.59, "And LED neon that follows any shape. Tap a stand to see it light up!"]], "kitchen": [[0.5, "Welcome to the kitchen! Here are our workstation sinks."], [9.0, "Next, our kitchen faucets."], [13.6, "And here, our luxury sinks, all in rose gold and gun black."], [19.0, "Mix and match freely, and come back when you're done."]], "bathroom": [[0.5, "This is the bathroom. Here are our vanity sets."], [7.0, "Next, the Avente Cascade shower."], [11.6, "Then concealed shower systems,"], [16.8, "and our stone shower trays."], [21.0, "Smart toilets are coming soon."], [26.4, "Explore freely, and come back when you're ready."]], "smart": [[0.8, "Our last room, the smart home. Here's our wireless smart home system."], [11.6, "Wired systems are coming soon."], [15.8, "And here, our smart locks."], [19.0, "Take your time, then let's go to the Hub Desk together."]], "desk": [[1.0, "This is the Hub Desk."], [2.54, "Request your Hub Key here, and it opens your prices for everything you picked."], [6.95, "Thank you so much for coming!"]]};
-VIDS.entrance='vid/00-entrance-v2-hd.mp4';VIDS.desk='vid/07-hubdesk-A-hd.mp4';
-['flooring','doors','lighting','kitchen','bathroom','smart'].forEach(k=>{VIDS[k][0]=VIDS[k][0].replace('.mp4','-hd.mp4')});
+const CUES={"entrance": [[14.2, "Hi, welcome to Avente Hub! I'm so glad you're here."], [18.11, "Walk the showroom with me, or tap any room on the map. And your prices?"], [21.7, "They're waiting for you at the Hub Desk."]], "flooring": [[11.3, "This is our Flooring room."], [13.07, "Here, engineered wood SPC, real wood on a rigid core."], [18.13, "Next to it, wood-grain baseboards in aluminium."], [21.73, "And here, modern metal baseboards. Tap any stand to see its video."], [26.98, "I'll wait right here."]], "doors": [[0.4, "Doors and walls! Here, stone-look wall panels."], [4.6, "Next, hidden doors that sit flush with the wall."], [7.95, "Then our classic WPC doors,"], [10.4, "and smart locks,"], [11.8, "all made to order for your project."], [15.4, "Tap any stand to explore."]], "lighting": [[0.6, "Now, lighting. Here's shadow-gap LED, hidden along the ceiling lines."], [6.28, "Next, LED baseboards, then plaster-in LED and magnetic tracks."], [12.59, "And LED neon that follows any shape. Tap a stand to see it light up!"]], "kitchen": [[0.5, "Welcome to the kitchen! Here are our workstation sinks."], [9.0, "Next, our kitchen faucets."], [13.6, "And here, our luxury sinks, all in rose gold and gun black."], [19.0, "Mix and match freely, and come back when you're done."]], "bathroom": [[0.5, "This is the bathroom. Here are our vanity sets."], [7.0, "Next, the Avente Cascade shower."], [11.6, "Then concealed shower systems,"], [16.8, "and our stone shower trays."], [21.0, "Smart toilets are coming soon."], [26.4, "Explore freely, and come back when you're ready."]], "smart": [[0.8, "Our last room, the smart home. Here's our wireless smart home system."], [11.6, "Wired systems are coming soon."], [15.8, "And here, our smart locks."], [19.0, "Take your time, then let's go to the Hub Desk together."]], "desk": [[1.0, "This is the Hub Desk."], [2.54, "Request your Hub Key here, and it opens your prices for everything you picked."], [6.95, "Thank you so much for coming!"]]};
+VIDS.entrance='vid/00-entrance-v2-hd2.mp4';VIDS.desk='vid/07-hubdesk-A-hd2.mp4';
+['flooring','doors','lighting','kitchen','bathroom','smart'].forEach(k=>{VIDS[k][0]=VIDS[k][0].replace('.mp4','-hd2.mp4')});VIDS.doors[0]='vid/02-doors-A-hd3.mp4';
 
 const CK={};CK[VIDS.entrance]='entrance';CK[VIDS.desk]='desk';['flooring','doors','lighting','kitchen','bathroom','smart'].forEach(k=>CK[VIDS[k][0]]=k);
 let SOUND=false;
@@ -602,7 +632,7 @@ const _rw=roomWait;roomWait=function(k){_rw(k);const b=VUI.querySelector('.sbar'
 const _vp2=vplay;vplay=function(src,onEnd,ui){standsOff();_vp2(src,onEnd,ui)};
 const _nv=novideo;novideo=function(){standsOff();_nv()};
 </script>
-<script>window.__CE={"entrance": [18.11, 21.7, 24.96], "flooring": [13.07, 18.13, 21.73, 26.98, 28.31], "doors": [4.68, 8.9, 15.48, 17.61], "lighting": [6.28, 12.59, 17.76], "kitchen": [4.25, 11.11, 18.48, 21.74], "bathroom": [4.02, 9.84, 14.03, 18.9, 22.98, 29.1], "smart": [5.73, 13.74, 17.95, 22.29], "desk": [2.54, 6.95, 8.97]};window.__CEND={"entrance": 24.96, "flooring": 28.31, "doors": 17.61, "lighting": 17.76, "kitchen": 21.74, "bathroom": 29.1, "smart": 22.29, "desk": 8.97};
+<script>window.__CE={"entrance": [18.11, 21.7, 24.96], "flooring": [13.07, 18.13, 21.73, 26.98, 28.31], "doors": [4.58, 8.0, 10.38, 11.75, 14.13, 17.54], "lighting": [6.28, 12.59, 17.76], "kitchen": [4.25, 11.11, 18.48, 21.74], "bathroom": [4.02, 9.84, 14.03, 18.9, 22.98, 29.1], "smart": [5.73, 13.74, 17.95, 22.29], "desk": [2.54, 6.95, 8.97]};window.__CEND={"entrance": 24.96, "flooring": 28.31, "doors": 17.54, "lighting": 17.76, "kitchen": 21.74, "bathroom": 29.1, "smart": 22.29, "desk": 8.97};
 /* v2.4: captions only while she speaks; hidden over the Hub Desk card */
 (function(){const _say=say;let cueOn=false;
  window.say=function(t){if(cueOn)_say(t)};
@@ -616,4 +646,11 @@ const _nv=novideo;novideo=function(){standsOff();_nv()};
  const _e=entrance;entrance=function(){document.body.classList.remove('deskon');_e()};
 })();
 </script>
-<footer id="sfoot"><a id="appt" href="/meet/?from=showroom" target="_top">📅 Make an appointment</a><span class="tag">Factory-direct luxury.</span><span class="co">GRF building materials for developers and builders · Greater Toronto Area and Florida</span><a class="ct" href="tel:+14166498282">+1 (416) 649-8282</a><a class="ct" href="mailto:info@aventehub.com">info@aventehub.com</a><span class="co">Vaughan, Ontario</span><span class="co">© 2026 Avente Canada Inc.</span></footer></body></html>
+<footer id="sfoot"><a id="appt" href="/meet/?from=showroom" target="_top">📅 Make an appointment</a><span class="tag">Factory-direct luxury.</span><span class="co">GRF building materials for developers and builders · Greater Toronto Area and Florida</span><a class="ct" href="tel:+14166498282">+1 (416) 649-8282</a><a class="ct" href="mailto:info@aventehub.com">info@aventehub.com</a><span class="co">Vaughan, Ontario</span><span class="co">© 2026 Avente Canada Inc.</span></footer><script>
+/* v2.5: no black flash between rooms: hold the last frame until the next clip plays */
+const VH=document.getElementById('vhold');
+function holdFrame(){try{const V=document.getElementById('v');if(!V.videoWidth||V.readyState<2)return;VH.width=V.videoWidth;VH.height=V.videoHeight;VH.getContext('2d').drawImage(V,0,0);VH.style.objectFit=getComputedStyle(V).objectFit;VH.classList.add('on')}catch(e){}}
+(function(){const V=document.getElementById('v');const off=()=>{if(V.currentTime>0.04)requestAnimationFrame(()=>VH.classList.remove('on'))};V.addEventListener('timeupdate',off);V.addEventListener('playing',()=>setTimeout(off,60));})();
+/* preload the next clip so it starts at once */
+(function(){const seen={};const V=document.getElementById('v');V.addEventListener('playing',()=>{try{const list=[VIDS.entrance].concat(...['flooring','doors','lighting','kitchen','bathroom','smart'].map(k=>VIDS[k])).concat([VIDS.desk]);const i=list.indexOf(V.getAttribute('src'));[list[i+1],list[i+2]].forEach(u=>{if(u&&!seen[u]){seen[u]=1;const l=document.createElement('link');l.rel='preload';l.as='video';l.href=u;document.head.appendChild(l);fetch(u,{headers:{Range:'bytes=0-3000000'}}).catch(()=>{})}})}catch(e){}})})();
+</script></body></html>
