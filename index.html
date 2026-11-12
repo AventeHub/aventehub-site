@@ -316,9 +316,21 @@ body.deskon .sub{opacity:0!important;pointer-events:none}
 /* v2.4 captions: subtitle style, only while she speaks */
 .sub{background:rgba(12,9,7,.55)!important;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:0!important;box-shadow:none!important;padding:8px 14px!important;font-size:15px!important}
 .sub .tag{font-size:9px!important;padding:2px 7px!important;opacity:.85}
-</style><style>#appt{position:fixed;left:14px;bottom:14px;z-index:60;display:flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;border:1px solid rgba(217,182,90,.7);background:rgba(27,21,18,.78);backdrop-filter:blur(6px);color:#F3E2A0;font:500 13px/1 Jost,sans-serif;letter-spacing:.06em;text-decoration:none;text-transform:uppercase;box-shadow:0 4px 18px rgba(0,0,0,.35)}#appt:hover{background:linear-gradient(90deg,#8A6A22,#D9B65A,#F3E2A0);color:#1B1512}@media(max-width:700px),(max-height:500px){#appt{left:10px;bottom:auto;top:118px;padding:7px 11px;font-size:10.5px}}</style></head><body>
+</style><style>#appt{position:fixed;left:14px;bottom:14px;z-index:60;display:flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;border:1px solid rgba(217,182,90,.7);background:rgba(27,21,18,.78);backdrop-filter:blur(6px);color:#F3E2A0;font:500 13px/1 Jost,sans-serif;letter-spacing:.06em;text-decoration:none;text-transform:uppercase;box-shadow:0 4px 18px rgba(0,0,0,.35)}#appt:hover{background:linear-gradient(90deg,#8A6A22,#D9B65A,#F3E2A0);color:#1B1512}</style><style>
+.logo.lg2{flex-direction:row;align-items:center;gap:10px;padding:7px 12px 7px 8px;border-radius:12px;background:rgba(18,13,10,.62);border:1px solid rgba(201,162,39,.28);backdrop-filter:blur(6px)}.logo.lg2 img{width:40px;height:auto;display:block}
+.logo.lg2 .wm{display:flex;flex-direction:column;line-height:1}.logo.lg2 .wm b{white-space:nowrap;font-family:Marcellus,serif;font-weight:400;font-size:19px;letter-spacing:4px;background:linear-gradient(90deg,#8A6A22,#D9B65A,#F3E2A0);-webkit-background-clip:text;background-clip:text;color:transparent}
+.logo.lg2 .wm i{white-space:nowrap;font-style:normal;font-size:8.5px;letter-spacing:3px;margin-top:5px;color:var(--gold-l)}
+#sfoot{position:fixed;left:0;right:0;bottom:0;z-index:55;display:flex;align-items:center;gap:18px;padding:8px 16px calc(8px + env(safe-area-inset-bottom));background:linear-gradient(0deg,rgba(18,13,10,.94),rgba(18,13,10,.72));border-top:1px solid rgba(201,162,39,.45);font:400 12px/1.2 Jost,sans-serif;color:#d9ccb4;white-space:nowrap;overflow:hidden}
+#sfoot .tag{font-family:Marcellus,serif;font-size:14px;letter-spacing:.5px;background:linear-gradient(90deg,#D9B65A,#F3E2A0);-webkit-background-clip:text;background-clip:text;color:transparent}
+#sfoot .ct{color:#F3E2A0;text-decoration:none}#sfoot .ct:hover{text-decoration:underline}
+#sfoot #appt{position:static;flex:none;padding:7px 14px;font-size:11.5px;box-shadow:none}
+.vnext{margin-bottom:46px}
+@media(max-width:900px){#sfoot .co{display:none}#sfoot{gap:12px}}
+@media(max-width:600px){.vip{white-space:nowrap;font-size:12px!important;padding:8px 12px!important}#sfoot{font-size:10.5px;gap:10px;padding:6px 10px calc(6px + env(safe-area-inset-bottom))}#sfoot .tag{display:none}#sfoot #appt{padding:6px 10px;font-size:10px}.logo.lg2 img{width:32px}.logo.lg2 .wm b{font-size:13px;letter-spacing:2px}.logo.lg2 .wm i{font-size:7px;letter-spacing:2px}}
+@media(max-height:500px){#sfoot .co{display:none}}
+</style></head><body>
 
-<header class="top"><a class="logo" href="#" onclick="go('entrance');return false" aria-label="Avente Hub, back to the entrance"><b>AVENTE</b><i>HUB</i></a><button class="vip" onclick="go('desk')">Request Your Hub Key 🔑</button></header>
+<header class="top"><a class="logo lg2" href="#" onclick="go('entrance');return false" aria-label="Avente Hub, back to the entrance"><img src="img/avh-mark.png" alt="" width="44" height="35"><span class="wm"><b>AVENTE HUB</b><i>LUXURY BUILDING SYSTEMS</i></span></a><button class="vip" onclick="go('desk')">Request Your Hub Key 🔑</button></header>
 <div id="gate"><div class="in"><div class="k">Avente Hub · Virtual Showroom</div><h1>Your host is ready</h1><p>Walk the showroom with her, room by room. Best with sound on.</p><button class="btn gold" id="gateGo">🔊 Enter the showroom</button><button class="mute" id="gateMute">Enter without sound</button></div></div><div id="vwrap"><video id="v" muted playsinline preload="auto"></video></div><main id="stage"></main><div id="vui"></div>
 <div class="sub glass" id="sub" role="status" aria-live="polite"><span class="tag">Client Care</span><span id="subtxt"></span><button id="snd" aria-label="Sound" title="Sound on / off">🔇</button></div>
 <div id="pop" role="dialog" aria-modal="true" aria-label="Product video"></div>
@@ -604,4 +616,4 @@ const _nv=novideo;novideo=function(){standsOff();_nv()};
  const _e=entrance;entrance=function(){document.body.classList.remove('deskon');_e()};
 })();
 </script>
-<a id="appt" href="/meet/?from=showroom" target="_top" aria-label="Make an appointment">📅 Make an appointment</a></body></html>
+<footer id="sfoot"><a id="appt" href="/meet/?from=showroom" target="_top">📅 Make an appointment</a><span class="tag">Factory-direct luxury.</span><span class="co">GRF building materials for developers and builders · Greater Toronto Area and Florida</span><a class="ct" href="tel:+14166498282">+1 (416) 649-8282</a><a class="ct" href="mailto:info@aventehub.com">info@aventehub.com</a><span class="co">Vaughan, Ontario</span><span class="co">© 2026 Avente Canada Inc.</span></footer></body></html>
