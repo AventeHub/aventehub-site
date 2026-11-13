@@ -658,6 +658,6 @@ function holdFrame(){try{const V=document.getElementById('v');if(!V.videoWidth||
 const MU=new Audio('audio/hub-music.m4a');MU.loop=true;MU.preload='auto';MU.volume=0;let muTarget=0,muOn=false;
 function musicOn(on){muOn=on;if(on){MU.play().catch(()=>{})}else{muTarget=0}}
 function speakingNow(){try{const V=document.getElementById('v');const k=CK[V.getAttribute('src')];if(!k||V.paused)return false;const t=V.currentTime,c=CUES[k],e=__CE[k];for(let i=0;i<c.length;i++){if(t>=c[i][0]-0.15&&t<(e[i]||c[i][0]+3)+0.2)return true}}catch(x){}return false}
-setInterval(()=>{muTarget=muOn&&!document.hidden?(speakingNow()?0:(document.getElementById('v').paused?0.06:0.10)):0;const v=MU.volume+(muTarget-MU.volume)*0.12;MU.volume=Math.max(0,Math.min(1,v));if(!muOn&&MU.volume<0.005&&!MU.paused)MU.pause()},80);
+setInterval(()=>{muTarget=muOn&&!document.hidden?(speakingNow()?0:(document.getElementById('v').paused?0.22:0.35)):0;const v=MU.volume+(muTarget-MU.volume)*0.12;MU.volume=Math.max(0,Math.min(1,v));if(!muOn&&MU.volume<0.005&&!MU.paused)MU.pause()},80);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&muOn)MU.play().catch(()=>{})});
 </script></body></html>
