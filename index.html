@@ -655,9 +655,9 @@ function holdFrame(){try{const V=document.getElementById('v');if(!V.videoWidth||
 (function(){const seen={};const V=document.getElementById('v');V.addEventListener('playing',()=>{try{const list=[VIDS.entrance].concat(...['flooring','doors','lighting','kitchen','bathroom','smart'].map(k=>VIDS[k])).concat([VIDS.desk]);const i=list.indexOf(V.getAttribute('src'));[list[i+1],list[i+2]].forEach(u=>{if(u&&!seen[u]){seen[u]=1;const l=document.createElement('link');l.rel='preload';l.as='video';l.href=u;document.head.appendChild(l);fetch(u,{headers:{Range:'bytes=0-3000000'}}).catch(()=>{})}})}catch(e){}})})();
 </script><script>
 /* v2.6 background music: Hub signature "Midnight Glow Delight", very low, ducked under the host's voice */
-const MU=new Audio('audio/hub-music.m4a');MU.loop=true;MU.preload='auto';MU.volume=0;let muTarget=0,muOn=false;
+const MU=new Audio('audio/hub-music-soft.m4a');MU.loop=true;MU.preload='auto';MU.volume=0;let muTarget=0,muOn=false;
 function musicOn(on){muOn=on;if(on){MU.play().catch(()=>{})}else{muTarget=0}}
 function speakingNow(){try{const V=document.getElementById('v');const k=CK[V.getAttribute('src')];if(!k||V.paused)return false;const t=V.currentTime,c=CUES[k],e=__CE[k];for(let i=0;i<c.length;i++){if(t>=c[i][0]-0.15&&t<(e[i]||c[i][0]+3)+0.2)return true}}catch(x){}return false}
-setInterval(()=>{muTarget=muOn&&!document.hidden?(speakingNow()?0:(document.getElementById('v').paused?0.22:0.35)):0;const v=MU.volume+(muTarget-MU.volume)*0.12;MU.volume=Math.max(0,Math.min(1,v));if(!muOn&&MU.volume<0.005&&!MU.paused)MU.pause()},80);
+setInterval(()=>{muTarget=muOn&&!document.hidden?(speakingNow()?0:(document.getElementById('v').paused?0.12:0.18)):0;const v=MU.volume+(muTarget-MU.volume)*0.12;MU.volume=Math.max(0,Math.min(1,v));if(!muOn&&MU.volume<0.005&&!MU.paused)MU.pause()},80);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&muOn)MU.play().catch(()=>{})});
 </script></body></html>
