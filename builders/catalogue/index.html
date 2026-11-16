@@ -462,7 +462,7 @@ table.simple td.sv2{color:#1F7A4A;font-weight:700}
 @media (max-width:560px){
 html,body{overflow-x:hidden!important;overflow-y:auto!important;height:auto!important;min-height:100%}
 body{display:block!important}
-.nav{position:sticky!important;bottom:0;z-index:30;background:rgba(27,17,11,.94);backdrop-filter:blur(6px);border-top:1px solid rgba(214,175,70,.35)}
+.nav{position:sticky!important;bottom:0;z-index:30;background:rgba(27,17,11,.96);border-top:1px solid rgba(214,175,70,.35)}
 .stage{height:auto!important;overflow:visible!important}
 .book{width:100%!important;max-width:100%!important;overflow:hidden;padding:6px 6px 0!important;box-sizing:border-box}
 .page{width:100%!important;min-width:0!important;box-sizing:border-box;grid-template-columns:repeat(3,minmax(0,1fr))!important;grid-template-rows:auto!important;align-content:start;padding:10px 8px 8px!important;border-radius:16px!important}
@@ -499,6 +499,31 @@ table.simple td{font-size:13px!important;padding:6px 6px!important}table.simple 
 .sumfoot{flex-direction:column;align-items:flex-start}
 .sumfoot .cta{font-size:14px!important}
 }
+
+/* ===== mobile v2: even sizes, side arrows ===== */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+@media (max-width:560px){
+.page{align-items:stretch!important}
+.card{height:100%}
+.card .body{flex:1 1 auto;display:flex;flex-direction:column}
+.card .price{margin-top:auto!important}
+.bar{display:none!important}
+.card .pic{height:110px!important;flex:none!important}
+.name{font-size:12.5px!important;line-height:1.2!important;min-height:3.6em!important}
+.card .list .it,.it{font-size:10.5px!important;line-height:1.25!important}
+.card .list .it > *:last-child{font-size:11px!important}
+.it.x{font-size:9.5px!important}
+.card .price b{font-size:15px!important}.card.av .price b{font-size:17px!important}
+.step b{width:18px!important;height:18px!important;font-size:10px!important}
+.nav #prev,.nav #next{position:fixed!important;top:30%!important;z-index:40;width:44px!important;height:44px!important;font-size:26px!important;border-radius:50%;opacity:.95;box-shadow:0 4px 14px rgba(0,0,0,.55),0 0 0 3px rgba(201,162,39,.25)!important}
+.nav #prev{left:4px!important}.nav #next{right:4px!important}
+.nav #prev:disabled{opacity:.25!important}
+.nav .lbl{flex:1 1 100%!important;text-align:center}
+.swipe-hint{display:block!important}
+.card .badge{padding:3px 8px!important;border-radius:10px!important}.card .badge b{font-size:16px!important}.card .badge span{font-size:6.5px!important;letter-spacing:.05em!important}
+}
+.swipe-hint{display:none;position:fixed;left:50%;bottom:120px;transform:translateX(-50%);z-index:45;background:rgba(27,17,11,.9);color:#F3D88A;border:1px solid rgba(214,175,70,.6);border-radius:999px;padding:9px 18px;font-family:'Jost',sans-serif;font-size:14px;letter-spacing:.06em;white-space:nowrap;pointer-events:none;transition:opacity .6s}
+.swipe-hint.gone{opacity:0}
 </style>
 </head>
 <body>
@@ -1111,6 +1136,7 @@ table.simple td{font-size:13px!important;padding:6px 6px!important}table.simple 
   </section>
 </div></div>
 
+<div class="swipe-hint" id="swipeHint">‹ Swipe or tap the arrows to flip pages ›</div>
 <div class="nav">
   <button id="prev" aria-label="Previous page">&#8249;</button>
   <div class="lbl" id="lbl"></div>
@@ -1235,5 +1261,6 @@ show(h>=1&&h<pages.length?h:0);
     nav.appendChild(b);}
 })();
 </script>
+<script>setTimeout(()=>{const h=document.getElementById('swipeHint');if(h)h.classList.add('gone')},4500);</script>
 </body>
 </html>
