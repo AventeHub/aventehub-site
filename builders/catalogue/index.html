@@ -435,6 +435,28 @@ table.simple td.sv2{color:#1F7A4A;font-weight:700}
 .offer-row .ov b{font-size:40px;font-weight:700;margin-left:8px;background:var(--goldgrad);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
 .offer-row .ov.ovs b{background:none;color:#7FD3A0;-webkit-text-fill-color:#7FD3A0}
 @media (max-width:560px){.offer-tag{position:static;transform:none;grid-column:1/-1;justify-self:start;font-size:12px;padding:5px 12px}.offer-tag b{font-size:14px}.offer-row .ov{font-size:15px}.offer-row .ov b{font-size:22px}.offer-row .ol{font-size:11px}}
+
+/* ===== cover ===== */
+.page.cover{grid-template-columns:1.15fr 1fr!important;grid-template-rows:1fr!important;gap:0!important;padding:0!important;overflow:hidden;
+ background:radial-gradient(900px 600px at 15% 10%,rgba(201,162,39,.16),transparent 60%),linear-gradient(160deg,#2A1B11,#160E08 70%)!important}
+.cv-left{padding:56px 48px 44px 64px;display:flex;flex-direction:column;gap:20px;min-width:0}
+.cv-brand{display:flex;align-items:center;gap:16px}.cv-brand img{width:84px;height:84px}
+.cv-brand span{font-family:'Avente Display',sans-serif;font-size:30px;letter-spacing:.3em;color:#FAF3E2;font-weight:600}
+.cv-ed{font-family:'Jost',sans-serif;font-size:19px;letter-spacing:.34em;text-transform:uppercase;color:#cdb98d;margin-top:22px}
+.cv-h1{margin:0;font-family:'Avente Display',sans-serif;font-weight:700;font-size:112px;line-height:.92;white-space:nowrap;text-transform:uppercase;background:var(--goldgrad);background-size:180% 100%;background-position:20% 50%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.cv-rule{width:120px;height:3px;background:var(--goldgrad);border-radius:3px}
+.cv-tag{font-family:'Avente Display',sans-serif;font-size:40px;color:#FAF3E2;line-height:1.2;max-width:720px}.cv-tag em{font-style:normal;color:#E9C766}
+.cv-chips{display:flex;flex-wrap:wrap;gap:10px}
+.cv-chips span{border:1px solid rgba(214,175,70,.55);border-radius:999px;padding:9px 20px;font-family:'Jost',sans-serif;font-size:19px;letter-spacing:.14em;text-transform:uppercase;color:#E9DDBF}
+.cv-offer{margin-top:auto;align-self:flex-start;background:var(--goldgrad);color:#24160E;border-radius:999px;padding:12px 26px;font-family:'Jost',sans-serif;font-size:24px;font-weight:500;box-shadow:0 8px 22px rgba(0,0,0,.45)}
+.cv-offer b{font-family:'Avente Display',sans-serif;font-size:32px;font-weight:700;margin-right:6px}
+.cv-foot{font-family:'Jost',sans-serif;font-size:18px;letter-spacing:.2em;text-transform:uppercase;color:#a8977a}
+.cv-right{display:grid;grid-template-columns:1.25fr 1fr;grid-template-rows:1.15fr 1fr;gap:10px;padding:26px 26px 26px 0;min-height:0}
+.cv-right figure{margin:0;position:relative;overflow:hidden;border-radius:22px;box-shadow:0 10px 26px rgba(0,0,0,.45);min-height:0}
+.cv-right figure:first-child{grid-row:1/3}
+.cv-right img{width:100%;height:100%;object-fit:cover;display:block}
+.cv-right figcaption{position:absolute;left:14px;bottom:12px;background:rgba(22,14,8,.72);color:#F3D88A;border:1px solid rgba(214,175,70,.5);border-radius:999px;padding:5px 13px;font-family:'Jost',sans-serif;font-size:13px;letter-spacing:.14em;text-transform:uppercase}
+@media (max-width:560px){.page.cover{grid-template-columns:1fr!important}.cv-left{padding:22px}.cv-h1{font-size:46px}.cv-tag{font-size:18px}.cv-right{padding:0 14px 14px;height:280px}.cv-offer{font-size:13px;padding:8px 14px}.cv-offer b{font-size:16px}}
 </style>
 </head>
 <body>
@@ -447,6 +469,23 @@ table.simple td.sv2{color:#1F7A4A;font-weight:700}
 <div class="stage" id="stage"><div class="book" id="book">
 
   <!-- PAGE 1 · CLASSIC -->
+  <section class="page cover" data-title="Builder catalogue">
+   <div class="cv-left">
+    <div class="cv-brand"><img src="img/logo.svg" alt=""><span>AVENTE HUB</span></div>
+    <div class="cv-ed">Edition 01 · 2026 – 2027</div>
+    <h1 class="cv-h1">Builder<br>Catalogue</h1>
+    <div class="cv-rule"></div>
+    <div class="cv-tag">Factory-direct luxury, <em>side by side</em> with the local price.</div>
+    <div class="cv-chips"><span>Lighting</span><span>Trim</span><span>Doors</span><span>Kitchen</span><span>Bath</span></div>
+    <div class="cv-offer"><b>15% off</b> your first order · confirm by Jan 31, 2027</div>
+    <div class="cv-foot">Vaughan · Greater Toronto Area · 416-649-8282</div>
+   </div>
+   <div class="cv-right">
+    <figure><img src="img/x03.jpg" alt="Shadow-line baseboard glowing along a hallway"><figcaption>Shadow-line glow</figcaption></figure>
+    <figure><img src="img/trk-room.jpg" alt="Magnetic track lighting in a living room"><figcaption>Magnetic track</figcaption></figure>
+    <figure><img src="img/bt-hero-gold.jpg" alt="Gold concealed shower"><figcaption>Bath · gold</figcaption></figure>
+   </div>
+  </section>
   <section class="page" data-title="Classic LED baseboard">
     <div class="offer-tag"><b>15% off</b> your first order · confirm by Jan 31, 2027</div>
     <div class="card">
@@ -1046,7 +1085,7 @@ table.simple td.sv2{color:#1F7A4A;font-weight:700}
 
 <script>
 (function(){
-  var pg=[...document.querySelectorAll('.page')];
+  var pg=[...document.querySelectorAll('.page:not(.cover)')];
   pg.forEach(function(p,i){
     var h=document.createElement('div');h.className='ph';
     h.innerHTML='<span class="n">'+String(i+1).padStart(2,'0')+'</span><span class="tt">'+p.dataset.title+'</span><span class="sub">Standard · Premium · <b>Avente</b></span>';
@@ -1055,7 +1094,7 @@ table.simple td.sv2{color:#1F7A4A;font-weight:700}
 })();
 </script>
 <script>
-const all=[...document.querySelectorAll('.page')];
+const all=[...document.querySelectorAll('.page:not(.cover)')];const coverPg=document.querySelector('.page.cover');
 const H0=(location.hash||'').replace('#','');
 const editMode=H0.indexOf('edit')===0;
 let keep=null;
@@ -1063,7 +1102,7 @@ const km=H0.match(/(?:^|-)show-([0-9-]+)/)||H0.match(/^show-([0-9-]+)/);
 if(km){keep=km[1].split('-').map(x=>parseInt(x,10)).filter(x=>x>=1&&x<=all.length)}
 const special=editMode||!!keep;
 all.forEach((p,i)=>{p.dataset.no=i+1});
-let pages=all.filter((p,i)=>editMode||!keep||keep.includes(i+1));
+let pages=all.filter((p,i)=>editMode||!keep||keep.includes(i+1));if(coverPg)pages=[coverPg,...pages];
 all.forEach(p=>{if(!pages.includes(p))p.style.display='none'});
 let cur=0,started=false;
 const lbl=document.getElementById('lbl'),prev=document.getElementById('prev'),next=document.getElementById('next');
@@ -1078,18 +1117,18 @@ function show(n){
   started=true;
   cur=n;
   if(window.fitBook)window.fitBook();
-  lbl.innerHTML=`Page <b>${n+1}</b> of ${pages.length} · ${pages[n].dataset.title}`;
+  lbl.innerHTML=n===0?`<b>Builder catalogue</b> · Edition 01`:`Page <b>${n}</b> of ${pages.length-1} · ${pages[n].dataset.title}`;
   prev.disabled=n===0; next.disabled=n===pages.length-1;
-  if(!special){try{ if(location.hash!=='#p'+(n+1)) history.replaceState(null,'','#p'+(n+1)) }catch(e){}}
+  if(!special){try{ if(location.hash!=='#p'+n) history.replaceState(null,'','#p'+n) }catch(e){}}
 }
 prev.onclick=()=>show(cur-1); next.onclick=()=>show(cur+1);
 document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')show(cur+1);if(e.key==='ArrowLeft')show(cur-1)});
 let sx=null;
 document.addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});
 document.addEventListener('touchend',e=>{if(sx===null)return;const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>50)show(cur+(dx<0?1:-1));sx=null},{passive:true});
-pages.forEach((p,i)=>{const n=p.querySelector('.ph .n');if(n)n.textContent=String(i+1).padStart(2,'0')});
+pages.forEach((p,i)=>{const n=p.querySelector('.ph .n');if(n)n.textContent=String(i).padStart(2,'0')});
 const h=special?0:parseInt((location.hash||'').replace('#p',''),10);
-show(h>=1&&h<=pages.length?h-1:0);
+show(h>=1&&h<pages.length?h:0);
 </script>
 
 <script>
