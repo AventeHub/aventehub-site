@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Avente Hub · Builder Catalogue · Edition 01</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--espresso:#24160E;--gold:#C9A227;--dgold:#9A7B14;--cream:#FAF7EE;--line:#E6DCC6;--ink:#2A221C;--muted:#8a7e70}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--cream);color:var(--ink);font-family:'Jost','Century Gothic',Arial,sans-serif;display:flex;flex-direction:column;min-height:100vh;overflow-x:hidden}
+header{background:var(--espresso);color:var(--cream);display:flex;align-items:center;gap:clamp(8px,1.4vw,18px);padding:8px clamp(12px,2.6vw,36px)}
+header img{width:clamp(40px,4.2vw,60px);height:clamp(40px,4.2vw,60px);margin:-4px 0}
+header .t{font-family:'Avente Display','URW Gothic','Century Gothic',Futura,sans-serif;font-size:clamp(16px,1.8vw,25px);letter-spacing:.02em}
+header .s{font-size:clamp(9px,.8vw,11px);letter-spacing:.24em;text-transform:uppercase;color:#cdb98d;margin-left:auto;text-align:right;line-height:1.6}
+header .s b{color:var(--gold);font-weight:500}
+
+.book{flex:1;display:grid;perspective:2200px;max-width:1360px;width:100%;margin:0 auto}
+.page{grid-area:1/1;display:grid;grid-template-columns:1fr 1fr 1.12fr;gap:clamp(8px,1.6vw,22px);padding:clamp(10px,1.6vw,22px) clamp(10px,2.6vw,36px) 6px;
+  transform-origin:left center;transition:transform .7s cubic-bezier(.45,.05,.2,1),opacity .5s ease;backface-visibility:hidden}
+.page.out-l{opacity:0;pointer-events:none}
+.page.out-r{opacity:0;pointer-events:none}
+.card{background:#fff;border:1px solid var(--line);border-radius:4px;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+.card.av{border:1.5px solid var(--gold);box-shadow:0 10px 30px rgba(154,123,20,.16)}
+.step{display:flex;align-items:center;gap:8px;height:clamp(38px,3.4vw,48px);flex:none;padding:0 clamp(8px,1.2vw,16px);font-size:clamp(9px,.85vw,12px);letter-spacing:.2em;text-transform:uppercase;font-weight:500;color:#8a7e70;white-space:nowrap;overflow:hidden}
+.step b{flex:none;width:clamp(20px,1.8vw,26px);height:clamp(20px,1.8vw,26px);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Avente Display','URW Gothic','Century Gothic',Futura,sans-serif;font-size:clamp(11px,1vw,14px);letter-spacing:0;background:#EEE7D8;color:#5b5047;font-weight:400}
+.av .step{color:var(--dgold)}
+.av .step b{background:var(--espresso);color:var(--gold)}
+.pic{position:relative;flex:1 1 0;min-height:clamp(130px,24vh,420px);background:#EFEAE1}
+.pic img,.pic svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.pic img{object-fit:cover}
+.body{padding:clamp(8px,1vw,14px) clamp(8px,1.3vw,18px) clamp(10px,1.3vw,18px);display:flex;flex-direction:column}
+.name{font-family:'Avente Display','URW Gothic','Century Gothic',Futura,sans-serif;font-size:clamp(14px,1.5vw,21px);color:var(--espresso);line-height:1.15;margin-bottom:6px;min-height:2.3em}
+.it{display:flex;justify-content:space-between;gap:8px;font-size:clamp(11px,.95vw,13.5px);color:#5b5047;padding:4px 0;border-bottom:1px dashed var(--line)}
+.it span:last-child{white-space:nowrap}
+.sv{font-style:normal;font-size:.82em;font-weight:600;color:#9A7B14;background:#F5EDD3;border-radius:8px;padding:1px 6px;margin-left:6px}
+.it.paint{color:#8a5a22}
+.it.x{color:#a39686;font-size:clamp(10px,.85vw,12.5px);border-bottom:none}
+.list{min-height:clamp(70px,6.5vw,100px)}
+.price{display:flex;justify-content:space-between;align-items:baseline;gap:6px;margin-top:6px}
+.price small{font-size:clamp(9px,.75vw,11px);letter-spacing:.14em;text-transform:uppercase;color:#9a8f82}
+.price b{font-family:'Avente Display','URW Gothic','Century Gothic',Futura,sans-serif;font-weight:400;font-size:clamp(17px,2vw,28px);color:#6b6158;white-space:nowrap}
+.av .price b{color:var(--dgold);font-size:clamp(19px,2.3vw,32px)}
+.bar{height:clamp(8px,.8vw,12px);border-radius:2px;background:#DDD6C8;margin-top:6px}
+.av .bar{background:linear-gradient(90deg,#9A7B14,#C9A227 60%,#E2C25A)}
+.badge{position:absolute;right:clamp(6px,1vw,14px);bottom:clamp(6px,1vw,14px);background:var(--espresso);color:#F3E2A0;padding:clamp(5px,.6vw,8px) clamp(8px,1vw,14px);border-radius:3px;text-align:center;line-height:1.1}
+.badge b{display:block;font-family:'Avente Display','URW Gothic','Century Gothic',Futura,sans-serif;font-size:clamp(17px,2vw,28px);color:var(--gold);font-weight:400}
+.badge span{font-size:clamp(8px,.75vw,10.5px);letter-spacing:.12em;text-transform:uppercase}
+
+.bar.sm{height:clamp(7px,.6vw,9px);margin:2px 0 6px}
+.bar.sm.g{background:linear-gradient(90deg,#9A7B14,#C9A227 60%,#E2C25A)}
+.it.avl{color:var(--espresso);font-weight:500;border-bottom:none}
+.it.avl span:last-child{color:var(--dgold);font-weight:600;font-size:clamp(13px,1.2vw,17px)}
+.page .list .it:not(.avl)+.bar.sm{margin-bottom:8px}
+.inset{position:absolute!important;inset:auto auto clamp(6px,1vw,14px) clamp(6px,1vw,14px)!important;width:34%!important;height:44%!important;object-fit:cover;border:3px solid #fff;border-radius:3px;box-shadow:0 6px 18px rgba(0,0,0,.2)}
+.page{grid-template-rows:1fr auto}
+.models{grid-column:1/-1;background:#fff;border:1px solid var(--line);border-radius:4px;padding:clamp(8px,1vw,12px) clamp(10px,1.3vw,16px)}
+.mh{display:flex;align-items:baseline;gap:12px;margin-bottom:8px}
+.mh b{font-family:'Avente Display','URW Gothic','Century Gothic',Futura,sans-serif;font-weight:400;font-size:clamp(14px,1.3vw,18px);color:var(--espresso)}
+.mh span{font-size:clamp(10px,.85vw,12px);color:#9a8f82}
+.mrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));grid-auto-flow:column;gap:clamp(6px,1vw,14px)}
+.mrow figure{margin:0}
+.mrow img{width:100%;height:clamp(70px,11vh,130px);object-fit:cover;border-radius:3px;display:block;background:#EFEAE1}
+.mrow figcaption{font-size:clamp(9px,.8vw,11.5px);color:#6b6158;margin-top:4px;text-align:center}
+.nav{display:flex;align-items:center;justify-content:center;gap:16px;padding:8px 0 4px}
+.nav button{width:38px;height:38px;border-radius:50%;border:1px solid var(--gold);background:#fff;color:var(--dgold);font-size:20px;cursor:pointer;line-height:1}
+.nav button:disabled{opacity:.3;cursor:default}
+.nav .lbl{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#6b6158;min-width:210px;text-align:center}
+.nav .lbl b{color:var(--dgold);font-weight:500}
+footer{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:6px clamp(12px,2.6vw,36px) 12px;font-size:clamp(10px,.85vw,11.5px);color:var(--muted);max-width:1360px;width:100%;margin:0 auto}
+footer .k b{color:var(--espresso);font-weight:500}
+footer .k span{margin:0 8px;color:var(--gold)}
+footer .k i{font-style:normal;white-space:nowrap}
+.draft{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#24160E;background:#E2C25A;padding:3px 10px;border-radius:20px;white-space:nowrap}
+@media (max-width:560px){
+  header .s{display:none}
+  .page{grid-template-columns:1fr}
+  .pic{flex:none;height:200px}
+  .name,.list{min-height:0}
+  .nav .lbl{min-width:150px}
+  .mrow{grid-template-columns:repeat(3,1fr)}
+}
+
+/* ===== v5 bold look ===== */
+body{background:#1B110B;color:var(--ink)}
+header{background:linear-gradient(180deg,#1B110B,#24160E);border-bottom:2px solid var(--gold);padding:10px clamp(12px,2.6vw,36px)}
+header .t{font-size:clamp(18px,2.1vw,30px);letter-spacing:.04em}
+.book{background:radial-gradient(1200px 600px at 75% 0%,rgba(201,162,39,.14),transparent 60%)}
+.page{grid-template-rows:auto 1fr auto;row-gap:clamp(8px,1.2vw,16px)}
+.ph{grid-column:1/-1;display:flex;align-items:flex-end;gap:clamp(10px,1.4vw,20px);padding-top:clamp(4px,.8vw,10px)}
+.ph .n{font-family:'Avente Display','URW Gothic','Century Gothic',Futura,sans-serif;font-size:clamp(34px,4.6vw,64px);line-height:.8;color:var(--gold)}
+.ph .tt{font-family:'Avente Display','URW Gothic','Century Gothic',Futura,sans-serif;font-size:clamp(20px,2.6vw,38px);color:#FAF3E2;line-height:1;letter-spacing:.01em}
+.ph .sub{margin-left:auto;font-size:clamp(9px,.8vw,11.5px);letter-spacing:.24em;text-transform:uppercase;color:#cdb98d;padding-bottom:4px;text-align:right}
+.ph .sub b{color:var(--gold);font-weight:500}
+.card{border:none;border-radius:6px;background:#F6F1E7;box-shadow:0 8px 24px rgba(0,0,0,.28)}
+.card:not(.av) .pic img{filter:saturate(.75) brightness(.97)}
+.card:not(.av) .step{color:#7d7266}
+.card:not(.av) .price b{color:#5b5047}
+.card.av{background:linear-gradient(180deg,#2B1B11,#1E130C);border:1.5px solid var(--gold);box-shadow:0 0 0 1px rgba(201,162,39,.25),0 18px 46px rgba(201,162,39,.22);transform:translateY(-6px)}
+.av .step{color:var(--gold);font-weight:600;letter-spacing:.24em}
+.av .step b{background:var(--gold);color:var(--espresso);font-weight:600}
+.av .name{color:#FAF3E2}
+.av .it{color:#EADFC8;border-bottom:1px solid rgba(201,162,39,.22)}
+.av .it span:last-child{color:#F3D77A;font-weight:600}
+.av .it.x{color:#bfae8f;border-bottom:none}
+.av .it.x span:last-child{color:inherit}
+.av .sv{background:var(--gold);color:#24160E}
+.av .price small{color:#cdb98d}
+.av .price b{color:var(--gold);font-size:clamp(24px,2.9vw,42px)}
+.price b{font-size:clamp(19px,2.2vw,32px)}
+.bar{height:clamp(10px,.9vw,14px);border-radius:7px}
+.av .bar{box-shadow:0 0 12px rgba(226,194,90,.45)}
+.badge{background:var(--gold);color:#24160E;border-radius:4px;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.badge b{color:#24160E;font-size:clamp(20px,2.4vw,34px)}
+.badge span{color:#24160E;font-weight:600}
+.models{background:#F6F1E7;border:none;border-radius:6px;box-shadow:0 8px 24px rgba(0,0,0,.28);border-top:3px solid var(--gold)}
+.mh b{font-size:clamp(15px,1.5vw,21px)}
+.mrow img{border-radius:4px}
+.nav button{background:var(--gold);color:#24160E;border:none;font-weight:600}
+.nav button:disabled{background:#4a3a2c;color:#8a7e70;opacity:1}
+.nav .lbl{color:#cdb98d}
+.nav .lbl b{color:var(--gold)}
+footer{color:#a39686}
+footer .k b{color:#FAF3E2}
+footer .k i{color:#cdb98d}
+@media (max-width:560px){.card.av{transform:none}.ph .sub{display:none}}
+
+.editbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center;background:#E2C25A;color:#24160E;padding:8px 16px;font-size:13px}
+.editbar code{background:#fff;padding:3px 8px;border-radius:4px;font-size:12px}
+.editbar button,.editbar a{background:#24160E;color:#F3D77A;border:none;border-radius:16px;padding:6px 14px;font:inherit;cursor:pointer;text-decoration:none}
+.etog{margin-left:12px;background:transparent;color:#F3D77A;border:1px solid #C9A227;border-radius:16px;padding:5px 12px;font:inherit;font-size:12px;cursor:pointer;align-self:center}
+.page.dropped .card,.page.dropped .models{opacity:.25;filter:grayscale(1)}
+.page.dropped .etog{background:#C9A227;color:#24160E}
+
+.cta{display:inline-block;background:linear-gradient(90deg,#C9A227,#E2C25A);color:#24160E;font-weight:600;font-size:13px;letter-spacing:.06em;padding:9px 18px;border-radius:22px;text-decoration:none;box-shadow:0 6px 18px rgba(201,162,39,.35);margin-left:18px;white-space:nowrap}
+.cta:hover{filter:brightness(1.08)}
+.ctaph{color:#cdb98d;font-size:12px;white-space:nowrap}
+.cta.big{display:block;margin:14px auto 0;width:max-content;font-size:16px;padding:12px 28px}
+.sum{grid-template-columns:1fr!important;grid-template-rows:auto auto auto auto!important;align-content:start}
+.sumgrid{display:grid;grid-template-columns:1fr 1fr 1.15fr;gap:clamp(8px,1.6vw,22px)}
+.tot{border-radius:6px;padding:clamp(12px,1.6vw,22px);display:flex;flex-direction:column;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,.28)}
+.tot small{font-size:clamp(10px,.85vw,12px);letter-spacing:.2em;text-transform:uppercase}
+.tot b{font-family:'Avente Display','URW Gothic','Century Gothic',Futura,sans-serif;font-weight:400;font-size:clamp(28px,3.6vw,52px);line-height:1.05}
+.tot span{font-size:clamp(11px,.95vw,13.5px)}
+.tot.mk{background:#F6F1E7;color:#5b5047}
+.tot.av{background:linear-gradient(180deg,#2B1B11,#1E130C);border:1.5px solid var(--gold);color:#EADFC8}
+.tot.av b{color:var(--gold)}
+.tot.sv3{background:linear-gradient(135deg,#C9A227,#E2C25A);color:#24160E}
+.stab table{width:100%;border-collapse:collapse;font-size:clamp(11px,1vw,14px)}
+.stab th{text-align:left;font-weight:500;font-size:clamp(9px,.8vw,11px);letter-spacing:.14em;text-transform:uppercase;color:#8a7e70;padding:6px 8px;border-bottom:2px solid var(--gold)}
+.stab td{padding:7px 8px;border-bottom:1px dashed var(--line);color:#3a3029}
+.stab td:nth-child(n+3),.stab th:nth-child(n+3){text-align:right}
+.stab td:nth-child(4){color:var(--dgold);font-weight:600}
+.stab tfoot td{font-weight:600;border-bottom:none;border-top:2px solid var(--espresso);font-size:1.05em}
+.sv2{color:#2E7D4F!important;font-weight:600;white-space:nowrap}
+.snote{font-size:clamp(10px,.85vw,12px);color:#9a8f82;margin-top:8px;text-align:center}
+@media (max-width:560px){.sumgrid{grid-template-columns:1fr}.cta{margin-left:0}.ctaph{display:none}.nav{flex-wrap:wrap}}
+
+/* ===== v5.2 mobile: keep 3 columns side by side ===== */
+@media (max-width:560px){
+.page{grid-template-columns:1fr 1fr 1fr!important;gap:6px;padding:8px 8px 4px}
+.page.sum{grid-template-columns:1fr!important}
+.ph{gap:8px}.ph .n{font-size:26px}.ph .tt{font-size:17px}
+.step{height:28px;padding:0 6px;font-size:0;gap:0}
+.step b{width:18px;height:18px;font-size:11px}
+.pic{flex:none;height:118px;min-height:0}
+.body{padding:6px 6px 8px}
+.name{font-size:11.5px;line-height:1.2;margin-bottom:4px}
+.it{font-size:9.5px;padding:2px 0;flex-direction:column;gap:0}
+.it span:last-child{white-space:normal;font-weight:600}
+.it.x{display:none}
+.sv{font-size:8px;padding:0 4px;margin-left:3px}
+.price{flex-direction:column;align-items:flex-start;gap:0}
+.price small{font-size:8px}
+.price b{font-size:15px}
+.av .price b{font-size:18px}
+.bar{height:7px}
+.badge{padding:3px 5px;right:4px;bottom:4px}
+.badge b{font-size:14px}.badge span{font-size:6.5px;letter-spacing:.06em}
+.card.av{transform:none}
+.models{padding:8px}
+.mh{flex-direction:column;gap:2px}
+.mrow{grid-template-columns:repeat(3,1fr)!important;grid-auto-flow:row}
+.mrow img{height:64px}
+.nav{gap:10px}
+.cta{order:5;margin:6px auto 0}
+}
+
+@media (max-width:560px){
+.page{grid-template-rows:auto auto auto!important;align-items:start}
+.nav{flex-wrap:wrap;padding:8px 10px;gap:8px}
+.nav .lbl{flex:1 1 0;min-width:0;font-size:9.5px;letter-spacing:.08em}
+.nav button{width:34px;height:34px;flex:none}
+#prev{order:1}.nav .lbl{order:2}#next{order:3}
+.cta{order:4;flex-basis:100%;text-align:center;margin:2px 0 0}
+.ctaph{display:none}
+}
+
+
+/* ===== v5.5 book page + page-turn ===== */
+.book{perspective:2400px;padding:clamp(8px,1.4vw,20px) clamp(8px,1.6vw,24px) 0;box-sizing:border-box}
+.page{transition:none!important;opacity:1!important;transform:none;transform-origin:left center;
+  background:linear-gradient(90deg,#120A06 0,#24170F 2.2%,#2A1B11 50%,#24170F 100%);
+  border:1px solid rgba(201,162,39,.45);border-radius:4px 12px 12px 4px;
+  box-shadow:0 18px 50px rgba(0,0,0,.55),inset 14px 0 22px -12px rgba(0,0,0,.7),inset 0 0 0 6px rgba(201,162,39,.06);
+  padding-left:clamp(16px,3vw,44px)!important;backface-visibility:hidden;will-change:transform}
+.page.out-l,.page.out-r{visibility:hidden;opacity:1!important}
+.page.out-l:not(.turn-out):not(.turn-in),.page.out-r:not(.turn-out):not(.turn-in){transform:none}
+.page.turn-out,.page.turn-in{visibility:visible!important;z-index:5}
+.page.turn-out{animation:turnOut 1.4s cubic-bezier(.4,0,.6,1) forwards}
+.page.turn-in{animation:turnIn 1.4s cubic-bezier(.25,0,.35,1) forwards}
+.page.turn-out::after,.page.turn-in::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(90deg,rgba(0,0,0,.0),rgba(0,0,0,.55));animation:shade 1.45s forwards}
+.page{position:relative}
+@keyframes turnOut{0%{transform:rotateY(0)}100%{transform:rotateY(-92deg)}}
+@keyframes turnIn{0%{transform:rotateY(-92deg)}100%{transform:rotateY(0)}}
+@keyframes shade{0%{opacity:0}50%{opacity:1}100%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.page.turn-out,.page.turn-in{animation-duration:.01s}}
+@media (max-width:560px){.page{padding-left:10px!important;border-radius:4px 8px 8px 4px}.book{padding:6px 6px 0}}
+
+/* ===== v5.6 page centred, arrows left + right ===== */
+html,body{overflow-x:hidden;max-width:100%}
+.book{margin-left:auto!important;margin-right:auto!important}
+@media (min-width:561px){
+.nav{position:relative;justify-content:center}
+.nav #prev,.nav #next{position:fixed;top:50%;transform:translateY(-50%);z-index:20;width:56px;height:56px;font-size:30px;
+  box-shadow:0 6px 18px rgba(0,0,0,.5),0 0 0 4px rgba(201,162,39,.18);transition:transform .2s}
+.nav #prev:hover:not(:disabled),.nav #next:hover:not(:disabled){transform:translateY(-50%) scale(1.08)}
+.nav #prev{left:max(8px,calc(50vw - 680px - 72px))}
+.nav #next{right:max(8px,calc(50vw - 680px - 72px))}
+.nav .lbl{min-width:0}
+.book{max-width:min(1360px,calc(100vw - 150px))!important}
+.nav #prev{left:max(10px,calc(50vw - min(680px,50vw - 75px) - 66px))}
+.nav #next{right:max(10px,calc(50vw - min(680px,50vw - 75px) - 66px))}
+}
+
+/* ===== v5.7 whole page on one screen: scale to fit ===== */
+@media (min-width:561px){
+html,body{height:100%;overflow:hidden!important}
+body{height:100dvh;display:flex;flex-direction:column}
+header{flex:none}
+.stage{flex:1 1 auto;min-height:0;position:relative;overflow:hidden;display:flex;justify-content:center;align-items:flex-start;padding-top:clamp(4px,1vh,14px)}
+.stage .book{background:none!important;flex:none;max-width:none!important;transform-origin:top center;margin:0!important}
+.nav{flex:none;padding:4px 0 2px!important}
+footer{flex:none;padding-top:2px!important;padding-bottom:6px!important}
+footer>div:first-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;flex:1}
+.pic{flex:none!important;min-height:0!important;aspect-ratio:16/9}
+.card.av .pic{aspect-ratio:16/8.7}
+.stage .page{align-self:start}
+.bar{display:none!important}
+.card .body{flex:1 1 auto}
+.card .list{flex:none!important}
+.card .price{margin-top:auto;padding-top:10px}
+.name{min-height:0!important}
+.mrow img{height:84px!important}
+.page{padding-bottom:16px!important}
+}
+
+/* ===== v5.8 luxury type + shine ===== */
+:root{--goldgrad:linear-gradient(100deg,#8C6A12 0%,#E9C766 22%,#FFF1C2 36%,#D4A93A 50%,#9C7614 66%,#F3D88A 84%,#B8901F 100%)}
+body{letter-spacing:.005em}
+.ph .n,.ph .tt,.name,.price b,.badge b,.tot b,.mh b,header .t{font-variant-numeric:lining-nums;font-weight:600}
+.ph .tt{font-weight:500;letter-spacing:.02em}
+.ph .n,.av .price b,.tot.av b,.msg em{background:var(--goldgrad);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent!important;-webkit-text-fill-color:transparent;animation:shine 6s ease-in-out infinite}
+@keyframes shine{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.badge,.cta,.nav button:not(:disabled),.tot.sv3{background:var(--goldgrad)!important;background-size:220% 100%!important;animation:shine 6s ease-in-out infinite}
+.card.av{position:relative;border:1.5px solid transparent!important;background:linear-gradient(#1F140D,#1F140D) padding-box,var(--goldgrad) border-box!important;background-size:100% 100%,220% 100%!important;animation:shine 6s ease-in-out infinite}
+
+.card.av::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;background:linear-gradient(115deg,transparent 40%,rgba(255,240,200,.16) 50%,transparent 60%);background-size:300% 100%;animation:sweep 5s ease-in-out infinite}
+@keyframes sweep{0%{background-position:150% 0}60%,100%{background-position:-50% 0}}
+.page{border-color:rgba(214,175,70,.6)!important}
+.msg{grid-column:1/-1;display:flex;flex-direction:column;gap:4px}
+.msg b{font-family:'Avente Display','URW Gothic','Century Gothic',Futura,sans-serif;font-weight:600;font-size:clamp(20px,2.3vw,32px);color:#FAF3E2;line-height:1.15;font-variant-numeric:lining-nums}
+.msg span{color:#cdb98d;font-size:clamp(11px,1vw,14px)}
+td.avc{color:#9A7B14;font-weight:600}
+.pct{display:inline-block;background:#E9DDBF;color:#5b4410;border-radius:20px;padding:1px 8px;font-size:.82em;font-weight:600;white-space:nowrap}
+tfoot .pct{background:var(--goldgrad);color:#24160E}
+@media (prefers-reduced-motion:reduce){*{animation-duration:0s!important}}
+
+/* ===== v5.9 Avente website style: URW Gothic display, pills, gold metal ===== */
+@font-face{font-family:'Avente Display';src:url(fonts/avente-display.woff2) format('woff2');font-weight:400 800;font-display:swap}
+body{font-weight:400}
+header{margin:10px clamp(10px,2vw,28px) 0!important;border-radius:999px!important;border:1px solid rgba(214,175,70,.55)!important;background:linear-gradient(180deg,rgba(60,40,24,.95),rgba(34,22,14,.95))!important;box-shadow:0 10px 30px rgba(0,0,0,.45);padding:8px 26px 8px 16px!important}
+header .t{font-family:'Avente Display',sans-serif;font-size:clamp(16px,1.7vw,24px)!important;letter-spacing:.2em!important;font-weight:600;line-height:1.1}
+header .t small{display:block;font-family:'Jost',sans-serif;font-size:clamp(8px,.72vw,11px);letter-spacing:.32em;text-transform:uppercase;color:#cdb98d;margin-top:3px;font-weight:400}
+header .s{font-family:'Jost',sans-serif}
+.ph .tt{text-transform:uppercase;font-weight:700!important;letter-spacing:-.01em!important;background:var(--goldgrad);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent!important;-webkit-text-fill-color:transparent;animation:shine 6s ease-in-out infinite}
+.ph .n{font-weight:700!important;letter-spacing:-.03em}
+.ph .sub{border:1px solid rgba(214,175,70,.55);border-radius:999px;padding:7px 16px 7px 14px!important;display:inline-flex;align-items:center;gap:8px;font-family:'Jost',sans-serif;font-weight:500}
+.ph .sub::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--goldgrad)}
+.page{border-radius:34px!important;padding-top:clamp(12px,1.8vw,26px)!important}
+.card{border-radius:24px!important}
+.models{border-radius:24px!important}
+.step{font-family:'Jost',sans-serif;font-weight:600}
+.name{font-weight:600!important;letter-spacing:-.005em}
+.price b,.badge b,.tot b{font-weight:700!important;letter-spacing:-.02em}
+.badge{border-radius:18px!important}
+.msg b{font-family:'Avente Display',sans-serif!important;font-weight:700;letter-spacing:-.01em}
+.cta{border-radius:999px!important;display:inline-flex!important;align-items:center;gap:12px;padding:6px 6px 6px 22px!important;font-family:'Avente Display',sans-serif;font-weight:600;letter-spacing:.02em;color:#24160E!important;text-decoration:none}
+.cta::after{content:"↗";display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#3A2516;color:#F3D88A;font-size:16px;flex:none}
+.cta.big{padding:8px 8px 8px 28px!important}
+.cta.big::after{width:42px;height:42px}
+.nav .lbl{font-family:'Jost',sans-serif;font-weight:500}
+.pct{border-radius:999px}
+
+
+
+
+
+
+
+/* ===== v5.13 no moving light + small text two sizes up ===== */
+.ph .n,.ph .tt,.av .price b,.tot.av b,.msg em,.badge,.cta,.nav button,.tot.sv3,.card.av{animation:none!important;background-position:30% 50%!important}
+.card.av::after{display:none!important}
+@media (min-width:561px){
+.card .list .it,.it{font-size:17px!important}
+.it.x{font-size:15px!important}
+.sv{font-size:12.5px!important}
+.price small{font-size:13px!important}
+.step{font-size:13px!important}
+.mh span{font-size:15px!important}
+.mrow figcaption{font-size:15px!important}
+.badge span{font-size:12px!important}
+.snote{font-size:14px!important}
+table{font-size:16.5px}
+}
+
+/* ===== v5.14 short screens: give the page the whole height ===== */
+@media (min-width:561px) and (max-height:820px){
+header{display:none!important}
+footer{display:none!important}
+.stage{padding-top:8px!important}
+.nav{padding:4px 0 8px!important}
+}
+
+@media (min-width:561px){
+.card .list .it,.it{font-size:20px!important}
+.it.x{font-size:17px!important}
+.name{font-size:25px!important}
+.price small{font-size:15px!important}
+.step{font-size:14.5px!important}
+.mh span{font-size:17px!important}
+.mrow figcaption{font-size:17px!important}
+.sv{font-size:14px!important}
+}
+
+/* ===== v5.15 savings page: one message, big type ===== */
+.sum .msg b{font-size:37px!important;line-height:1.1;white-space:nowrap}
+.sumfoot .cta{font-size:21px!important;padding:8px 8px 8px 28px!important}
+.sumfoot .cta::after{width:44px!important;height:44px!important;font-size:20px!important}
+.sum .tot small{font-size:16px!important;letter-spacing:.2em}
+.sum .tot b{font-size:64px!important}
+.sum .tot span{font-size:20px!important}
+.sum .tot{display:flex;flex-direction:column;justify-content:center}
+table.simple{width:100%;border-collapse:collapse;font-family:'Avente Display','Century Gothic',sans-serif}
+table.simple th{font-family:'Jost',sans-serif;font-size:15px;letter-spacing:.16em;text-transform:uppercase;color:#8a7e70;font-weight:600;text-align:right;padding:4px 14px 10px}
+table.simple td{font-size:25px;padding:9px 14px;text-align:right;border-bottom:1px dashed #ddd2bb;color:#4a4038}
+table.simple td:first-child{text-align:left;color:#24160E;font-weight:600}
+table.simple td i{font-style:normal;font-family:'Jost',sans-serif;font-weight:400;font-size:19px;color:#8a7e70;margin-left:8px}
+table.simple td.avc{color:#9A7B14;font-weight:700}
+table.simple td.sv2{color:#1F7A4A;font-weight:700}
+.sumfoot{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-top:16px}
+.sumfoot .snote{font-size:16px!important;color:#8a7e70;text-align:left}
+
+/* ===== v5.16 option photos: whole photo, no crop ===== */
+@media (min-width:561px){
+.stage .mrow{display:flex!important;gap:12px;align-items:flex-start;justify-content:center}
+.stage .mrow figure{min-width:0;margin:0}
+.stage .mrow img{width:100%!important;height:auto!important;aspect-ratio:auto!important;object-fit:fill!important;max-height:none!important}
+}
+
+/* prices on the right of each line: bigger */
+@media (min-width:561px){.card .list .it > *:last-child{font-size:1.22em;font-weight:600;white-space:nowrap}.card.av .list .it > *:last-child{color:#F3D88A}}
+
+/* bottom totals two sizes bigger */
+@media (min-width:561px){.card .price b{font-size:40px!important}.card.av .price b{font-size:50px!important}.card .price small{font-size:15px!important}}
+
+/* savings badge on photo two sizes bigger */
+@media (min-width:561px){.card .badge b{font-size:46px!important}.card .badge span{font-size:14.5px!important}.card .badge{padding:10px 18px!important}}
+
+.nav .snd{position:static!important;transform:none!important;width:34px!important;height:34px!important;font-size:15px!important;background:transparent!important;border:1px solid rgba(214,175,70,.5)!important;color:#F3D88A;box-shadow:none!important;animation:none!important}
+
+/* ===== v5.25 slow real page flap ===== */
+.book{perspective:4800px!important}
+.page.turn-out{animation:flapOut 1.9s cubic-bezier(.42,0,.38,1) forwards!important;transform-origin:0% 50%!important;z-index:6}
+.page.turn-in{animation:flapIn 1.9s cubic-bezier(.42,0,.38,1) forwards!important;transform-origin:0% 50%!important;z-index:6}
+@keyframes flapOut{
+ 0%{transform:rotateY(0) skewY(0)}
+ 15%{transform:rotateY(-10deg) skewY(-1deg)}
+ 50%{transform:rotateY(-48deg) skewY(-1.5deg)}
+ 82%{transform:rotateY(-84deg) skewY(-2deg)}
+ 100%{transform:rotateY(-96deg) skewY(0)}}
+@keyframes flapIn{
+ 0%{transform:rotateY(-96deg) skewY(0)}
+ 18%{transform:rotateY(-84deg) skewY(2deg)}
+ 50%{transform:rotateY(-48deg) skewY(1.5deg)}
+ 85%{transform:rotateY(-10deg) skewY(1deg)}
+ 100%{transform:rotateY(0) skewY(0)}}
+.page.turn-out::after,.page.turn-in::after{background:linear-gradient(90deg,rgba(0,0,0,0) 0%,rgba(0,0,0,.18) 45%,rgba(255,240,210,.18) 70%,rgba(0,0,0,.5) 100%)!important;animation:shadeSlow 1.9s ease-in-out forwards!important}
+@keyframes shadeSlow{0%{opacity:0}45%{opacity:1}100%{opacity:.6}}
+/* shadow falling on the page underneath */
+.page.under-shadow::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:4;background:linear-gradient(90deg,rgba(0,0,0,.45),rgba(0,0,0,0) 70%);animation:underFade 1.9s ease-in-out forwards}
+@keyframes underFade{0%{opacity:.9}100%{opacity:0}}
+
+/* ===== v5.26 page back shows a soft ghost of the print, page underneath always visible ===== */
+.page.turn-out,.page.turn-in{backface-visibility:visible!important;-webkit-backface-visibility:visible!important}
+.page.stay-under{visibility:visible!important;opacity:1!important;z-index:3!important}
+@keyframes flapOut{
+ 0%{transform:rotateY(0) skewY(0);opacity:1}
+ 15%{transform:rotateY(-14deg) skewY(-1deg)}
+ 50%{transform:rotateY(-90deg) skewY(-2deg)}
+ 85%{transform:rotateY(-160deg) skewY(-.8deg);opacity:1}
+ 100%{transform:rotateY(-180deg) skewY(0);opacity:0}}
+@keyframes flapIn{
+ 0%{transform:rotateY(-180deg) skewY(0);opacity:0}
+ 15%{transform:rotateY(-160deg) skewY(.8deg);opacity:1}
+ 50%{transform:rotateY(-90deg) skewY(2deg)}
+ 85%{transform:rotateY(-14deg) skewY(1deg)}
+ 100%{transform:rotateY(0) skewY(0);opacity:1}}
+.page.turn-out::after{background:linear-gradient(90deg,rgba(30,20,12,.15),rgba(30,20,12,.35) 60%,rgba(30,20,12,.55))!important;animation:backOut 1.9s ease-in-out forwards!important;z-index:7}
+.page.turn-in::after{background:linear-gradient(90deg,rgba(30,20,12,.15),rgba(30,20,12,.35) 60%,rgba(30,20,12,.55))!important;animation:backIn 1.9s ease-in-out forwards!important;z-index:7}
+@keyframes backOut{0%{opacity:0}45%{opacity:.35}52%{opacity:.9}100%{opacity:.9}}
+@keyframes backIn{0%{opacity:.9}48%{opacity:.9}55%{opacity:.35}100%{opacity:0}}
+</style>
+</head>
+<body>
+<header>
+  <img src="img/logo.svg" alt="Avente Hub">
+  <div class="t">AVENTE HUB<small>Builder catalogue · side by side</small></div>
+  <div class="s">Builder prices · CAD<br><b>Factory-direct luxury pricing.</b></div>
+</header>
+
+<div class="stage" id="stage"><div class="book" id="book">
+
+  <!-- PAGE 1 · CLASSIC -->
+  <section class="page" data-title="Classic LED baseboard">
+    <div class="card">
+      <div class="step"><b>1</b>Classic</div>
+      <div class="pic"><img src="img/std-simple.jpg" style="object-position:40% 70%" alt="Simple painted MDF baseboard"></div>
+      <div class="body">
+        <div class="name">Classic MDF baseboard</div>
+        <div class="list">
+          <div class="it"><span>7&quot; MDF baseboard</span><span>$3.00–4.00</span></div>
+          <div class="it paint"><span>Prime + paint on site</span><span>$2.00–5.00</span></div>
+          <div class="it"><span>Light</span><span>none</span></div>
+        </div>
+        <div class="price"><small>Per foot</small><b>$5.00–9.00</b></div>
+        <div class="bar" style="width:67%"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="step"><b>2</b>Classic + LED on top</div>
+      <div class="pic"><img src="img/std-led.jpg" style="object-position:50% 45%" alt="Simple baseboard with an LED strip added on top"></div>
+      <div class="body">
+        <div class="name">Classic baseboard + LED strip on top</div>
+        <div class="list">
+          <div class="it"><span>7&quot; MDF baseboard</span><span>$3.00–4.00</span></div>
+          <div class="it paint"><span>Prime + paint on site</span><span>$2.00–5.00</span></div>
+          <div class="it"><span>LED channel on top</span><span>≈ $4.50</span></div>
+          <div class="it x"><span>LED strip extra</span><span></span></div>
+        </div>
+        <div class="price"><small>Per foot</small><b>≈ $9.50–13.50</b></div>
+        <div class="bar" style="width:100%"></div>
+      </div>
+    </div>
+    <div class="card av">
+      <div class="step"><b>3</b>Classic · Avente all in one</div>
+      <div class="pic">
+        <img src="img/clip-detail.jpg" style="object-position:40% 50%" alt="Avente Classic LED Baseboard with clip-on mounting">
+        <div class="badge"><b>45–60%</b><span>less than style 2</span></div>
+      </div>
+      <div class="body">
+        <div class="name">Avente Classic LED Baseboard</div>
+        <div class="list">
+          <div class="it"><span>Baseboard + LED channel, all in one</span><span>$5.27<em class="sv">30–38% less</em></span></div>
+          <div class="it"><span>Prime + paint: factory finished</span><span>$0<em class="sv">100% less</em></span></div>
+          <div class="it"><span>Installs like normal trim</span><span>✓</span></div>
+          <div class="it x"><span>LED strip extra · priced like style 1</span><span></span></div>
+        </div>
+        <div class="price"><small>Per foot</small><b>$5.27</b></div>
+        <div class="bar" style="width:39%"></div>
+      </div>
+    </div>
+      <div class="models">
+      <div class="mh"><b>More Avente Classic LED models</b><span>Mounted on the wall · different finish and shape</span></div>
+      <div class="mrow">
+        <figure><img src="img/model-m1.jpg" alt="Champagne brushed LED baseboard"><figcaption>Champagne brushed</figcaption></figure>
+        <figure><img src="img/model-m2.jpg" alt="Black LED baseboard, light on top"><figcaption>Black · light on top</figcaption></figure>
+        <figure><img src="img/model-m3.jpg" alt="Black LED baseboard with rounded top"><figcaption>Black · rounded top</figcaption></figure>
+        <figure><img src="img/classic-floor.jpg" style="object-position:60% 55%" alt="Black LED baseboard, light at the floor"><figcaption>Black · light at the floor</figcaption></figure>
+        <figure><img src="img/model-m5.jpg" style="object-position:50% 40%" alt="Clip-on mounting system"><figcaption>Clip-on mounting</figcaption></figure>
+        <figure><img src="img/classic-hall.jpg" alt="Classic LED baseboards lighting a hallway"><figcaption>The light effect · hallway</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- PAGE 2 · SHADOW GAP -->
+  <section class="page out-r" data-title="Shadow-line baseboard">
+    <div class="card">
+      <div class="step"><b>1</b>Shadow line · Canada</div>
+      <div class="pic"><img src="img/sg-plain.jpg" style="object-position:50% 70%" alt="Standard plain shadow-gap profile"></div>
+      <div class="body">
+        <div class="name">Standard flush shadow-gap baseboard</div>
+        <div class="list">
+          <div class="it"><span>Hidden in the wall, plain</span><span>from $5.00</span></div>
+          <div class="it"><span>LED pocket</span><span>none</span></div>
+          <div class="it x"><span>Local bulk price to builders</span><span></span></div>
+        </div>
+        <div class="price"><small>Per foot</small><b>from $5.00</b></div>
+        <div class="bar" style="width:67%"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="step"><b>2</b>Shadow line + LED · Canada</div>
+      <div class="pic"><img src="img/sg-led.jpg" style="object-position:50% 70%" alt="Standard shadow-gap profile with LED pocket and cover"></div>
+      <div class="body">
+        <div class="name">Shadow gap with LED pocket + cover</div>
+        <div class="list">
+          <div class="it"><span>Hidden profile with LED pocket + cover</span><span>from $7.50</span></div>
+          <div class="it x"><span>Local bulk price to builders · LED strip extra</span><span></span></div>
+        </div>
+        <div class="price"><small>Per foot</small><b>from $7.50</b></div>
+        <div class="bar" style="width:100%"></div>
+      </div>
+    </div>
+    <div class="card av">
+      <div class="step"><b>3</b>Shadow line + LED · Avente</div>
+      <div class="pic">
+        <img src="img/sl-led-finishes.jpg" style="object-position:35% 85%" alt="Avente shadow-gap profiles with LED pocket in black, gold, grey and white">
+        <div class="badge"><b>≈ 40%</b><span>less than style 2</span></div>
+      </div>
+      <div class="body">
+        <div class="name">Avente Shadow-Gap with LED pocket</div>
+        <div class="list">
+          <div class="it"><span>Hidden profile with LED pocket</span><span>$4.50<em class="sv">40% less</em></span></div>
+          <div class="it"><span>Black, gold, grey or white</span><span>✓</span></div>
+          <div class="it"><span>LED cover</span><span>price coming</span></div>
+          <div class="it x"><span>LED strip extra</span><span></span></div>
+        </div>
+        <div class="price"><small>Per foot</small><b>$4.50</b></div>
+        <div class="bar" style="width:60%"></div>
+      </div>
+    </div>
+    <div class="models">
+      <div class="mh"><b>More Avente shadow-line profiles</b><span>Hidden in the wall · with or without LED</span></div>
+      <div class="mrow">
+        <figure><img src="img/sg-av-a31.jpg" alt="Shadow-gap profiles without cover, black and white"><figcaption>Simple · no LED</figcaption></figure>
+        <figure><img src="img/sl-led-detail2.jpg" style="object-position:8% 30%" alt="LED pocket detail of the shadow-line profile"><figcaption>LED pocket · detail</figcaption></figure>
+        <figure><img src="img/a4-sizes.jpg" style="object-position:50% 45%" alt="A-4 built-in profiles, 3/4 to 2 inches"><figcaption>A-4 built-in · ¾″–2″</figcaption></figure>
+        <figure><img src="img/sg-look.jpg" style="object-position:50% 70%" alt="Finished shadow line at a wall corner"><figcaption>Finished look</figcaption></figure>
+              <figure><img src="img/x01.jpg" alt="Corner, lit"><figcaption>Corner, lit</figcaption></figure>
+        <figure><img src="img/x02.jpg" alt="Black, lit"><figcaption>Black, lit</figcaption></figure>
+        <figure><img src="img/x03.jpg" alt="Hallway glow"><figcaption>Hallway glow</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE 3 · CEILING SHADOW LINE -->
+  <section class="page out-r" data-title="Ceiling shadow line">
+    <div class="card">
+      <div class="step"><b>1</b>Ceiling shadow line · local</div>
+      <div class="pic">
+        <svg viewBox="0 0 320 240" preserveAspectRatio="xMidYMid slice" aria-label="Sketch: plain shadow gap where the ceiling meets the wall">
+          <rect width="320" height="240" fill="#EFEAE1"/>
+          <polygon points="0,0 320,0 320,70 0,110" fill="#F7F4EE"/>
+          <polygon points="0,110 320,70 320,78 0,120" fill="#2B2724"/>
+          <rect x="0" y="120" width="320" height="120" fill="#E9E3D8"/>
+          <text x="160" y="190" text-anchor="middle" font-family="Jost,Arial" font-size="13" fill="#9a8f82">plain dark gap · no light</text>
+        </svg>
+      </div>
+      <div class="body">
+        <div class="name">Standard ceiling shadow-gap profile</div>
+        <div class="list">
+          <div class="it"><span>Hidden at the ceiling edge, plain</span><span>≈ $7.00</span></div>
+          <div class="it"><span>LED pocket</span><span>none</span></div>
+          <div class="it x"><span>Local bulk price to builders</span><span></span></div>
+        </div>
+        <div class="price"><small>Per foot</small><b>≈ $7.00</b></div>
+        <div class="bar" style="width:67%"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="step"><b>2</b>Ceiling line + LED · local</div>
+      <div class="pic"><img src="img/ceil-cove.jpg" style="object-position:50% 35%" alt="Ceiling cove profile with LED washing the wall"></div>
+      <div class="body">
+        <div class="name">Ceiling profile with LED pocket + cover</div>
+        <div class="list">
+          <div class="it"><span>Shadow line with LED pocket + cover</span><span>≈ $10.50</span></div>
+          <div class="it x"><span>Local bulk price to builders · LED strip extra</span><span></span></div>
+        </div>
+        <div class="price"><small>Per foot</small><b>≈ $10.50</b></div>
+        <div class="bar" style="width:100%"></div>
+      </div>
+    </div>
+    <div class="card av">
+      <div class="step"><b>3</b>Ceiling shadow line + LED · Avente</div>
+      <div class="pic">
+        <img src="img/ceil-av-led.jpg" style="object-position:70% 30%" alt="Avente ceiling shadow-line profile with LED pocket">
+        <div class="badge"><b>≈ 50%</b><span>less than style 2</span></div>
+      </div>
+      <div class="body">
+        <div class="name">Avente Ceiling Shadow Line</div>
+        <div class="list">
+          <div class="it"><span>Ceiling shadow line with LED pocket</span><span>$5.30<em class="sv">50% less</em></span></div>
+          <div class="it"><span>Plaster-in · light washes the wall</span><span>✓</span></div>
+          <div class="it"><span>Black or white</span><span>✓</span></div>
+          <div class="it x"><span>LED strip extra</span><span></span></div>
+        </div>
+        <div class="price"><small>Per foot</small><b>$5.30</b></div>
+        <div class="bar" style="width:50%"></div>
+      </div>
+    </div>
+    <div class="models">
+      <div class="mh"><b>More Avente ceiling profiles</b><span>Hidden at the ceiling edge · plain or lit</span></div>
+      <div class="mrow">
+        <figure><img src="img/ceil-m-profile.jpg" alt="Ceiling-edge profile 1.5 x 0.5 inches"><figcaption>Ceiling edge · 1½″ × ½″</figcaption></figure>
+        <figure><img src="img/ceil-m-p4123.jpg" alt="P4123 ceiling shadow-line profile, white and black"><figcaption>P4123 · black or white</figcaption></figure>
+        <figure><img src="img/ceil-m-room2.jpg" alt="Ceiling line lighting a living room"><figcaption>Light effect · living room</figcaption></figure>
+        <figure><img src="img/ceil-m-room.jpg" alt="Ceiling line lighting a living room at night"><figcaption>Light effect · evening</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE 4 · TRACK LIGHTING -->
+  <section class="page out-r" data-title="Ceiling lighting · one room">
+    <div class="card">
+      <div class="step"><b>1</b>Traditional · drop ceiling</div>
+      <div class="pic"><img src="img/trad-drop.jpg" style="object-position:50% 20%" alt="Traditional drop ceiling with LED cove and pot lights"></div>
+      <div class="body">
+        <div class="name">Built-down ceiling + LED cove + pot lights</div>
+        <div class="list">
+          <div class="it"><span>Drop ceiling ≈ 3 ft wide, built + painted</span><span>≈ $1,300</span></div>
+          <div class="it"><span>LED cove channel</span><span>≈ $320</span></div>
+          <div class="it"><span>LED strip</span><span>≈ $320</span></div>
+          <div class="it"><span>6 pot lights</span><span>≈ $70</span></div>
+        </div>
+        <div class="price"><small>One room</small><b>≈ $2,010</b></div>
+        <div class="bar" style="width:100%"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="step"><b>2</b>Magnetic track · local wholesaler</div>
+      <div class="pic"><img src="img/trk-std.jpg" style="object-position:50% 10%" alt="Standard magnetic track lighting on a ceiling"></div>
+      <div class="body">
+        <div class="name">Recessed magnetic track, contractor price</div>
+        <div class="list">
+          <div class="it"><span>20 ft hidden rail ($55/ft)</span><span>≈ $1,070</span></div>
+          <div class="it"><span>8 heads ($90 each)</span><span>≈ $720</span></div>
+          <div class="it"><span>Dimmable driver, certified</span><span>≈ $220</span></div>
+          <div class="it x"><span>Store list price ≈ $2,610 · contractors ≈ 25% off</span><span></span></div>
+        </div>
+        <div class="price"><small>One room</small><b>≈ $2,010</b></div>
+        <div class="bar" style="width:100%"></div>
+      </div>
+    </div>
+    <div class="card av">
+      <div class="step"><b>3</b>Avente magnetic track</div>
+      <div class="pic">
+        <img src="img/trk-room.jpg" style="object-position:50% 25%" alt="Avente recessed magnetic track lighting in a living room">
+        <div class="badge"><b>≈ 56%</b><span>less than styles 1 and 2</span></div>
+      </div>
+      <div class="body">
+        <div class="name">Avente track: concealed or exposed</div>
+        <div class="list">
+          <div class="it"><span>20 ft track (2 × 10 ft)</span><span>≈ $466<em class="sv">56% less</em></span></div>
+          <div class="it"><span>8 heads: spot, linear, grille</span><span>≈ $314<em class="sv">56% less</em></span></div>
+          <div class="it"><span>Dimmable driver, certified</span><span>≈ $96<em class="sv">56% less</em></span></div>
+          <div class="it x"><span>No drop ceiling · change the heads any time</span><span></span></div>
+        </div>
+        <div class="price"><small>One room</small><b>≈ $876</b></div>
+        <div class="bar" style="width:44%"></div>
+      </div>
+    </div>
+    <div class="models">
+      <div class="mh"><b>Avente track options</b><span>Concealed in the ceiling or exposed on it · change the heads, not the ceiling</span></div>
+      <div class="mrow">
+        <figure><img src="img/trk-linear.jpg" style="object-position:50% 45%" alt="Recessed track with linear head"><figcaption>Concealed · linear head</figcaption></figure>
+        <figure><img src="img/trk-corner.jpg" style="object-position:50% 20%" alt="Track running from ceiling down the wall"><figcaption>Concealed · ceiling to wall</figcaption></figure>
+        <figure><img src="img/trk-rail.jpg" alt="Surface magnetic track rail"><figcaption>Exposed · surface rail</figcaption></figure>
+        <figure><img src="img/trk-heads.jpg" alt="Magnetic track heads"><figcaption>Heads · spot, linear, grille</figcaption></figure>
+              <figure><img src="img/x04.jpg" alt="Ceiling lines · living"><figcaption>Ceiling lines · living</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE 5 · LED STRIP (ZBL) -->
+  <section class="page out-r" data-title="LED strip">
+    <div class="card">
+      <div class="step"><b>1</b>Big-box store</div>
+      <div class="pic"><img src="img/zs-std.jpg" style="object-position:50% 50%" alt="Standard LED strip on a reel"></div>
+      <div class="body">
+        <div class="name">COB LED strip, 3000K, 24V</div>
+        <div class="list">
+          <div class="it"><span>8 ft reel, retail ($95.66)</span><span>$11.66/ft</span></div>
+          <div class="it x"><span>Home Depot price · strip only</span><span></span></div>
+        </div>
+        <div class="price"><small>Per foot</small><b>$11.66</b></div>
+        <div class="bar" style="width:100%"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="step"><b>2</b>Local wholesaler · contractor</div>
+      <div class="pic"><img src="img/zs-cabinet.jpg" style="object-position:50% 40%" alt="LED strip lighting cabinet shelves"></div>
+      <div class="body">
+        <div class="name">COB LED strip, 3000K, 24V</div>
+        <div class="list">
+          <div class="it"><span>5/16″ COB, 16 ft reel ($67.81)</span><span>$4.13/ft</span></div>
+          <div class="it"><span>¼″ narrow COB</span><span>from $5.96/ft</span></div>
+          <div class="it x"><span>Lotus · GTA electrical wholesaler (Ajax)</span><span></span></div>
+        </div>
+        <div class="price"><small>Per foot</small><b>$4.13</b></div>
+        <div class="bar" style="width:35%"></div>
+      </div>
+    </div>
+    <div class="card av">
+      <div class="step"><b>3</b>Avente LED strip</div>
+      <div class="pic">
+        <img src="img/zs-av.jpg" style="object-position:50% 50%" alt="Dot-free LED lines in a corridor">
+        <div class="badge"><b>27–39%</b><span>less than style 2</span></div>
+      </div>
+      <div class="body">
+        <div class="name">Avente COB strip, sized to our profiles</div>
+        <div class="list">
+          <div class="it"><span>5/16″ · crowns, plaster-in, shadow lines</span><span>$3.00<em class="sv">27% less</em></span></div>
+          <div class="it"><span>¼″ · Classic lit baseboard</span><span>$3.66<em class="sv">39% less</em></span></div>
+          <div class="it"><span>5/32″ mini · slim slots, shelves</span><span>$2.66<em class="sv">36% less</em></span></div>
+          <div class="it x"><span>One size for each Avente profile · 3000K · CRI 90</span><span></span></div>
+        </div>
+        <div class="price"><small>Per foot</small><b>from $2.66</b></div>
+        <div class="bar" style="width:26%"></div>
+      </div>
+    </div>
+    <div class="models">
+      <div class="mh"><b>Where it goes</b><span>Inside baseboards, ceiling lines, shelves and stairs</span></div>
+      <div class="mrow">
+        <figure><img src="img/zs-m-living.jpg" style="object-position:50% 35%" alt="LED lines in a living room wall"><figcaption>Living room wall</figcaption></figure>
+        <figure><img src="img/zs-cabinet.jpg" style="object-position:50% 35%" alt="LED strip in cabinet shelves"><figcaption>Cabinets + shelves</figcaption></figure>
+        <figure><img src="img/zs-m-reception.jpg" style="object-position:50% 35%" alt="LED lines at a reception desk"><figcaption>Reception wall</figcaption></figure>
+        <figure><img src="img/zn-m-stairs.jpg" style="object-position:50% 35%" alt="LED strip lighting stair steps"><figcaption>Stairs</figcaption></figure>
+              <figure><img src="img/x05.jpg" alt="Strip in profile"><figcaption>Strip in profile</figcaption></figure>
+        <figure><img src="img/x06.jpg" alt="Floor glow"><figcaption>Floor glow</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE 6 · NEON FLEX (ZBL) -->
+  <section class="page out-r" data-title="LED neon flex">
+    <div class="card">
+      <div class="step"><b>1</b>Big-box store</div>
+      <div class="pic"><img src="img/zn-std.jpg" style="object-position:50% 50%" alt="Colour neon flex kit lighting stairs"></div>
+      <div class="body">
+        <div class="name">Smart neon flex kit</div>
+        <div class="list">
+          <div class="it"><span>16 ft kit, retail ($229)</span><span>$14.31/ft</span></div>
+          <div class="it x"><span>Home Depot price · plug-in kit</span><span></span></div>
+        </div>
+        <div class="price"><small>Per foot</small><b>$14.31</b></div>
+        <div class="bar" style="width:100%"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="step"><b>2</b>Local distributor · contractor</div>
+      <div class="pic"><img src="img/zn-local.jpg" style="object-position:50% 50%" alt="Warm white neon flex coil"></div>
+      <div class="body">
+        <div class="name">Neon flex, 3000K, 24V</div>
+        <div class="list">
+          <div class="it"><span>Interior mini neon, 16 ft ($154.99)</span><span>$9.45/ft</span></div>
+          <div class="it"><span>Exterior neon IP67, 16 ft ($235.20)</span><span>$14.34/ft</span></div>
+          <div class="it x"><span>Lotus · Canadian lighting distributor</span><span></span></div>
+        </div>
+        <div class="price"><small>Per foot</small><b>$9.45</b></div>
+        <div class="bar" style="width:66%"></div>
+      </div>
+    </div>
+    <div class="card av">
+      <div class="step"><b>3</b>Avente neon flex</div>
+      <div class="pic">
+        <img src="img/zn-black-wave.jpg" style="object-position:50% 50%" alt="Black series neon lines on a curved building">
+        <div class="badge"><b>50–56%</b><span>less than style 2</span></div>
+      </div>
+      <div class="body">
+        <div class="name">Avente neon flex · Black Series</div>
+        <div class="list">
+          <div class="it"><span>Interior mini neon 5/16″</span><span>$4.16<em class="sv">56% less</em></span></div>
+          <div class="it"><span>Interior Black Series ¼″ × ½″</span><span>$4.49<em class="sv">52% less</em></span></div>
+          <div class="it"><span>Exterior Black Series ⅝″ × ⅝″, IP67</span><span>$7.16<em class="sv">50% less</em></span></div>
+          <div class="it x"><span>Black body, no glow on the sides · 3000K</span><span></span></div>
+        </div>
+        <div class="price"><small>Per foot</small><b>from $4.16</b></div>
+        <div class="bar" style="width:29%"></div>
+      </div>
+    </div>
+    <div class="models">
+      <div class="mh"><b>Avente Black Series</b><span>Black body, clean line of light · interior and exterior</span></div>
+      <div class="mrow">
+        <figure><img src="img/zn-black-612.jpg" alt="Black series interior neon, side view"><figcaption>Interior · ¼″ × ½″</figcaption></figure>
+        <figure><img src="img/zn-black-16.jpg" alt="Black series exterior neon, top view"><figcaption>Exterior · ⅝″ × ⅝″ IP67</figcaption></figure>
+        <figure><img src="img/zn-black-swirl.jpg" alt="Neon line drawing a curve on a ceiling"><figcaption>Ceiling curves</figcaption></figure>
+        <figure><img src="img/zn-m-ext.jpg" alt="Neon lines on a modern house exterior"><figcaption>House exterior</figcaption></figure>
+              <figure><img src="img/x07.jpg" alt="Neon curves"><figcaption>Neon curves</figcaption></figure>
+        <figure><img src="img/x08.jpg" alt="Neon profiles"><figcaption>Neon profiles</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE 7 · DOORS -->
+  <section class="page out-r" data-title="Interior doors">
+    <div class="card">
+      <div class="step"><b>1</b>Standard · local</div>
+      <div class="pic"><img src="img/dr-std.jpg" style="object-fit:contain;background:#EFEAE1;object-position:50% 40%" alt="Standard white interior door"></div>
+      <div class="body">
+        <div class="name">Solid-core pre-hung door, primed</div>
+        <div class="list">
+          <div class="it"><span>32″ × 80″ pre-hung, solid core</span><span>$290</span></div>
+          <div class="it paint"><span>Prime + paint on site</span><span>≈ $100</span></div>
+          <div class="it x"><span>Ontario door supplier price</span><span></span></div>
+        </div>
+        <div class="price"><small>Per door</small><b>≈ $390</b></div>
+        <div class="bar" style="width:25%"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="step"><b>2</b>Premium collection · local</div>
+      <div class="pic"><img src="img/dr-prem.jpg" style="object-fit:contain;background:#EFEAE1;object-position:50% 40%" alt="Premium wood-veneer flush door"></div>
+      <div class="body">
+        <div class="name">Premium veneer + hidden doors</div>
+        <div class="list">
+          <div class="it"><span>Wood-veneer flush pre-hung set</span><span>from $810</span></div>
+          <div class="it"><span>Hidden flush door, concealed frame</span><span>from $1,560</span></div>
+          <div class="it x"><span>Retail door makers · US prices in CAD</span><span></span></div>
+        </div>
+        <div class="price"><small>Per door</small><b>$810–1,560</b></div>
+        <div class="bar" style="width:100%"></div>
+      </div>
+    </div>
+    <div class="card av">
+      <div class="step"><b>3</b>Avente WPC doors</div>
+      <div class="pic">
+        <img src="img/dr-av.jpg" style="object-position:50% 50%" alt="Avente concealed door flush with an oak wall">
+        <div class="badge"><b>6–23%</b><span>less than premium</span></div>
+      </div>
+      <div class="body">
+        <div class="name">Factory-finished WPC doors</div>
+        <div class="list">
+          <div class="it"><span>WPC pre-hung set, finished</span><span>$762<em class="sv">6% less</em></span></div>
+          <div class="it"><span>Concealed door, hidden hinges</span><span>$1,200<em class="sv">23% less</em></span></div>
+          <div class="it"><span>No painting · waterproof core</span><span>✓</span></div>
+          <div class="it x"><span>Made to order for your floor plan · about 2 months</span><span></span></div>
+        </div>
+        <div class="price"><small>Per door</small><b>from $762</b></div>
+        <div class="bar" style="width:49%"></div>
+      </div>
+    </div>
+    <div class="models">
+      <div class="mh"><b>Avente door options</b><span>Pre-hung or concealed · wood tones, white, grey, charcoal</span></div>
+      <div class="mrow">
+        <figure><img src="img/dr-m-prehung.jpg" style="object-position:50% 45%" alt="Oak WPC pre-hung door in a bedroom"><figcaption>Pre-hung · oak</figcaption></figure>
+        <figure><img src="img/dr-m-hidden.jpg" style="object-position:50% 45%" alt="White concealed door in a living room"><figcaption>Concealed · white</figcaption></figure>
+        <figure><img src="img/dr-m-tones.jpg" style="object-position:50% 45%" alt="WPC doors in white, oak and walnut"><figcaption>White · oak · walnut</figcaption></figure>
+        <figure><img src="img/dr-m-white.jpg" style="object-position:50% 45%" alt="Modern white WPC door with black line detail"><figcaption>Modern line design</figcaption></figure>
+              <figure><img src="img/x09.jpg" alt="Dark · white · grey"><figcaption>Dark · white · grey</figcaption></figure>
+        <figure><img src="img/x10.jpg" alt="Full range"><figcaption>Full range</figcaption></figure>
+        <figure><img src="img/x11.jpg" alt="Concealed · oak wall"><figcaption>Concealed · oak wall</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE 8 · KITCHEN -->
+  <section class="page out-r" data-title="Kitchen · sink + faucet">
+    <div class="card">
+      <div class="step"><b>1</b>Standard · local</div>
+      <div class="pic"><img src="img/kt-std.jpg" style="object-position:50% 45%" alt="Standard single sink with pull-down faucet"></div>
+      <div class="body">
+        <div class="name">Undermount sink + pull-down faucet</div>
+        <div class="list">
+          <div class="it"><span>Stainless undermount sink</span><span>from $128</span></div>
+          <div class="it"><span>Pull-down faucet (Moen)</span><span>from $214</span></div>
+          <div class="it x"><span>Toronto building supply price</span><span></span></div>
+        </div>
+        <div class="price"><small>Per kitchen</small><b>≈ $342</b></div>
+        <div class="bar" style="width:34%"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="step"><b>2</b>Premium · local</div>
+      <div class="pic"><img src="img/kt-av.jpg" style="object-position:50% 50%" alt="Designer workstation sink, single item"></div>
+      <div class="body">
+        <div class="name">Designer workstation sink, PVD colour</div>
+        <div class="list">
+          <div class="it"><span>Workstation sink, rose gold or gun black</span><span>from $995</span></div>
+          <div class="it"><span>Matched faucet, drains</span><span>extra</span></div>
+          <div class="it x"><span>Canaroma Toronto showroom · single item, not a matched set</span><span></span></div>
+        </div>
+        <div class="price"><small>Sink</small><b>from $995</b></div>
+        <div class="bar" style="width:100%"></div>
+      </div>
+    </div>
+    <div class="card av">
+      <div class="step"><b>3</b>Avente kitchen set</div>
+      <div class="pic">
+        <img src="img/kt-hero-rg.jpg" style="object-position:50% 60%" alt="Avente rose gold workstation sink set">
+        <div class="badge"><b>Coming soon</b><span>rose gold · gun black</span></div>
+      </div>
+      <div class="body">
+        <div class="name">Luxury workstation set</div>
+        <div class="list">
+          <div class="it"><span>Workstation sink with waterfall</span><span>✓</span></div>
+          <div class="it"><span>Matched pull-out faucet</span><span>✓</span></div>
+          <div class="it"><span>Board, rack and cup washer</span><span>✓</span></div>
+          <div class="it x"><span>Sink, faucet and drains in one matched finish</span><span></span></div>
+        </div>
+        <div class="price"><small>Avente price</small><b>Coming soon</b></div>
+      </div>
+    </div>
+    <div class="models">
+      <div class="mh"><b>Avente kitchen · coming soon</b><span>Workstation sets and faucets in matched luxury finishes</span></div>
+      <div class="mrow">
+        <figure><img src="img/kt-m-faucets-rg.jpg" style="object-position:50% 50%" alt="Avente rose gold kitchen faucets"><figcaption>Kitchen faucets · rose gold</figcaption></figure>
+        <figure><img src="img/kt-m-lux-rg.jpg" style="object-position:50% 70%" alt="Avente rose gold farmhouse sink"><figcaption>Farmhouse sink · rose gold</figcaption></figure>
+        <figure><img src="img/kt-m-rg.jpg" style="object-position:50% 40%" alt="Black and rose gold kitchen faucet"><figcaption>Faucet · black + rose gold</figcaption></figure>
+        <figure><img src="img/kt-m-ws.jpg" style="object-position:50% 70%" alt="Gun black workstation sink"><figcaption>Workstation · gun black</figcaption></figure>
+              <figure><img src="img/x12.jpg" alt="Workstation sink"><figcaption>Workstation sink</figcaption></figure>
+        <figure><img src="img/x13.jpg" alt="Sink + faucet"><figcaption>Sink + faucet</figcaption></figure>
+        <figure><img src="img/x15.jpg" alt="Waterfall spray"><figcaption>Waterfall spray</figcaption></figure>
+        <figure><img src="img/x16.jpg" alt="Faucet + rinser"><figcaption>Faucet + rinser</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE 9 · BATHROOM -->
+  <section class="page out-r" data-title="Bathroom · shower">
+    <div class="card">
+      <div class="step"><b>1</b>Standard · local</div>
+      <div class="pic"><img src="img/bt-m-grey2.jpg" style="object-position:62% 20%" alt="Thermostatic bar shower system"></div>
+      <div class="body">
+        <div class="name">Thermostatic bar shower system</div>
+        <div class="list">
+          <div class="it"><span>Bar system, chrome or black</span><span>from $299</span></div>
+          <div class="it x"><span>Toronto building supply price</span><span></span></div>
+        </div>
+        <div class="price"><small>Per shower</small><b>from $299</b></div>
+        <div class="bar" style="width:14%"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="step"><b>2</b>Premium · local</div>
+      <div class="pic"><img src="img/bt-hero-gold.jpg" style="object-position:50% 12%" alt="Designer concealed rain shower"></div>
+      <div class="body">
+        <div class="name">Designer concealed shower</div>
+        <div class="list">
+                    <div class="it"><span>Concealed 3-way shower (Riobel)</span><span>from $2,126</span></div>
+          <div class="it x"><span>Brand retail price · big-box stores don't carry this tier</span><span></span></div>
+        </div>
+        <div class="price"><small>Per shower</small><b>from $2,126</b></div>
+        <div class="bar" style="width:100%"></div>
+      </div>
+    </div>
+    <div class="card av">
+      <div class="step"><b>3</b>Avente shower</div>
+      <div class="pic">
+        <img src="img/bt-av.jpg" style="object-fit:contain;background:#F1ECE6;" alt="Avente rose gold thermostatic shower system">
+        <div class="badge"><b>Coming soon</b><span>gold · rose gold · gun grey</span></div>
+      </div>
+      <div class="body">
+        <div class="name">Luxury showers + basin faucets</div>
+        <div class="list">
+          <div class="it"><span>Thermostatic shower, rose gold</span><span>✓</span></div>
+          <div class="it"><span>Concealed waterfall shower</span><span>✓</span></div>
+          <div class="it"><span>Smart shower shelf with LED</span><span>✓</span></div>
+          <div class="it"><span>Basin faucet, rose gold</span><span>✓</span></div>
+          <div class="it x"><span>Shower, faucet and trim in one matched finish</span><span></span></div>
+        </div>
+        <div class="price"><small>Avente price</small><b>Coming soon</b></div>
+      </div>
+    </div>
+    <div class="models">
+      <div class="mh"><b>Avente bathroom · coming soon</b><span>Showers, faucets and vanities in matched luxury finishes</span></div>
+      <div class="mrow">
+        <figure><img src="img/bt2-rg.jpg" alt="Rose gold thermostatic shower"><figcaption>Shower · rose gold</figcaption></figure>
+        <figure><img src="img/bt2-grey.jpg" alt="Gun grey shower system"><figcaption>Shower · gun grey</figcaption></figure>
+        <figure><img src="img/bt2-conc.jpg" alt="Concealed shower in stone wall"><figcaption>Concealed shower</figcaption></figure>
+        <figure><img src="img/bt2-van1.jpg" alt="Vanity with lit mirror"><figcaption>Smart vanity</figcaption></figure>
+        <figure><img src="img/bt2-van2.jpg" alt="Stone-finish vanity, rose gold faucet"><figcaption>Stone vanity · rose gold</figcaption></figure>
+        <figure><img src="img/bt2-wc.jpg" alt="Smart toilet"><figcaption>Smart toilet</figcaption></figure>
+              <figure><img src="img/x17.jpg" alt="Rain shower"><figcaption>Rain shower</figcaption></figure>
+        <figure><img src="img/x18.jpg" alt="Lit wall niches"><figcaption>Lit wall niches</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE 10 · ONE HOME -->
+  <section class="page out-r sum" data-title="Your savings · one home">
+    <div class="msg"><b>See how much you save on a 3,000 sf home with Avente factory-direct luxury.</b></div>
+    <div class="sumgrid">
+      <div class="tot mk"><small>Buy locally</small><b>$30,706</b></div>
+      <div class="tot av"><small>With Avente</small><b>$21,209</b></div>
+      <div class="tot sv3"><small>You save</small><b>$9,496</b><span>31% less</span></div>
+    </div>
+    <div class="models stab">
+      <table class="simple">
+        <thead><tr><th></th><th>Buy locally</th><th>With Avente</th><th>You save</th></tr></thead>
+        <tbody>
+<tr><td>Classic LED baseboard <i>600 ft</i></td><td>$5,700</td><td class="avc">$3,162</td><td class="sv2">$2,538</td></tr>
+<tr><td>Ceiling shadow line <i>250 ft</i></td><td>$2,625</td><td class="avc">$1,325</td><td class="sv2">$1,300</td></tr>
+<tr><td>LED strip <i>850 ft</i></td><td>$3,510</td><td class="avc">$2,550</td><td class="sv2">$960</td></tr>
+<tr><td>Magnetic track lighting <i>3 rooms</i></td><td>$6,030</td><td class="avc">$2,628</td><td class="sv2">$3,402</td></tr>
+<tr><td>Interior doors <i>12 doors</i></td><td>$9,720</td><td class="avc">$9,144</td><td class="sv2">$576</td></tr>
+<tr><td>Concealed doors <i>2 doors</i></td><td>$3,120</td><td class="avc">$2,400</td><td class="sv2">$720</td></tr>
+        </tbody>
+      </table>
+      <div class="sumfoot"><span class="snote">Estimate for a typical home · kitchen and bath not included</span><a class="cta big" href="https://www.aventehub.com/meet/?from=catalogue" target="_blank" rel="noopener">Get the number for your project</a></div>
+    </div>
+  </section>
+</div></div>
+
+<div class="nav">
+  <button id="prev" aria-label="Previous page">&#8249;</button>
+  <div class="lbl" id="lbl"></div>
+  <button id="next" aria-label="Next page">&#8250;</button>
+  <a class="cta" href="https://www.aventehub.com/meet/?from=catalogue" target="_blank" rel="noopener">Book a showroom visit</a>
+  <span class="ctaph">or call 416-649-8282</span>
+</div>
+<footer>
+  <div>Builder prices in CAD, before tax · profiles: material only, LED strip extra · page 4: one 12×14 ft room, GTA contractor prices · pages 5–6: Canadian store and distributor prices · pages 7–9: US$ prices × 1.39 · page 10: typical-home estimate · painting: Toronto painter rates (RenoHouse 2026) · made for your project <span class="draft">Draft · prices to confirm</span></div>
+  <div class="k"><b>Max Babaee</b><span>·</span><i>416-649-8282</i><span>·</span><i>info@aventehub.com</i><span>·</span><i>aventehub.com</i></div>
+</footer>
+
+
+
+<script>
+(function(){
+  var pg=[...document.querySelectorAll('.page')];
+  pg.forEach(function(p,i){
+    var h=document.createElement('div');h.className='ph';
+    h.innerHTML='<span class="n">'+String(i+1).padStart(2,'0')+'</span><span class="tt">'+p.dataset.title+'</span><span class="sub">Standard · Premium · <b>Avente</b></span>';
+    p.insertBefore(h,p.firstChild);
+  });
+})();
+</script>
+<script>
+const all=[...document.querySelectorAll('.page')];
+const H0=(location.hash||'').replace('#','');
+const editMode=H0.indexOf('edit')===0;
+let keep=null;
+const km=H0.match(/(?:^|-)show-([0-9-]+)/)||H0.match(/^show-([0-9-]+)/);
+if(km){keep=km[1].split('-').map(x=>parseInt(x,10)).filter(x=>x>=1&&x<=all.length)}
+const special=editMode||!!keep;
+all.forEach((p,i)=>{p.dataset.no=i+1});
+let pages=all.filter((p,i)=>editMode||!keep||keep.includes(i+1));
+all.forEach(p=>{if(!pages.includes(p))p.style.display='none'});
+let cur=0,started=false;
+const lbl=document.getElementById('lbl'),prev=document.getElementById('prev'),next=document.getElementById('next');
+function show(n){
+  if(n<0||n>=pages.length)return;
+  const was=pages[cur], dir=n>cur?1:(n<cur?-1:0);
+  pages.forEach(p=>p.classList.remove('turn-out','turn-in'));
+  pages.forEach((p,i)=>{p.classList.toggle('out-l',i<n);p.classList.toggle('out-r',i>n);p.setAttribute('aria-hidden',i!==n)});
+  if(started&&dir===1&&was){const np2=pages[n];np2.classList.add('under-shadow');setTimeout(()=>np2.classList.remove('under-shadow'),1950);was.classList.add('turn-out');was.addEventListener('animationend',function f(e){if(e.target!==was)return;was.classList.remove('turn-out');was.removeEventListener('animationend',f)})}
+  if(started&&dir===-1){const np=pages[n];if(was){was.classList.add('stay-under','under-shadow');setTimeout(()=>was.classList.remove('stay-under','under-shadow'),1950);}np.classList.add('turn-in');np.addEventListener('animationend',function f(e){if(e.target!==np)return;np.classList.remove('turn-in');np.removeEventListener('animationend',f)})}
+  if(started&&dir!==0&&window.flipSound)window.flipSound();
+  started=true;
+  cur=n;
+  if(window.fitBook)window.fitBook();
+  lbl.innerHTML=`Page <b>${n+1}</b> of ${pages.length} · ${pages[n].dataset.title}`;
+  prev.disabled=n===0; next.disabled=n===pages.length-1;
+  if(!special){try{ if(location.hash!=='#p'+(n+1)) history.replaceState(null,'','#p'+(n+1)) }catch(e){}}
+}
+prev.onclick=()=>show(cur-1); next.onclick=()=>show(cur+1);
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')show(cur+1);if(e.key==='ArrowLeft')show(cur-1)});
+let sx=null;
+document.addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});
+document.addEventListener('touchend',e=>{if(sx===null)return;const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>50)show(cur+(dx<0?1:-1));sx=null},{passive:true});
+pages.forEach((p,i)=>{const n=p.querySelector('.ph .n');if(n)n.textContent=String(i+1).padStart(2,'0')});
+const h=special?0:parseInt((location.hash||'').replace('#p',''),10);
+show(h>=1&&h<=pages.length?h-1:0);
+</script>
+
+<script>
+(function(){
+  if(matchMedia('(max-width:560px)').matches)return;
+  const st=document.getElementById('stage'),bk=document.getElementById('book'),pv=document.getElementById('prev'),nx=document.getElementById('next');
+  function fit(){
+    if(innerWidth<=560){bk.style.transform='';bk.style.width='';return}
+    const aw=Math.min(1600,innerWidth-130), ah=st.clientHeight-parseFloat(getComputedStyle(st).paddingTop)-22;
+    let w=aw,s=1;
+    const pgs=[...bk.querySelectorAll('.page')].filter(p=>p.style.display!=='none');pgs.forEach(p=>p.style.minHeight='');const mh=()=>Math.max(...pgs.map(p=>p.offsetHeight));let h=0;for(let k=0;k<10;k++){bk.style.transform='none';bk.style.height='';bk.style.width=w+'px';h=mh();const nw=Math.max(aw,Math.min(1600,w*Math.sqrt((aw/ah)/(w/h))));if(Math.abs(nw-w)<6)break;w=nw;}bk.style.width=w+'px';h=mh();pgs.forEach(p=>p.style.minHeight=h+'px');s=Math.min(1,ah/h,aw/w);bk.style.height=h+'px';
+    bk.style.transform='scale('+s+')';
+    st.style.height='';
+    const r=bk.getBoundingClientRect();
+    pv.style.left=Math.max(8,r.left-68)+'px'; nx.style.right=Math.max(8,innerWidth-r.right-68)+'px';
+    pv.style.top=nx.style.top=(r.top+r.height/2)+'px';
+  }
+  window.fitBook=fit;addEventListener('resize',fit); addEventListener('load',fit); document.fonts&&document.fonts.ready.then(fit); fit();
+})();
+</script>
+
+<script>
+(function(){
+  function setFlex(){document.querySelectorAll('.mrow').forEach(r=>{const fs=[...r.querySelectorAll('figure')];let sum=0;fs.forEach(f=>{const i=f.querySelector('img');f._a=(i&&i.naturalWidth)?i.naturalWidth/i.naturalHeight:1;sum+=f._a});const W=(r.clientWidth||1400)-12*(fs.length-1);const H=Math.min(200,W/sum);fs.forEach(f=>{f.style.flex='0 0 '+(f._a*H-0.5).toFixed(1)+'px'})});if(window.fitBook)window.fitBook()}
+  document.querySelectorAll('.mrow img').forEach(i=>{if(!i.complete)i.addEventListener('load',setFlex)});
+  addEventListener('load',setFlex);setFlex();
+})();
+</script>
+
+<script>
+/* paper page-turn sound, made in the browser (no file) */
+(function(){
+  let ctx=null,on=true;
+  try{on=localStorage.getItem('avSound')!=='off'}catch(e){}
+  const aus=['flip1.mp3','flip2.mp3'].map(f=>{const a=new Audio(f);a.preload='auto';return a});let ai=0;
+  window.flipSound=function(){
+    if(!on)return;
+    try{const a=aus[(ai++)%aus.length].cloneNode();a.volume=0.9;const pr=a.play();if(pr&&pr.catch)pr.catch(()=>synth());return;}catch(e){}
+    synth();
+  };
+  function synth(){
+    try{
+      ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();
+      const t=ctx.currentTime,dur=0.55,sr=ctx.sampleRate,n=Math.floor(sr*dur);
+      const buf=ctx.createBuffer(1,n,sr),d=buf.getChannelData(0);
+      for(let i=0;i<n;i++){const x=i/n;
+        const env=Math.pow(Math.sin(Math.PI*Math.min(1,x*1.25)),1.6)*(0.55+0.45*Math.random());
+        const crinkle=(Math.random()<0.012)?(Math.random()*2-1)*1.6:0;
+        d[i]=((Math.random()*2-1)*0.6+crinkle)*env;}
+      const src=ctx.createBufferSource();src.buffer=buf;
+      const bp=ctx.createBiquadFilter();bp.type='bandpass';bp.Q.value=0.7;
+      bp.frequency.setValueAtTime(900,t);bp.frequency.exponentialRampToValueAtTime(3800,t+dur*0.55);bp.frequency.exponentialRampToValueAtTime(1600,t+dur);
+      const hp=ctx.createBiquadFilter();hp.type='highpass';hp.frequency.value=300;
+      const g=ctx.createGain();g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(0.35,t+0.06);g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+      src.connect(bp);bp.connect(hp);hp.connect(g);g.connect(ctx.destination);src.start(t);
+    }catch(e){}
+  }
+  const nav=document.querySelector('.nav');
+  if(nav){const b=document.createElement('button');b.className='snd';b.type='button';
+    const lab=()=>{b.textContent=on?'🔊':'🔇';b.title=on?'Page sound on':'Page sound off'};lab();
+    b.onclick=()=>{on=!on;try{localStorage.setItem('avSound',on?'on':'off')}catch(e){};lab();if(on)window.flipSound()};
+    nav.appendChild(b);}
+})();
+</script>
+</body>
+</html>
