@@ -457,6 +457,48 @@ table.simple td.sv2{color:#1F7A4A;font-weight:700}
 .cv-right img{width:100%;height:100%;object-fit:cover;display:block}
 .cv-right figcaption{position:absolute;left:14px;bottom:12px;background:rgba(22,14,8,.72);color:#F3D88A;border:1px solid rgba(214,175,70,.5);border-radius:999px;padding:5px 13px;font-family:'Jost',sans-serif;font-size:13px;letter-spacing:.14em;text-transform:uppercase}
 @media (max-width:560px){.page.cover{grid-template-columns:1fr!important}.cv-left{padding:22px}.cv-h1{font-size:46px}.cv-tag{font-size:18px}.cv-right{padding:0 14px 14px;height:280px}.cv-offer{font-size:13px;padding:8px 14px}.cv-offer b{font-size:16px}}
+
+/* ===== mobile fix (Nov 16 17:25) ===== */
+@media (max-width:560px){
+html,body{overflow-x:hidden!important;overflow-y:auto!important;height:auto!important;min-height:100%}
+body{display:block!important}
+.nav{position:sticky!important;bottom:0;z-index:30;background:rgba(27,17,11,.94);backdrop-filter:blur(6px);border-top:1px solid rgba(214,175,70,.35)}
+.stage{height:auto!important;overflow:visible!important}
+.book{width:100%!important;max-width:100%!important;overflow:hidden;padding:6px 6px 0!important;box-sizing:border-box}
+.page{width:100%!important;min-width:0!important;box-sizing:border-box;grid-template-columns:repeat(3,minmax(0,1fr))!important;grid-template-rows:auto!important;align-content:start;padding:10px 8px 8px!important;border-radius:16px!important}
+.page>*{min-width:0}
+.page.sum{grid-template-columns:minmax(0,1fr)!important}
+.page.cover{grid-template-columns:minmax(0,1fr)!important;grid-template-rows:auto auto!important;align-content:start!important}
+.ph{flex-wrap:wrap}.ph .sub{display:none}.ph .n{font-size:24px!important}.ph .tt{font-size:16px!important}
+.offer-tag{grid-column:1/-1;justify-self:stretch;text-align:center;white-space:normal}
+.card .list .it,.it{font-size:10px!important;padding:2px 0!important}
+.name{font-size:12px!important}
+.card .price b{font-size:16px!important}.card.av .price b{font-size:19px!important}
+.card .price small{font-size:8px!important}
+.card .badge b{font-size:15px!important}.card .badge span{font-size:6.5px!important}.card .badge{padding:3px 6px!important}
+.step{font-size:0!important}
+.sv{font-size:7.5px!important}
+.mrow{display:flex!important;flex-wrap:wrap!important;gap:6px!important}
+.mrow figure{flex:0 0 calc(33.33% - 4px)!important;min-width:0!important}
+.mrow img{width:100%!important;height:auto!important;aspect-ratio:4/3;object-fit:cover!important}
+.mrow figcaption{font-size:9px!important}
+.mh span{font-size:10px!important}.mh b{font-size:14px!important}
+.cv-left{padding:20px 18px!important;gap:12px!important}
+.cv-brand img{width:44px!important;height:44px!important}.cv-brand span{font-size:18px!important}
+.cv-ed{font-size:11px!important;margin-top:4px!important}
+.cv-h1{font-size:46px!important;white-space:normal!important}
+.cv-tag{font-size:18px!important}
+.cv-chips span{font-size:11px!important;padding:5px 10px!important}
+.cv-offer{font-size:13px!important;padding:8px 14px!important;margin-top:6px!important}.cv-offer b{font-size:17px!important}
+.cv-foot{font-size:10px!important}.cv-right figcaption{font-size:9px!important;padding:3px 8px!important;left:8px!important;bottom:8px!important}
+.cv-right{padding:0 12px 12px!important;height:300px}
+.offer-row .ov b{font-size:22px!important}
+table.simple td{font-size:13px!important;padding:6px 6px!important}table.simple td i{display:block;margin:0;font-size:10px}table.simple th{font-size:9px!important;padding:4px 6px!important}
+.sum .msg b{font-size:20px!important;white-space:normal!important}
+.sum .tot b{font-size:26px!important}.sum .tot small{font-size:10px!important}
+.sumfoot{flex-direction:column;align-items:flex-start}
+.sumfoot .cta{font-size:14px!important}
+}
 </style>
 </head>
 <body>
@@ -1152,7 +1194,7 @@ show(h>=1&&h<pages.length?h:0);
 
 <script>
 (function(){
-  function setFlex(){document.querySelectorAll('.mrow').forEach(r=>{const fs=[...r.querySelectorAll('figure')];let sum=0;fs.forEach(f=>{const i=f.querySelector('img');f._a=(i&&i.naturalWidth)?i.naturalWidth/i.naturalHeight:1;sum+=f._a});const W=(r.clientWidth||1400)-12*(fs.length-1);const H=Math.min(200,W/sum);fs.forEach(f=>{f.style.flex='0 0 '+(f._a*H-0.5).toFixed(1)+'px'})});if(window.fitBook)window.fitBook()}
+  function setFlex(){if(innerWidth<=560){document.querySelectorAll('.mrow figure').forEach(f=>f.style.flex='');return}document.querySelectorAll('.mrow').forEach(r=>{const fs=[...r.querySelectorAll('figure')];let sum=0;fs.forEach(f=>{const i=f.querySelector('img');f._a=(i&&i.naturalWidth)?i.naturalWidth/i.naturalHeight:1;sum+=f._a});const W=(r.clientWidth||1400)-12*(fs.length-1);const H=Math.min(200,W/sum);fs.forEach(f=>{f.style.flex='0 0 '+(f._a*H-0.5).toFixed(1)+'px'})});if(window.fitBook)window.fitBook()}
   document.querySelectorAll('.mrow img').forEach(i=>{if(!i.complete)i.addEventListener('load',setFlex)});
   addEventListener('load',setFlex);setFlex();
 })();
