@@ -528,6 +528,15 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 
 .mpg{display:none;position:fixed;bottom:22px;left:50%;transform:translateX(-50%);z-index:39;background:rgba(27,17,11,.92);border:1px solid rgba(214,175,70,.6);border-radius:999px;padding:0 22px;height:36px;align-items:center;font-family:'Avente Display',sans-serif;font-size:16px;color:#F3D88A;min-width:84px;justify-content:center;box-shadow:0 6px 18px rgba(0,0,0,.5)}
 @media (max-width:560px){.book{padding-bottom:84px!important}.swipe-hint{bottom:84px!important}}
+
+/* ===== v5.33 smooth magazine flip (one engine, steady speed, no vanishing) ===== */
+.page{will-change:auto!important;animation:none!important}
+.page.fl-move{visibility:visible!important;opacity:1;z-index:8!important;transform-origin:0% 50%!important;backface-visibility:visible!important;-webkit-backface-visibility:visible!important;will-change:transform!important;pointer-events:none}
+.page.fl-under{visibility:visible!important;opacity:1!important;z-index:2!important}
+.fl-shade,.fl-ushade{position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:20}
+.fl-shade{background:linear-gradient(90deg,#2A1B11 0%,#24170F 55%,#170E08 100%)}
+.fl-ushade{background:linear-gradient(90deg,rgba(0,0,0,.5),rgba(0,0,0,0) 75%)}
+.page.turn-out,.page.turn-in{animation:none!important}
 </style>
 </head>
 <body>
@@ -1182,10 +1191,25 @@ const lbl=document.getElementById('lbl'),prev=document.getElementById('prev'),ne
 function show(n){
   if(n<0||n>=pages.length)return;
   const was=pages[cur], dir=n>cur?1:(n<cur?-1:0);
-  pages.forEach(p=>p.classList.remove('turn-out','turn-in'));
+  if(window.__flipBusy){window.__flipQ=n;return}
   pages.forEach((p,i)=>{p.classList.toggle('out-l',i<n);p.classList.toggle('out-r',i>n);p.setAttribute('aria-hidden',i!==n)});
-  if(started&&dir===1&&was){const np2=pages[n];np2.classList.add('under-shadow');setTimeout(()=>np2.classList.remove('under-shadow'),1950);was.classList.add('turn-out');was.addEventListener('animationend',function f(e){if(e.target!==was)return;was.classList.remove('turn-out');was.removeEventListener('animationend',f)})}
-  if(started&&dir===-1){const np=pages[n];if(was){was.classList.add('stay-under','under-shadow');setTimeout(()=>was.classList.remove('stay-under','under-shadow'),1950);}np.classList.add('turn-in');np.addEventListener('animationend',function f(e){if(e.target!==np)return;np.classList.remove('turn-in');np.removeEventListener('animationend',f)})}
+  if(started&&dir!==0&&was&&!matchMedia('(prefers-reduced-motion:reduce)').matches){
+    const mover=dir===1?was:pages[n], under=dir===1?pages[n]:was;
+    window.__flipBusy=true;
+    under.classList.add('fl-under');mover.classList.add('fl-move');
+    const sh=document.createElement('div');sh.className='fl-shade';mover.appendChild(sh);
+    const ush=document.createElement('div');ush.className='fl-ushade';under.appendChild(ush);
+    const D=1700,E='cubic-bezier(.45,.05,.3,1)';
+    const fwd=[{transform:'rotateY(0deg)',filter:'opacity(1)'},{transform:'rotateY(-90deg)',filter:'opacity(1)',offset:.5},{transform:'rotateY(-168deg)',filter:'opacity(1)',offset:.88},{transform:'rotateY(-180deg)',filter:'opacity(0)'}];
+    const kf=dir===1?fwd:fwd.slice().reverse().map((k,i,a)=>Object.assign({},k,{offset:k.offset!==undefined?1-k.offset:undefined}));
+    const a1=mover.animate(kf,{duration:D,easing:E,fill:'both'});
+    const sk=[{opacity:0},{opacity:.35,offset:.46},{opacity:.93,offset:.5},{opacity:.93}];
+    sh.animate(dir===1?sk:sk.slice().reverse().map(k=>Object.assign({},k,{offset:k.offset!==undefined?1-k.offset:undefined})),{duration:D,easing:E,fill:'both'});
+    ush.animate(dir===1?[{opacity:.55},{opacity:0}]:[{opacity:0},{opacity:.55}],{duration:D,easing:'ease-in-out',fill:'both'});
+    const done=()=>{a1.cancel();sh.remove();ush.remove();mover.classList.remove('fl-move');under.classList.remove('fl-under');window.__flipBusy=false;
+      const q=window.__flipQ;window.__flipQ=null;if(q!==null&&q!==undefined&&q!==cur)show(q)};
+    a1.finished.then(done,done);
+  }
   if(started&&dir!==0&&window.flipSound)window.flipSound();
   started=true;
   cur=n;
@@ -1268,5 +1292,6 @@ show(h>=1&&h<pages.length?h:0);
 })();
 </script>
 <script>setTimeout(()=>{const h=document.getElementById('swipeHint');if(h)h.classList.add('gone')},4500);</script>
+<script>window.addEventListener('load',function(){document.querySelectorAll('.page img').forEach(function(im){if(im.decode)im.decode().catch(function(){})})});</script>
 </body>
 </html>
