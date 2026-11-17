@@ -4,7 +4,7 @@
 <meta name="robots" content="noindex,nofollow,noarchive">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Avente Hub · Builder Catalogue · Edition 01</title>
+<title>Avente Hub · Builder &amp; Developer Catalogue · Edition 01</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -537,23 +537,27 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 .fl-shade{background:linear-gradient(90deg,#2A1B11 0%,#24170F 55%,#170E08 100%)}
 .fl-ushade{background:linear-gradient(90deg,rgba(0,0,0,.5),rgba(0,0,0,0) 75%)}
 .page.turn-out,.page.turn-in{animation:none!important}
+
+/* v5.34 builder & developer cover */
+@media (min-width:561px){.page.cover .cv-h1{font-size:clamp(64px,6.2vw,92px)!important;line-height:.95}}
+.cv-amp{font-family:Georgia,'Times New Roman',serif;font-style:italic;font-weight:400;text-transform:none}
 </style>
 </head>
 <body>
 <header>
   <img src="img/logo.svg" alt="Avente Hub">
-  <div class="t">AVENTE HUB<small>Builder catalogue · side by side</small></div>
-  <div class="s">Builder prices · CAD<br><b>Factory-direct luxury pricing.</b></div>
+  <div class="t">AVENTE HUB<small>Builder &amp; developer catalogue · side by side</small></div>
+  <div class="s">Builder &amp; developer prices · CAD<br><b>Factory-direct luxury pricing.</b></div>
 </header>
 
 <div class="stage" id="stage"><div class="book" id="book">
 
   <!-- PAGE 1 · CLASSIC -->
-  <section class="page cover" data-title="Builder catalogue">
+  <section class="page cover" data-title="Builder &amp; developer catalogue">
    <div class="cv-left">
     <div class="cv-brand"><img src="img/logo.svg" alt=""><span>AVENTE HUB</span></div>
     <div class="cv-ed">Edition 01 · 2026 – 2027</div>
-    <h1 class="cv-h1">Builder<br>Catalogue</h1>
+    <h1 class="cv-h1">Builder <span class="cv-amp">&amp;</span><br>Developer<br>Catalogue</h1>
     <div class="cv-rule"></div>
     <div class="cv-tag">Factory-direct luxury, <em>side by side</em> with the local price.</div>
     <div class="cv-chips"><span>Lighting</span><span>Trim</span><span>Doors</span><span>Kitchen</span><span>Bath</span></div>
@@ -1160,7 +1164,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 </div>
 <footer>
   <div>Builder prices in CAD, before tax · profiles: material only, LED strip extra · page 4: one 12×14 ft room, GTA contractor prices · pages 5–6: Canadian store and distributor prices · pages 7–9: US$ prices × 1.39 · page 10: typical-home estimate · painting: Toronto painter rates (RenoHouse 2026) · made for your project</div>
-  <div class="k"><b>Max Babaee</b><span>·</span><i>416-649-8282</i><span>·</span><i>info@aventehub.com</i><span>·</span><i>aventehub.com</i></div>
+  <div class="k"><i>416-649-8282</i><span>·</span><i>info@aventehub.com</i><span>·</span><i>aventehub.com</i></div>
 </footer>
 
 
@@ -1214,7 +1218,7 @@ function show(n){
   started=true;
   cur=n;
   if(window.fitBook)window.fitBook();
-  lbl.innerHTML=n===0?`<b>Builder catalogue</b> · Edition 01`:`Page <b>${n}</b> of ${pages.length-1} · ${pages[n].dataset.title}`;
+  lbl.innerHTML=n===0?`<b>Builder &amp; developer catalogue</b> · Edition 01`:`Page <b>${n}</b> of ${pages.length-1} · ${pages[n].dataset.title}`;
   prev.disabled=n===0; next.disabled=n===pages.length-1;
   {const m=document.getElementById('mpg');if(m)m.textContent=n===0?'Cover':String(n).padStart(2,'0')+' / '+(pages.length-1);}
   if(!special){try{ if(location.hash!=='#p'+n) history.replaceState(null,'','#p'+n) }catch(e){}}
