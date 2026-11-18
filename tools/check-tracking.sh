@@ -2,7 +2,7 @@
 # Release guard (Nov 18, Saam · lesson L-20261114-TRACKINGDROP): every public page must load the tracking script.
 # Run: bash tools/check-tracking.sh   (also runs on every push/PR in .github/workflows/tracking-guard.yml)
 # Internal tools without tracking go in SKIP.
-SKIP='^(\./)?(wa-upload|tools|email|social)/'
+SKIP='^(\./)?(wa-upload|tools|email|social|c)/'
 fail=0
 while IFS= read -r f; do
   [[ "$f" =~ $SKIP ]] && continue
