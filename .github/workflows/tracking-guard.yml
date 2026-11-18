@@ -1,0 +1,14 @@
+name: Tracking guard
+# Fails if a public page lost /assets/av-consent.js (Vercel Analytics + HubSpot + Meta Pixel)
+# or an email-linked page lost /assets/av-visit.js (?from= visit log). See RELEASE-CHECKLIST.md.
+on:
+  push: { paths: ['**.html', 'tools/check-tracking.sh'] }
+  pull_request: { paths: ['**.html', 'tools/check-tracking.sh'] }
+  workflow_dispatch: {}
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - run: bash tools/check-tracking.sh
